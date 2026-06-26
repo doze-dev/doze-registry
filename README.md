@@ -1,6 +1,6 @@
 # doze-registry
 
-The signed module registry for [doze](https://github.com/nerdmenot/doze). It serves
+The signed module registry for [doze](https://github.com/doze-dev/doze). It serves
 the **discovery layer** — tiny, signed text files that tell doze where each engine
 module lives and let it verify the module is authentic. It is a static site deployed
 to **Cloudflare Pages** at `doze.nerdmenot.in`, with the registry under `/registry`.
@@ -39,7 +39,7 @@ engines:
     artifacts:
       "0.1.0":
         aarch64-apple-darwin:
-          url: https://github.com/NerdMeNot/doze-modules/releases/download/valkey/valkey-0.1.0-aarch64-apple-darwin.tar.gz
+          url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-0.1.0-aarch64-apple-darwin.tar.gz
           sha256: <hex>
           sig: <base64 ed25519 over the hex sha256>
 ```
