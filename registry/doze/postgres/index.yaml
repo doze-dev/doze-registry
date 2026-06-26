@@ -7,17 +7,17 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 290633052c119a0b7bc009bc73a6d0175e5c1ab2b9cfe4e8a08edfe7dc3c5ba2
-          sig: LtoW6D0lrKG6kRbczJXUckWep9w3TBOiR6IE3UlahpR1o4uPNBVYivn7rtiJLhFm9J6owsQsWupeLM13inhcBQ==
+          sha256: 2b20e35d3c6bc3e97cb93ff1e95502ee84b86b4287dea649cbb7b1a08c9816c0
+          sig: 10+tJ+Hby/hxxe0ML+WxKKOa+usEF3BQ1LHXsW7prX086vKq+i0cjjurIsxghq1/X+/u52hI8XZ0OcBA5NsHCg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 6b002d88ae854f7596e0ed677b4e9d9266355cfb8876372b8a454edd1e40b4d5
-          sig: kqf7fu8syWPhGCf4zfjfniZi1sqzMKE5ZG2c/qBh+ifTMMD5Cz9xDTnYXAqmx/FR+FJXilEoh3NLl8MHeBI8Aw==
+          sha256: bf6a5b3adda252b2d58c09936b9911b7d6ef7b6ef5d1148a8293ac01699cb4a1
+          sig: 0E7w9CbI108hQo9fC0QR32TnUKTWvgjfTZf8FQDXcxARUc5mcdfGBJcKZZDcLAIqEvY15BDNlGF6HCCKhDbkAw==
         x86_64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: abae6a17e4e9836239fa312fc7a77b85216ee258b6fba5e86e01c3830ac1f536
-          sig: bNQtPi77HHBzEzsYKVAKqOF0G8A3aeNEtVXWpLwff4XypGWRnOurgKn1fj8CTaO5rnv6I7X294PkPPh0DF8LAw==
+          sha256: d7f86cbdc540b93b1883da2c6b8da4b755dbff6966f5845fcb44118be720930a
+          sig: GXBL1jQaNoDiYh5/nq/+x1B7q0O9u82YauC6v1tYLO/II0qMcUjDtNoM3K8fgzYmGOs6N42oEglvK/XatES1Aw==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: e64fbc18471121e759cb0f2c75c5428151c609c104d2b79731980385bf04e661
-          sig: 9JCx9PcrOSVMmBvLsiuQwDHjFfDHP8jdewRAtl7f6/NFxHFykK73O4NHO0qZn7f9LLC73LKI7PUdZTvUz+6zBg==
+          sha256: 46fa434a35f2b23cdcaca0aa98940a8cfcd42e81b0778ada5c7e757cfb4a2a61
+          sig: KDL0ZbaATmEwrJ2X8igSnZO8z1f/zoFi3RD/XnOnUbAmtDK9pCQGZPKmHLRdBuLKMdyHOlI1YlFscRsJk6yWAg==

@@ -7,17 +7,17 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 9fccc2c4aaea9680ff73bf36c22d0bac4bb6e5644368b38b12789bfe711e511d
-          sig: M5HNgmKkcnag7qibl7RJB95vK8Lenfy9vWYJX3H75g7TxW0RndMzjxABAGNNKp7drqUTXCz57mDtWoB7MgiyBA==
+          sha256: 50e461e2e19e93bd37e94319d6dec7bf37fdabf770c04c3dd742afbe072b9928
+          sig: fvjAz2/6NOZrdHPoA/U40B0UkGpNnUAE+R5dE1f2TSPy4YX1/SuosiS4IUFkVNiebPz4X02JLSIh3jvwr988BQ==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 4663944b99165432228a167fe1f782fbff782424e5c28e6cffe688c69c8281e2
-          sig: 5ufTqVZiOrW8gtcUWKO01P75wYyeynDn2yxR2yaN4GD/X+e63zg7MVAoIb0atRt1b0w32jp5ad9/YCVLeTiwAQ==
+          sha256: 69dc29d3c23c7406865bc0abd41c418800f7ce099a0c8dca9e8ae96136ac7ff0
+          sig: SSxvheuXOLun1aF22Uz0U+HU4lwSqTDH63ejtOZijg61HLSTTQQqIh350K6ZYJXFaEvsH3PolRvK4uRPZr+pAw==
         x86_64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: 6f731cf54cc7c2f6016dc820888c71176921812d7893e2c7c155f42c26c4665a
-          sig: /92AasP6ewGRZzzp76/PjuCdZ8j5u1bjBoikZz1fQt4awJZ1wDwJdVCnnPfcO8qQ631ORT97raGn4RjkoBI4BA==
+          sha256: 8944357b046aad78581470985f271b0c074a13f911b13abeacb667b68cb8108b
+          sig: bEI5ornZZ5/zGXoARTPTiuShHT8kT6nacfcB3FLKFoP60c/F/PiCKYK0UWvgt95xv2a6lzoaNWVQFTJZLMCOCQ==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 02ad03956381bdb443e964896c9621ecc2d3885a5676267e11deae7a81b49bde
-          sig: JzkKiMH8UaDmLviaLR+AZocID87k6rnEX5zIHD65AdIY6T1qAa0AgZBYdXyWwyKmBsZNPoIp+YaFK1yjQuA3DA==
+          sha256: 73781cffe2399a313514b160082423f97db1128ce36cee6d313d94cbbdcd23b0
+          sig: e/cA1TMwG2UeXIHCBohjRSd2U/b9YBunGeOTOKB693jz36L/zXN1HtSL4uPdaQw4XC9kQ2wjYJPdG6ra1fP0AA==

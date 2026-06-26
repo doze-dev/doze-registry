@@ -7,17 +7,17 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 52fedc3a3a1951d62ba94b408d5f33ebe8a714be02d32f38551511ea6f500ddb
-          sig: ozREsGE5qi5ObcusTZc5Zt6NVqhN8ZVPCO/80bc0ffbQ7joGKIuvmYL4ETCT/o7Na3O/3GUzxM+VVhOM2m3dDg==
+          sha256: 933f07d79210c07f7370dca64802169e0519bcd46d97eb7740889d4de24d20d0
+          sig: G/GRmos8m5oH0vsdiYckhm/GsXcqYoykMeWM0/tBSTr2Gx2+2h5MKfOKmxL9dJOo/ssinofGlWVqByesIWvcCA==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: a3194a4be440127ca1846a0a29f0ab667d589a53cf4feb3264499f7e9fdbd8d6
-          sig: IWzyD+sg9wTQ/RLgjAqBJVgUETdWroMJPMIi/pf1GHoqvRfpYrs1CSljLuZBawDG6eaPmhslZ3Pf9lKyIvdfCQ==
+          sha256: 2e2c7f44d40631a177dae18f22180215adcf443bbcb156c6f24a50f2916ee7f8
+          sig: xJ+QggiPXxpRUr3Lr08v/jsjXdjvyUe7ZhcpzvivYSqc8gW5UUFPf15W7zf2Fal7Qhbnt4OQ2aAr57S4LYSxBg==
         x86_64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: 1f84d592bbba27ee2377b55d1f9876508708e4902ffa19bfd125bb41f89e6d58
-          sig: Jlpu491GK9K1r+viMpRcdpO0yx1bjSsF5eI4wz6bzonDf3VK+3Z2PscuIrXD9pBhIOf5Rm/BAAcWPwCheydSBw==
+          sha256: ddfc03d8ef6d81e4f59e7812f879c63c54f8a6cc5e15fdaeca0dc7ac1b4fedae
+          sig: /t1K9JIg3KjUJAiadaest0XrOHYlJ3bNF63A0w4D9ZhLd2kIBjcATGwEDWoIaLVncOrtLBCyOW++W3MiDEKCAw==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: df5640d47469459113ab7292ef6efc4ef5467411d3fa981cc78967d12a8773e8
-          sig: 50qLB7uTk/NGs3zFqwtttnr4GDl8yy5KFYVK0LqCH4TQwX/5OC/hvN+5jxk33OIMsn0Pq7WCtMUYYfzMgz+SBA==
+          sha256: ba5d8fbe0ab4b269274d4a827966461107cba87862632d0a09a68ed21bd5735f
+          sig: CFB95+lOuBpo9f+6OfqMe6i94HEPfHPbsw2uOTdb6EcsPUXKVpvmiRuISgfINZywYYA8Qz9r6ks9PacoiIMkBQ==

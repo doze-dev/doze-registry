@@ -7,17 +7,17 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 14dc14d72d24237ea22e74783783960c5dac2fe9690ea076f0430e6fc1968e7b
-          sig: RzbJL9DhWNbecLGuO6n9QVcPL1caqUZBD7xRzekwRIj5YuD1NGb5gKpDm9v9L9hVO/bzW3ZsPaSJ4Qxhql9OCg==
+          sha256: b5f8791212b79ff8776f170e70bf094a13e82a78f21a79c0f5192244e21a675e
+          sig: YZRGdl/UQxgq6USE0r2wGLllfFhwFF8BlT12JqYXeID/h0vVT9ZjCvvpRRiB20DJ6cRcvZgi9aITAe75r5nCAw==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: c3f7d01da84b5a3f4cf87cf1145a7937844f00b4e196e1f49bfa35651611c3e7
-          sig: Z62gddQ4VfUrXHwpQ10sfu/8wSuPvZm9olXBgOcKwHwW8wfs6oYfC5z8c6NuS52JeSXTbwbiObaAq24JZ743Dg==
+          sha256: 8ee9d6c15102e250a06926fc84348213eb34d22cfcdcd11540309a19c3c6ffb2
+          sig: lpIFRHjzUo5us4jH/vFr/bx/FVs2TlTEvo9JpYsqydCSQrpOj2tdfSPXANwN4XOWexNz+nnAs/7qL5WjicZpCg==
         x86_64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: cfd8d284089cc450efd0d4943601c3416b458ee2212a3243606a2721501c66ca
-          sig: 6ivgJ/Oc7OtD5cBjtWTXgUlg8Gz4g+16C7YMaS6GyOnZGFWej9H2RAJgue3GsfF9NmwzSm19aLICKxVytFWRCg==
+          sha256: f449745d83d01216c731495a0bd85ef3510cdc2e54a904ce299473166389feff
+          sig: 24zaSKltrcKNyzMFcsXpq4h7ZJIktNwvhWC8Tfe51jI76FbVz3PTizwyn5BmxBIaUMXsjO40mzFJkdNYzAcMCg==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: fde7f5bc1248923ade20b7665510a421c326e04ef1c9ee21abe721dad5eaede7
-          sig: 5QNfghjkz/4OrYIRwdWAPfdKT/cxYHRAGokP9USieycckOcTZ1Im83jXHWZcKFg5O56bAQd6CH5UphNcrlOfAg==
+          sha256: b0b524c081b868b0f320e3287ed215b255367927b7bb3d1ef2084458100b2204
+          sig: Tu5ZlmkvJs+I9vBXuvappwT505FfAdFUtcjhQcf9PgH9OmLBEwNEU3AMOXI7xz2XuQTzzktvVCfRMyxiukruDw==

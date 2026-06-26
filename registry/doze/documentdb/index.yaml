@@ -7,17 +7,17 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 57eade31988bae37994bbb5c57b463957008ba7450f0e5425723d6ed9010f88f
-          sig: RhXLpcFYwlmvbC8AMLD701A2ihq/RGjFi0e5FP1lDc6tSx60N/VbStnfnLkVkiAG+FsV0H8KoEkOkthawqX7Dg==
+          sha256: 1bf93349a0027230d814bff70a80be2602f86a47206f673da5c2b6f4dcac7423
+          sig: fDpp0PhEYPil6hKs4pmCEBczUjzsRltbiDALUou+Vt9xldzjtUyyPbBW2jgTXElOHu14zSB9/rlQ4cSRg9S3Cg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: ca07b58a9ff98e44327aea8e40b5f30675d0daa7cf86aef92498c7d5b4f73625
-          sig: UiFWmejTDnUe8vFgJ+NsJoFoItIAt53Gr8h51PPTDDT7f+U52eXWevZqGIguHYSqft5qrd5Q7sGBSpSYf7NSCQ==
+          sha256: d1b771bdca4254bc90d54c44ed61b4f222b331a327c7b3aa33dc7224e521a593
+          sig: C7ekWo+QhZlVgekiauFtnqQ0oH9qRgBATFqV9MDWLu0Cjy2yOgIJinbh6mMS/8rn88oVWLXpIiCM1uzOh8yxAg==
         x86_64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: dc57645f62328b1d854c2f97bf09c9d4c82cf9d578641df121c6e5a18c6191c8
-          sig: fMDvVkgg5sTSnzp5jTOZBmOfRMGjr4Q3kGrphZjb/igl2SVRe88CPbwTJPebcvN6NVp+sMluRa+Q3ZK7uyqOAw==
+          sha256: 6651f0cb974bfe05017e629caeb96bbb278e870d438df631964758a760329480
+          sig: /HIslYhh1TWDuqZElSUhw5pQbDdirzxw1PCxjtdCu3OYy1pOKNgU3ugtpBFQL7jSP7MbETsf9WcF2wQpZIGIBw==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 107e2b55f52177fc392225984cc6627dc6c9a58b9848f33000884e7c167c4e86
-          sig: o57EGBjFGKt+gqy0YHIqik5+qUEPPk0CPK8fXdqxYnYwuVk3Mfa76+hqjC3/wOTaHVwgO9DRS0doGA+qJvgmBA==
+          sha256: 4b0e43a438f18500d235f707d6eeaf1711c693c06d8683f3ac3fef382c9a1b08
+          sig: j9FRhPf6T3mxfjkWaMmMT39xmmmVrSH/0yEwWg6eoTXOLkioSofb3XtoLY6p2J84XBNoi0zC/4bVEb5AnPrIDw==
