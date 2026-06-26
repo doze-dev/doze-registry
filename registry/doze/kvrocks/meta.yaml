@@ -1,0 +1,17 @@
+title: Kvrocks
+tagline: Redis API on RocksDB — durable, low-RAM.
+category: database
+engine: kvrocks
+description: >
+  A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk.
+  Durable and memory-frugal — a drop-in Redis API when you want persistence
+  without holding the dataset in RAM.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kvrocks
+source: https://github.com/doze-dev/doze-modules
+example: |
+  kvrocks "store" {
+    version = 2
+  }
+options:
+  - name: version
+    desc: Engine major to run — 2.

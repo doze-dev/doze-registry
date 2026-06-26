@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import data from '../../data/modules.json';
+
+const { modules, categories, count } = data;
+---
+
+<Base title="Modules — doze registry">
+	<section class="mx-auto max-w-5xl px-5 py-12">
+		<h1 class="text-2xl font-bold tracking-tight">Modules <span class="text-zinc-400 font-normal">({count})</span></h1>
+		<p class="mt-1 text-zinc-600">Signed engine modules for doze. Click one for usage, versions and config.</p>
+
+		<div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+			<div id="filters" class="flex flex-wrap gap-2 text-sm">
+				<button data-cat="all" class="cat-btn rounded-full border border-brand bg-brand text-white px-3 py-1">All</button>
+				{categories.map((c) => (
+					<button data-cat={c} class="cat-btn rounded-full border border-zinc-200 px-3 py-1 capitalize hover:border-brand">{c}</button>
+				))}
+			</div>
+			<input id="search" type="search" placeholder="Search…" class="w-56 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:border-brand" />
+		</div>
+
+		<div id="grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			{modules.map((mod) => <ModuleCard mod={mod} />)}
+		</div>
+		<p id="empty" class="mt-8 text-center text-sm text-zinc-400 hidden">No modules match.</p>
+	</section>
+</Base>
+
+<script>
+	const search = document.getElementById('search');
+	const cards = [...document.querySelectorAll('.module-card')];
+	const catBtns = [...document.querySelectorAll('.cat-btn')];
+	const empty = document.getElementById('empty');
+	let cat = 'all';
+	function apply() {
+		const q = (search?.value || '').trim().toLowerCase();
+		let shown = 0;
+		for (const card of cards) {
+			const show = (cat === 'all' || card.dataset.category === cat) && (!q || (card.dataset.name || '').includes(q));
+			card.classList.toggle('hidden', !show);
+			if (show) shown++;
+		}
+		empty?.classList.toggle('hidden', shown > 0);
+	}
+	search?.addEventListener('input', apply);
+	for (const btn of catBtns) {
+		btn.addEventListener('click', () => {
+			cat = btn.dataset.cat;
+			for (const b of catBtns) {
+				const active = b === btn;
+				b.classList.toggle('bg-brand', active);
+				b.classList.toggle('text-white', active);
+				b.classList.toggle('border-brand', active);
+				b.classList.toggle('border-zinc-200', !active);
+			}
+			apply();
+		});
+	}
+</script>

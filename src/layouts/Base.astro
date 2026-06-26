@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+const { title = 'doze registry', description = 'Signed engine modules for doze — real local databases & AWS services, no Docker.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="icon" href="/favicon.svg" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+	</head>
+	<body class="min-h-screen flex flex-col bg-paper text-ink antialiased">
+		<header class="border-b border-zinc-200/70 bg-white/70 backdrop-blur sticky top-0 z-10">
+			<div class="mx-auto max-w-5xl px-5 h-14 flex items-center justify-between">
+				<a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+					<span class="grid place-items-center w-6 h-6 rounded-md bg-brand text-white text-sm">d</span>
+					doze <span class="text-zinc-400 font-normal">registry</span>
+				</a>
+				<nav class="flex items-center gap-5 text-sm text-zinc-600">
+					<a href="/registry/" class="hover:text-ink">Modules</a>
+					<a href="https://github.com/doze-dev/doze" class="hover:text-ink">GitHub</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="flex-1">
+			<slot />
+		</main>
+
+		<footer class="border-t border-zinc-200/70 mt-16">
+			<div class="mx-auto max-w-5xl px-5 py-8 text-sm text-zinc-500 flex flex-wrap gap-x-6 gap-y-2 justify-between">
+				<span>Every module is ed25519-signed by its publisher and pinned on first use.</span>
+				<span><a class="hover:text-ink" href="https://github.com/doze-dev/doze-registry">Publish a module →</a></span>
+			</div>
+		</footer>
+	</body>
+</html>

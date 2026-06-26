@@ -1,0 +1,36 @@
+title: PostgreSQL
+tagline: Real local Postgres, declared not scripted.
+category: database
+engine: postgres
+description: >
+  A real PostgreSQL server per instance — no Docker. Declare databases, roles,
+  schemas, extensions and grants in HCL and doze converges them, creating what's
+  new, updating what changed, and dropping what you removed. Boots on first
+  connect, reaps when idle.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/postgres
+source: https://github.com/doze-dev/doze-modules
+example: |
+  postgres "app" {
+    version = 18
+    owner   = "app"
+
+    role "app" {
+      password         = "app"
+      connection_limit = 20
+    }
+
+    extension "pgvector" {}
+  }
+options:
+  - name: version
+    desc: Engine major to run — 14, 15, 16, 17, or 18.
+  - name: owner
+    desc: Owner role for the default database.
+  - name: role
+    desc: A login/role with password, grants, connection limit.
+  - name: database
+    desc: An additional database to create.
+  - name: schema
+    desc: A schema within a database.
+  - name: extension
+    desc: A Postgres extension to install (pgvector, postgis, …).

@@ -1,0 +1,11 @@
+---
+const { code } = Astro.props;
+---
+
+<div class="relative mt-2 group">
+	<pre class="overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-950 text-zinc-100 p-4 text-sm leading-relaxed"><code>{code}</code></pre>
+	<button
+		data-copy={code}
+		class="absolute top-2 right-2 rounded-md bg-white/10 hover:bg-white/20 text-zinc-200 text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition"
+	>copy</button>
+</div>

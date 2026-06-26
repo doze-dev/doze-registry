@@ -1,0 +1,23 @@
+title: Valkey
+tagline: In-memory cache, Redis-compatible.
+category: cache
+engine: valkey
+description: >
+  A local Valkey server — the open-source Redis fork. Speaks the Redis protocol,
+  so any redis client works. Set a memory ceiling and an eviction policy and use
+  it as a cache; doze boots it on first connect and reaps it when idle.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/valkey
+source: https://github.com/doze-dev/doze-modules
+example: |
+  valkey "cache" {
+    version          = 9
+    maxmemory        = 256
+    maxmemory_policy = "allkeys-lru"
+  }
+options:
+  - name: version
+    desc: Engine major to run — 8 or 9.
+  - name: maxmemory
+    desc: Memory ceiling in MB before eviction kicks in.
+  - name: maxmemory_policy
+    desc: Eviction policy (allkeys-lru, volatile-ttl, …).

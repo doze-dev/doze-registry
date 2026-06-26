@@ -1,0 +1,30 @@
+title: SQS
+tagline: Local SQS queues with DLQ + redrive.
+category: queue
+engine: sqs
+description: >
+  SQS-compatible message queues built into doze — declare queues, visibility
+  timeouts, and dead-letter redrive policies, then use any AWS SDK against the
+  instance endpoint. Ground-up implementation: no LocalStack, instant boot.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/sqs
+source: https://github.com/doze-dev/doze-modules
+exampleLabel: jobs
+example: |
+  sqs "jobs" {
+    queue "emails" {
+      visibility_timeout = "30s"
+    }
+    queue "emails-dlq" {}
+
+    redrive "emails" {
+      dead_letter   = "emails-dlq"
+      max_receives  = 5
+    }
+  }
+options:
+  - name: queue
+    desc: A queue to create.
+  - name: visibility_timeout
+    desc: How long a received message stays hidden.
+  - name: redrive
+    desc: Dead-letter policy moving failed messages to a DLQ.
