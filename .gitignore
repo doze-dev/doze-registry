@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.wrangler/
+.DS_Store
+
+# Publisher secret keys — NEVER commit. Keep in a vault / CI secret.
+*.secret.key

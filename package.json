@@ -1,0 +1,21 @@
+{
+  "name": "doze-registry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Signed module registry for doze, served at doze.nerdmenot.in/registry",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "validate:remote": "node scripts/validate.mjs --remote",
+    "build": "node scripts/build.mjs",
+    "keygen": "node scripts/keygen.mjs",
+    "sign": "node scripts/sign.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=${CLOUDFLARE_PROJECT:-doze}"
+  },
+  "dependencies": {
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

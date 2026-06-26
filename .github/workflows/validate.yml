@@ -1,0 +1,18 @@
+name: validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      # Structure + every artifact's ed25519 signature against its namespace key.
+      - run: bun run validate
+      # On PRs, also confirm each archive is reachable and its SHA256 matches.
+      - if: github.event_name == 'pull_request'
+        run: bun run validate:remote
