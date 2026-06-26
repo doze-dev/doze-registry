@@ -1,6 +1,6 @@
 // sign — add (or refresh) a signed artifact entry in a module's index.yaml.
 //
-//   DOZE_SIGNING_KEY="$(cat nerdmenot.secret.key)" \
+//   DOZE_SIGNING_KEY="$(cat doze.secret.key)" \
 //     bun scripts/sign.mjs <namespace>/<name> <version> <triple> <url> <archive>
 //
 // <archive> is a local path to the .tar.gz that <url> will serve (its SHA256 is

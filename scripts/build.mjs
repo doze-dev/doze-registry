@@ -71,9 +71,9 @@ function browsePage(cat) {
 table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.4rem .6rem;border-bottom:1px solid #ddd}
 code{background:#f4f4f5;padding:.1rem .3rem;border-radius:4px}</style>
 <h1>doze module registry</h1>
-<p>Signed engine modules for <a href="https://github.com/nerdmenot/doze">doze</a>.
+<p>Signed engine modules for <a href="https://github.com/doze-dev/doze">doze</a>.
 Use one as <code>modules { &lt;type&gt; { source = "ns/name" } }</code>, or rely on the
-default <code>nerdmenot/&lt;type&gt;</code>. Every artifact is ed25519-signed by its
+default <code>doze/&lt;type&gt;</code>. Every artifact is ed25519-signed by its
 namespace's publisher key (pinned on first use).</p>
 <table><tr><th>source</th><th>versions</th><th>platforms</th><th>manifest</th></tr>
 ${rows.join('\n') || '<tr><td colspan="4">no modules yet</td></tr>'}

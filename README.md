@@ -47,11 +47,11 @@ engines:
 ## How doze consumes it
 
 A doze engine type resolves to a registry **source** `<namespace>/<name>`. The default
-is `nerdmenot/<type>`; override per type in a `modules {}` block:
+is `doze/<type>`; override per type in a `modules {}` block:
 
 ```hcl
 modules {
-  postgres { source = "nerdmenot/postgres", version = "16" }
+  postgres { source = "doze/postgres", version = "16" }
   cache    { source = "acme/valkey" }          # a third-party publisher
 }
 ```
