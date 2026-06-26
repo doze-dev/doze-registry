@@ -14,17 +14,24 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
-	<body class="min-h-screen flex flex-col bg-paper text-ink antialiased">
-		<header class="border-b border-zinc-200/70 bg-white/70 backdrop-blur sticky top-0 z-10">
-			<div class="mx-auto max-w-5xl px-5 h-14 flex items-center justify-between">
-				<a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
-					<span class="grid place-items-center w-6 h-6 rounded-md bg-brand text-white text-sm">d</span>
-					doze <span class="text-zinc-400 font-normal">registry</span>
+	<body class="min-h-screen flex flex-col">
+		<header class="sticky top-0 z-30 border-b border-line bg-ink/80 backdrop-blur-md">
+			<div class="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
+				<a href="/" class="group flex items-center gap-2.5">
+					<span class="text-awake text-lg leading-none transition group-hover:text-amber">‚óè</span>
+					<span class="mono text-sm tracking-tight">doze<span class="text-faint">/registry</span></span>
 				</a>
-				<nav class="flex items-center gap-5 text-sm text-zinc-600">
-					<a href="/registry/" class="hover:text-ink">Modules</a>
-					<a href="https://github.com/doze-dev/doze" class="hover:text-ink">GitHub</a>
+				<nav class="flex items-center gap-7 text-sm text-dim">
+					<a href="/registry/" class="hover:text-fg transition">Modules</a>
+					<a href="https://github.com/doze-dev/doze" class="hover:text-fg transition">GitHub</a>
+					<a href="https://github.com/doze-dev/doze-registry" class="mono text-xs px-3 py-1.5 rounded-md border border-line2 text-fg hover:border-amber hover:text-amber transition">Publish</a>
 				</nav>
 			</div>
 		</header>
@@ -33,10 +40,13 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 			<slot />
 		</main>
 
-		<footer class="border-t border-zinc-200/70 mt-16">
-			<div class="mx-auto max-w-5xl px-5 py-8 text-sm text-zinc-500 flex flex-wrap gap-x-6 gap-y-2 justify-between">
-				<span>Every module is ed25519-signed by its publisher and pinned on first use.</span>
-				<span><a class="hover:text-ink" href="https://github.com/doze-dev/doze-registry">Publish a module ‚Üí</a></span>
+		<footer class="border-t border-line mt-24">
+			<div class="mx-auto max-w-6xl px-6 py-10 flex flex-wrap items-center gap-x-8 gap-y-3 justify-between text-sm text-faint">
+				<span class="flex items-center gap-2">
+					<span class="text-awake">‚óè</span>
+					Every module is ed25519-signed and pinned on first use.
+				</span>
+				<span class="mono text-xs">doze.nerdmenot.in</span>
 			</div>
 		</footer>
 	</body>

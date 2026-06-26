@@ -52,7 +52,7 @@ for (const ns of dirs('registry')) {
 			engine: meta.engine || name,
 			engineVersions: await engineVersions(meta.engine || name),
 			example: meta.example || `${name} "${meta.exampleLabel || name}" {}`,
-			options: meta.options || [],
+			config: meta.config || {},
 			homepage: meta.homepage || '',
 			sourceRepo: meta.source || '',
 			platforms: [...triples].sort(),

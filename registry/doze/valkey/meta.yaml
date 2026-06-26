@@ -8,16 +8,19 @@ description: >
   it as a cache; doze boots it on first connect and reaps it when idle.
 homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/valkey
 source: https://github.com/doze-dev/doze-modules
+exampleLabel: cache
 example: |
   valkey "cache" {
     version          = 9
-    maxmemory        = 256
+    maxmemory        = "256mb"
     maxmemory_policy = "allkeys-lru"
   }
-options:
-  - name: version
-    desc: Engine major to run — 8 or 9.
-  - name: maxmemory
-    desc: Memory ceiling in MB before eviction kicks in.
-  - name: maxmemory_policy
-    desc: Eviction policy (allkeys-lru, volatile-ttl, …).
+config:
+  arguments:
+    - { name: version, type: number, required: true, desc: "Engine major to run — 8 or 9." }
+    - { name: maxmemory, type: string, desc: "Memory ceiling before eviction, e.g. \"256mb\"." }
+    - { name: maxmemory_policy, type: string, default: "noeviction", desc: "Eviction policy (allkeys-lru, volatile-ttl, …)." }
+    - { name: appendonly, type: bool, default: "false", desc: "Enable the append-only file for durability." }
+    - { name: password, type: string, desc: "requirepass auth password." }
+    - { name: save, type: string, desc: "RDB snapshot schedule, e.g. \"900 1 300 10\" (empty disables)." }
+    - { name: settings, type: map(string), desc: "Arbitrary valkey.conf directives, applied verbatim." }

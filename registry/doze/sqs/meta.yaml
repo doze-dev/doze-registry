@@ -3,8 +3,8 @@ tagline: Local SQS queues with DLQ + redrive.
 category: queue
 engine: sqs
 description: >
-  SQS-compatible message queues built into doze — declare queues, visibility
-  timeouts, and dead-letter redrive policies, then use any AWS SDK against the
+  SQS-compatible message queues built into doze — declare queues, FIFO, visibility
+  timeouts, retention and dead-letter redrive, then use any AWS SDK against the
   instance endpoint. Ground-up implementation: no LocalStack, instant boot.
 homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/sqs
 source: https://github.com/doze-dev/doze-modules
@@ -17,14 +17,26 @@ example: |
     queue "emails-dlq" {}
 
     redrive "emails" {
-      dead_letter   = "emails-dlq"
-      max_receives  = 5
+      dead_letter       = "emails-dlq"
+      max_receive_count = 5
     }
   }
-options:
-  - name: queue
-    desc: A queue to create.
-  - name: visibility_timeout
-    desc: How long a received message stays hidden.
-  - name: redrive
-    desc: Dead-letter policy moving failed messages to a DLQ.
+config:
+  blocks:
+    - name: queue
+      label: name
+      desc: "A queue to create on boot."
+      arguments:
+        - { name: fifo, type: bool, default: "false", desc: "Make it a FIFO (.fifo) queue." }
+        - { name: content_based_dedup, type: bool, default: "false", desc: "FIFO content-based deduplication." }
+        - { name: visibility_timeout, type: string, default: "30s", desc: "How long a received message stays hidden." }
+        - { name: delay, type: string, default: "0s", desc: "Delivery delay for new messages." }
+        - { name: retention, type: string, default: "4d", desc: "How long messages are retained." }
+        - { name: wait_time, type: string, default: "0s", desc: "Default long-poll wait time." }
+        - { name: max_message_size, type: number, default: "262144", desc: "Max message size in bytes." }
+    - name: redrive
+      label: queue
+      desc: "A dead-letter redrive policy for a queue."
+      arguments:
+        - { name: dead_letter, type: string, required: true, desc: "The queue failed messages move to." }
+        - { name: max_receive_count, type: number, required: true, desc: "Receives before a message is dead-lettered." }

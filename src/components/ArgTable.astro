@@ -1,0 +1,29 @@
+---
+const { args } = Astro.props;
+---
+
+<div class="overflow-x-auto">
+	<table class="w-full text-sm border-collapse">
+		<thead>
+			<tr class="t-label border-b border-line">
+				<th class="text-left font-normal py-2 pr-5">Name</th>
+				<th class="text-left font-normal py-2 pr-5">Type</th>
+				<th class="text-left font-normal py-2 pr-5">Default</th>
+				<th class="text-left font-normal py-2">Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			{args.map((a) => (
+				<tr class="border-b border-line/60 align-top">
+					<td class="py-2.5 pr-5 whitespace-nowrap">
+						<span class="mono text-fg">{a.name}</span>
+						{a.required && <sup class="ml-1 mono text-[9px] text-rose tracking-wide">REQ</sup>}
+					</td>
+					<td class="py-2.5 pr-5 mono text-xs text-amber whitespace-nowrap">{a.type || 'string'}</td>
+					<td class="py-2.5 pr-5 mono text-xs text-faint whitespace-nowrap">{a.default ?? '—'}</td>
+					<td class="py-2.5 text-dim leading-snug">{a.desc}</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+</div>

@@ -7,24 +7,25 @@ const { modules, categories, count } = data;
 ---
 
 <Base title="Modules — doze registry">
-	<section class="mx-auto max-w-5xl px-5 py-12">
-		<h1 class="text-2xl font-bold tracking-tight">Modules <span class="text-zinc-400 font-normal">({count})</span></h1>
-		<p class="mt-1 text-zinc-600">Signed engine modules for doze. Click one for usage, versions and config.</p>
+	<section class="mx-auto max-w-6xl px-6 py-14">
+		<p class="t-eyebrow">Browse</p>
+		<h1 class="t-h1 mt-3">Modules <span class="mono text-faint text-base">({count})</span></h1>
+		<p class="mt-2 text-dim">Signed engine modules for doze. Open one for usage, engine versions and full config.</p>
 
-		<div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-			<div id="filters" class="flex flex-wrap gap-2 text-sm">
-				<button data-cat="all" class="cat-btn rounded-full border border-brand bg-brand text-white px-3 py-1">All</button>
+		<div class="mt-7 flex flex-wrap items-center justify-between gap-4">
+			<div id="filters" class="flex flex-wrap gap-2 mono text-xs">
+				<button data-cat="all" class="cat-btn rounded-full border border-amber bg-amber/10 text-amber px-3.5 py-1.5">all</button>
 				{categories.map((c) => (
-					<button data-cat={c} class="cat-btn rounded-full border border-zinc-200 px-3 py-1 capitalize hover:border-brand">{c}</button>
+					<button data-cat={c} class="cat-btn rounded-full border border-line2 text-dim px-3.5 py-1.5 hover:border-faint hover:text-fg transition">{c}</button>
 				))}
 			</div>
-			<input id="search" type="search" placeholder="Search…" class="w-56 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:border-brand" />
+			<input id="search" type="search" placeholder="Search…" class="w-60 rounded-lg border border-line2 bg-raise px-3.5 py-2 text-sm mono placeholder:text-faint focus:outline-none focus:border-amber transition" />
 		</div>
 
-		<div id="grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-			{modules.map((mod) => <ModuleCard mod={mod} />)}
+		<div id="grid" class="mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+			{modules.map((mod, i) => <ModuleCard mod={mod} index={i} />)}
 		</div>
-		<p id="empty" class="mt-8 text-center text-sm text-zinc-400 hidden">No modules match.</p>
+		<p id="empty" class="mt-10 text-center text-sm text-faint hidden mono">no modules match.</p>
 	</section>
 </Base>
 
@@ -49,11 +50,12 @@ const { modules, categories, count } = data;
 		btn.addEventListener('click', () => {
 			cat = btn.dataset.cat;
 			for (const b of catBtns) {
-				const active = b === btn;
-				b.classList.toggle('bg-brand', active);
-				b.classList.toggle('text-white', active);
-				b.classList.toggle('border-brand', active);
-				b.classList.toggle('border-zinc-200', !active);
+				const on = b === btn;
+				b.classList.toggle('border-amber', on);
+				b.classList.toggle('bg-amber/10', on);
+				b.classList.toggle('text-amber', on);
+				b.classList.toggle('border-line2', !on);
+				b.classList.toggle('text-dim', !on);
 			}
 			apply();
 		});

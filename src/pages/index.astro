@@ -4,50 +4,71 @@ import ModuleCard from '../components/ModuleCard.astro';
 import data from '../data/modules.json';
 
 const { modules, categories, count } = data;
+const engineCount = new Set(modules.flatMap((m) => m.engineVersions || [])).size;
 ---
 
 <Base>
 	<!-- Hero -->
-	<section class="border-b border-zinc-200/70 bg-gradient-to-b from-white to-paper">
-		<div class="mx-auto max-w-5xl px-5 py-16 text-center">
-			<p class="text-sm font-medium text-brand">The doze module registry</p>
-			<h1 class="mt-3 text-4xl sm:text-5xl font-bold tracking-tight">
-				Real local services, one <code class="text-brand">version =</code> away.
-			</h1>
-			<p class="mt-4 max-w-2xl mx-auto text-lg text-zinc-600">
-				Signed engine modules for <a class="text-brand hover:underline" href="https://github.com/doze-dev/doze">doze</a> —
-				Postgres, Valkey, DocumentDB, S3/SQS/SNS and more. No Docker. doze fetches the
-				plugin, verifies its signature, and boots a real backend on first connect.
-			</p>
-			<div class="mt-6 inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 py-2 font-mono text-sm text-zinc-700">
-				<span class="text-zinc-400">$</span> postgres "db" &#123; version = 18 &#125;
+	<section class="mx-auto max-w-6xl px-6 pt-20 pb-14">
+		<p class="t-eyebrow">The doze module registry</p>
+		<h1 class="t-display mt-5 max-w-4xl">
+			Real local services,<br />
+			<span class="italic text-dim">one</span>
+			<span class="mono text-amber not-italic" style="font-size:0.62em; vertical-align:0.14em;">version =</span>
+			<span class="italic text-dim">away.</span>
+		</h1>
+		<p class="mt-6 max-w-xl text-lg text-dim">
+			Signed engine modules for
+			<a class="text-fg underline decoration-line2 hover:decoration-amber" href="https://github.com/doze-dev/doze">doze</a>.
+			No Docker. doze fetches the plugin, verifies its signature, and boots a real
+			backend on first connect — Postgres, Valkey, DocumentDB, S3/SQS/SNS and more.
+		</p>
+
+		<div class="mt-8 panel max-w-xl overflow-hidden">
+			<div class="flex items-center gap-1.5 px-4 h-9 border-b border-line">
+				<span class="w-2.5 h-2.5 rounded-full bg-line2"></span>
+				<span class="w-2.5 h-2.5 rounded-full bg-line2"></span>
+				<span class="w-2.5 h-2.5 rounded-full bg-line2"></span>
+				<span class="mono text-xs text-faint ml-2">doze.hcl</span>
 			</div>
+			<pre class="mono text-sm leading-relaxed p-4 overflow-x-auto"><span class="text-amber">postgres</span> <span class="text-awake">"db"</span> &#123;
+  version = <span class="text-amber2">18</span>
+&#125;</pre>
+		</div>
+
+		<div class="mt-8 flex flex-wrap gap-x-8 gap-y-2 t-label">
+			<span><span class="text-fg mono text-sm">{count}</span> modules</span>
+			<span><span class="text-fg mono text-sm">{engineCount}</span> engine versions</span>
+			<span><span class="text-awake mono text-sm">●</span> all signed</span>
 		</div>
 	</section>
 
 	<!-- Modules -->
-	<section id="modules" class="mx-auto max-w-5xl px-5 py-12">
-		<div class="flex flex-wrap items-center justify-between gap-3">
-			<h2 class="text-xl font-semibold tracking-tight">Modules <span class="text-zinc-400 font-normal">({count})</span></h2>
+	<section id="modules" class="mx-auto max-w-6xl px-6 pb-8 border-t border-line pt-12">
+		<div class="flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<h2 class="t-h1">Modules</h2>
+				<p class="mt-1 text-sm text-dim">Pick an engine. Declare it. <span class="mono text-faint">doze up</span>.</p>
+			</div>
 			<input
 				id="search"
 				type="search"
 				placeholder="Search modules…"
-				class="w-56 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm focus:outline-none focus:border-brand"
+				class="w-60 rounded-lg border border-line2 bg-raise px-3.5 py-2 text-sm mono placeholder:text-faint focus:outline-none focus:border-amber transition"
 			/>
 		</div>
 
-		<div id="filters" class="mt-4 flex flex-wrap gap-2 text-sm">
-			<button data-cat="all" class="cat-btn rounded-full border border-brand bg-brand text-white px-3 py-1">All</button>
+		<div id="filters" class="mt-6 flex flex-wrap gap-2 mono text-xs">
+			<button data-cat="all" class="cat-btn rounded-full border border-amber bg-amber/10 text-amber px-3.5 py-1.5">all</button>
 			{categories.map((c) => (
-				<button data-cat={c} class="cat-btn rounded-full border border-zinc-200 px-3 py-1 capitalize hover:border-brand">{c}</button>
+				<button data-cat={c} class="cat-btn rounded-full border border-line2 text-dim px-3.5 py-1.5 hover:border-faint hover:text-fg transition">{c}</button>
 			))}
 		</div>
 
-		<div id="grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-			{modules.map((mod) => <ModuleCard mod={mod} />)}
+		<div id="grid" class="mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+			{modules.map((mod, i) => <ModuleCard mod={mod} index={i} />)}
 		</div>
-		<p id="empty" class="mt-8 text-center text-sm text-zinc-400 hidden">No modules match.</p>
+		<p id="empty" class="mt-10 text-center text-sm text-faint hidden mono">no modules match.</p>
 	</section>
 </Base>
 
@@ -57,30 +78,27 @@ const { modules, categories, count } = data;
 	const catBtns = [...document.querySelectorAll('.cat-btn')];
 	const empty = document.getElementById('empty');
 	let cat = 'all';
-
 	function apply() {
 		const q = (search?.value || '').trim().toLowerCase();
 		let shown = 0;
 		for (const card of cards) {
-			const okCat = cat === 'all' || card.dataset.category === cat;
-			const okText = !q || (card.dataset.name || '').includes(q);
-			const show = okCat && okText;
+			const show = (cat === 'all' || card.dataset.category === cat) && (!q || (card.dataset.name || '').includes(q));
 			card.classList.toggle('hidden', !show);
 			if (show) shown++;
 		}
 		empty?.classList.toggle('hidden', shown > 0);
 	}
-
 	search?.addEventListener('input', apply);
 	for (const btn of catBtns) {
 		btn.addEventListener('click', () => {
 			cat = btn.dataset.cat;
 			for (const b of catBtns) {
-				const active = b === btn;
-				b.classList.toggle('bg-brand', active);
-				b.classList.toggle('text-white', active);
-				b.classList.toggle('border-brand', active);
-				b.classList.toggle('border-zinc-200', !active);
+				const on = b === btn;
+				b.classList.toggle('border-amber', on);
+				b.classList.toggle('bg-amber/10', on);
+				b.classList.toggle('text-amber', on);
+				b.classList.toggle('border-line2', !on);
+				b.classList.toggle('text-dim', !on);
 			}
 			apply();
 		});

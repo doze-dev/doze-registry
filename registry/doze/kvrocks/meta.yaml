@@ -5,13 +5,29 @@ engine: kvrocks
 description: >
   A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk.
   Durable and memory-frugal — a drop-in Redis API when you want persistence
-  without holding the dataset in RAM.
+  without holding the dataset in RAM. Supports namespaces with per-namespace
+  tokens.
 homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kvrocks
 source: https://github.com/doze-dev/doze-modules
+exampleLabel: store
 example: |
   kvrocks "store" {
     version = 2
+    workers = 4
+
+    namespace "tenant_a" {
+      token = "secret-token"
+    }
   }
-options:
-  - name: version
-    desc: Engine major to run — 2.
+config:
+  arguments:
+    - { name: version, type: number, required: true, desc: "Engine major to run — 2." }
+    - { name: workers, type: number, desc: "Number of worker threads." }
+    - { name: password, type: string, desc: "requirepass auth password (the admin namespace)." }
+    - { name: settings, type: map(string), desc: "Arbitrary kvrocks.conf directives, applied verbatim." }
+  blocks:
+    - name: namespace
+      label: name
+      desc: "A logical namespace with its own access token."
+      arguments:
+        - { name: token, type: string, required: true, desc: "Auth token scoped to this namespace." }

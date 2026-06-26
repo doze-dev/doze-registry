@@ -1,0 +1,28 @@
+---
+import ArgTable from './ArgTable.astro';
+const { config } = Astro.props;
+const args = config?.arguments || [];
+const blocks = config?.blocks || [];
+const empty = args.length === 0 && blocks.length === 0;
+---
+
+{config?.note && <p class="text-dim text-sm leading-relaxed">{config.note}</p>}
+
+{args.length > 0 && <ArgTable args={args} />}
+
+{blocks.map((b) => (
+	<div class="mt-9">
+		<div class="flex items-baseline gap-3 flex-wrap">
+			<code class="mono text-sm text-fg">
+				{b.name} <span class="text-amber">"{b.label ? `<${b.label}>` : ''}"</span> &#123; &#125;
+			</code>
+			<span class="t-label">nested block{b.repeatable === false ? '' : ' · repeatable'}</span>
+		</div>
+		{b.desc && <p class="mt-1.5 text-sm text-dim">{b.desc}</p>}
+		{b.arguments && b.arguments.length > 0
+			? <div class="mt-3"><ArgTable args={b.arguments} /></div>
+			: <p class="mt-2 mono text-xs text-faint">— no arguments, just the label</p>}
+	</div>
+))}
+
+{empty && !config?.note && <p class="text-dim text-sm">No configuration — declare the block and connect.</p>}

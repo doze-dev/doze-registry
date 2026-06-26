@@ -21,10 +21,19 @@ example: |
       raw      = true
     }
   }
-options:
-  - name: topic
-    desc: A topic to create.
-  - name: subscribe
-    desc: A subscription fanning a topic out to an endpoint.
-  - name: sqs
-    desc: The sqs instance this topic delivers into.
+config:
+  arguments:
+    - { name: sqs, type: string, desc: "The sqs instance (by reference) this topic delivers into." }
+  blocks:
+    - name: topic
+      label: name
+      desc: "A topic to create on boot."
+      arguments: []
+    - name: subscribe
+      label: topic
+      desc: "A subscription fanning a topic out to an endpoint."
+      arguments:
+        - { name: protocol, type: string, required: true, desc: "Delivery protocol (sqs, …)." }
+        - { name: endpoint, type: string, required: true, desc: "Target endpoint — e.g. an SQS queue name." }
+        - { name: raw, type: bool, default: "false", desc: "Raw message delivery (no SNS envelope)." }
+        - { name: filter, type: "map(list(string))", desc: "Subscription filter policy by attribute." }
