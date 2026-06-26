@@ -88,7 +88,6 @@ function browsePage(cat) {
 			rows.push(
 				`<tr><td><code>${ns}/${name}</code></td>` +
 					`<td>${engine}</td>` +
-					`<td class="muted">${info.plugin.join(', ') || '—'}</td>` +
 					`<td class="muted">${info.platforms.length}</td>` +
 					`<td><a href="/registry/${ns}/${name}/index.yaml">index.yaml</a></td></tr>`,
 			);
@@ -109,15 +108,14 @@ function browsePage(cat) {
 <p>Signed engine modules for <a href="https://github.com/doze-dev/doze">doze</a>.
 Every artifact is ed25519-signed by its namespace's publisher key (pinned on first use).</p>
 <div class="note">
-  <strong>Engine version vs plugin version.</strong> The <em>engine version</em> is the
-  database you pick — set it with <code>version =</code> in the block, e.g.
-  <code>postgres "db" { version = 18 }</code>. The <em>plugin version</em> is doze's
-  adapter binary (rarely pinned). Use a module via the default source
-  <code>doze/&lt;type&gt;</code>, or override with
+  <strong>Pick a version with <code>version =</code>.</strong> The engine version is the
+  database you run — e.g. <code>postgres "db" { version = 18 }</code>. doze fetches it,
+  verifies it, and pins it in <code>doze.lock</code> for you. Use a module via the
+  default source <code>doze/&lt;type&gt;</code>, or point at another publisher with
   <code>modules { &lt;type&gt; { source = "ns/name" } }</code>.
 </div>
 <table>
-  <tr><th>source</th><th>engine versions (pick with <code>version =</code>)</th><th>plugin</th><th>platforms</th><th>manifest</th></tr>
-${rows.join('\n') || '<tr><td colspan="5">no modules yet</td></tr>'}
+  <tr><th>source</th><th>engine versions (pick with <code>version =</code>)</th><th>platforms</th><th>manifest</th></tr>
+${rows.join('\n') || '<tr><td colspan="4">no modules yet</td></tr>'}
 </table>`;
 }

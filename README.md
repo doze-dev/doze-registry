@@ -47,12 +47,14 @@ engines:
 ## How doze consumes it
 
 A doze engine type resolves to a registry **source** `<namespace>/<name>`. The default
-is `doze/<type>`; override per type in a `modules {}` block:
+is `doze/<type>`; override per type in a `modules {}` block (only the source — there is
+no plugin-version knob; the engine version is the block's own `version =`):
 
 ```hcl
+postgres "db" { version = 18 }                 # the ENGINE version you pick
+
 modules {
-  postgres { source = "doze/postgres", version = "16" }
-  cache    { source = "acme/valkey" }          # a third-party publisher
+  cache { source = "acme/valkey" }             # use a third-party publisher's plugin
 }
 ```
 
@@ -61,10 +63,11 @@ For each source doze:
 1. fetches `<base>/<namespace>/keys.json` and **pins the publisher key on first use**
    (trust-on-first-use, recorded in `doze.lock` under `keys:`). A later key change is a
    hard error until the pin is cleared — a compromised registry can't silently swap keys.
-2. fetches `<base>/<namespace>/<name>/index.yaml`, resolves the version, downloads the
-   archive, and accepts it only if its SHA256 matches **and** carries a valid signature
-   from the pinned key. Unsigned ⇒ rejected.
-3. pins the resolved version + checksum in `doze.lock` (reproducible installs).
+2. fetches `<base>/<namespace>/<name>/index.yaml`, downloads the current plugin build,
+   and accepts it only if its SHA256 matches **and** carries a valid signature from the
+   pinned key. Unsigned ⇒ rejected.
+3. pins the plugin build by **content hash** in `doze.lock` (reproducible installs) — the
+   developer never names a plugin version.
 
 `<base>` defaults to `https://doze.nerdmenot.in/registry`; override with
 `DOZE_MODULES_MIRROR` (a URL or `file://` path) or a `modules { mirror = … }`.
