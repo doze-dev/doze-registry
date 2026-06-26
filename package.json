@@ -10,6 +10,7 @@
     "build": "node scripts/build.mjs",
     "keygen": "node scripts/keygen.mjs",
     "sign": "node scripts/sign.mjs",
+    "publish": "node scripts/publish.mjs",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=${CLOUDFLARE_PROJECT:-doze}"
   },
   "dependencies": {

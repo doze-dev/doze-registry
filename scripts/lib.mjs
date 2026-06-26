@@ -42,6 +42,14 @@ export function privateKeyObject(pkcs8B64) {
 	return createPrivateKey({ key: Buffer.from(pkcs8B64, 'base64'), format: 'der', type: 'pkcs8' });
 }
 
+// publicFromPrivate derives the raw 32-byte base64 public key from a PKCS8 secret,
+// so a publisher can confirm its secret matches the namespace's committed keys.json
+// before signing (signing with the wrong key would just fail validation later).
+export function publicFromPrivate(pkcs8B64) {
+	const pub = createPublicKey(privateKeyObject(pkcs8B64));
+	return pub.export({ format: 'der', type: 'spki' }).subarray(-RAW_PUBKEY_BYTES).toString('base64');
+}
+
 // sha256Hex returns the lowercase-hex SHA256 of a buffer — the value that is signed.
 export function sha256Hex(buf) {
 	return createHash('sha256').update(buf).digest('hex');

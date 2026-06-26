@@ -1,0 +1,23 @@
+engines:
+  documentdb:
+    versions:
+      "0": 0.1.0
+      default: 0.1.0
+    artifacts:
+      0.1.0:
+        aarch64-apple-darwin:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-apple-darwin.tar.gz
+          sha256: 57eade31988bae37994bbb5c57b463957008ba7450f0e5425723d6ed9010f88f
+          sig: RhXLpcFYwlmvbC8AMLD701A2ihq/RGjFi0e5FP1lDc6tSx60N/VbStnfnLkVkiAG+FsV0H8KoEkOkthawqX7Dg==
+        aarch64-unknown-linux-gnu:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
+          sha256: ca07b58a9ff98e44327aea8e40b5f30675d0daa7cf86aef92498c7d5b4f73625
+          sig: UiFWmejTDnUe8vFgJ+NsJoFoItIAt53Gr8h51PPTDDT7f+U52eXWevZqGIguHYSqft5qrd5Q7sGBSpSYf7NSCQ==
+        x86_64-apple-darwin:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-apple-darwin.tar.gz
+          sha256: dc57645f62328b1d854c2f97bf09c9d4c82cf9d578641df121c6e5a18c6191c8
+          sig: fMDvVkgg5sTSnzp5jTOZBmOfRMGjr4Q3kGrphZjb/igl2SVRe88CPbwTJPebcvN6NVp+sMluRa+Q3ZK7uyqOAw==
+        x86_64-unknown-linux-gnu:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
+          sha256: 107e2b55f52177fc392225984cc6627dc6c9a58b9848f33000884e7c167c4e86
+          sig: o57EGBjFGKt+gqy0YHIqik5+qUEPPk0CPK8fXdqxYnYwuVk3Mfa76+hqjC3/wOTaHVwgO9DRS0doGA+qJvgmBA==
