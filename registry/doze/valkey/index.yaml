@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: a5405a8e9fbfa8e65babd9df817efedfe041cab718357ba695fb9f91aec234d3
-          sig: UVLRSmZNPfvNajyoiplLrD8PSXqCdY1nlOsrb8m8qcAzXjIVGrbqLDeyEqfRI0tptD0u88cmlW9RNxteXyECBg==
+          sha256: dc30a2af64cd03226aef22d8bb10228889ffa1dfcec7473c6d6da8dcd3fd65e9
+          sig: /VbAEQGcBfm1JbHP8ud5HVvkCO79eAHcgVpZL7514GvGjwhia8j1Qkifpeox+IaeQbOlwzrjx/6VETiP2rk4CA==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: caa7fdc252466ac8b1d5af32b359e38dbe67703dd58ac318534c0e45d43073a2
-          sig: ZG/GHMT+LGNRuC8LWV3f69G1o3ZDy3nRyTaPYoTjGbsnN+6hrUMush8vVq63QGNgjJWjel9DTlIX1ifDxyeYDQ==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: bfd1c44fba575a782058cf6a1eb46f543d47eb3ff2951e72ded8f65d4a3ee651
-          sig: 0jGpn76txHorpJVJA7pz0gaLZwqAcgPLyIz+/d9rt+qa8cAHhAm1vL0eNOfo9Kteq2kbC1vMTrSgq5UECzR5Dg==
+          sha256: 9be7f485d89d15f4deff6842a6c68128c4b405ae330a2e3dc47d723f76db63cc
+          sig: 4nwJhSkB2au7F0mxH3jNGj0SUoxwpVTCVpoN2Ukm1H3sadLfoE3qFvkTr8Lo2oKOYU9GeL/oBtEDyjLqDiobBA==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 3f7c5c0e05b40b6ad10f03c89e6b2296b6aca07959a93c79574b2a82666d8938
-          sig: 9jwBUtDno+wcUn1t0Lkr7jfOHVxnrMFydUJzcDznNMPycnfXasomvse80t6tAHZEH5bCFJQ54CfTZciSbpFvBg==
+          sha256: e11983275d70282251a36afa9430f7a0aba7e9c162fbf88b3e1d2c4fee7a9401
+          sig: LXgPgJdPWte4Oy+czm+MQauOO/MF6TEo1bwlwtUNMfcdfRqQgmsEJSi12yASD9rB6AiY6EtbJs/aByomOdOPAw==

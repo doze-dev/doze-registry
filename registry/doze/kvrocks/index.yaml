@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 933f07d79210c07f7370dca64802169e0519bcd46d97eb7740889d4de24d20d0
-          sig: G/GRmos8m5oH0vsdiYckhm/GsXcqYoykMeWM0/tBSTr2Gx2+2h5MKfOKmxL9dJOo/ssinofGlWVqByesIWvcCA==
+          sha256: c73ff898e703ef3cb7db62da2658d36aca787e1492e72489fc7cbe8befa71a22
+          sig: K39e/H79U8ZDOn1Q8C7xr5LMItxv0s3nsxGRRfzcx1DA6L0Gl0W81Oa4jcVNSlTdgQv/JDdQiUmVhJr/zWe+Cg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 2e2c7f44d40631a177dae18f22180215adcf443bbcb156c6f24a50f2916ee7f8
-          sig: xJ+QggiPXxpRUr3Lr08v/jsjXdjvyUe7ZhcpzvivYSqc8gW5UUFPf15W7zf2Fal7Qhbnt4OQ2aAr57S4LYSxBg==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: ddfc03d8ef6d81e4f59e7812f879c63c54f8a6cc5e15fdaeca0dc7ac1b4fedae
-          sig: /t1K9JIg3KjUJAiadaest0XrOHYlJ3bNF63A0w4D9ZhLd2kIBjcATGwEDWoIaLVncOrtLBCyOW++W3MiDEKCAw==
+          sha256: f430dbeaee114ebb1c65afb061c5317b847e1eaf2d29910bf177d625a97aedee
+          sig: Xm19JG28jon5Sj5adOOvK1WtaJIXrIk3FYW6i8FQtnXrhGFkXU+EIwnRjzwVNTII5V39dm4hF5CgM81B8PyhCA==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: ba5d8fbe0ab4b269274d4a827966461107cba87862632d0a09a68ed21bd5735f
-          sig: CFB95+lOuBpo9f+6OfqMe6i94HEPfHPbsw2uOTdb6EcsPUXKVpvmiRuISgfINZywYYA8Qz9r6ks9PacoiIMkBQ==
+          sha256: 8fccf8405a906d57d7d4d9e427813ef17fc80baaa6ee9538a39ad085965add95
+          sig: 7dgbwA3Qh07qbI49WEc6pNLKJtASlIWuTeADuv77hCwc8v4tlQTd4vrDMcFJb1Fc8KYiGG1QTt1c7a1b80+EBA==

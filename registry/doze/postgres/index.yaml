@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 2b20e35d3c6bc3e97cb93ff1e95502ee84b86b4287dea649cbb7b1a08c9816c0
-          sig: 10+tJ+Hby/hxxe0ML+WxKKOa+usEF3BQ1LHXsW7prX086vKq+i0cjjurIsxghq1/X+/u52hI8XZ0OcBA5NsHCg==
+          sha256: 8b674abc9e86cd81f96c28d427e85ae34995b890af6f9f8cc2d89068c2f35214
+          sig: P0Sq663IDw1q4hLpDg6nULMEvBYss33DbCMCNEIq/VOS/hH+Q7n6ymtUr6BTl85kHRLt8B+bVHA+GP9Z4cgYDw==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: bf6a5b3adda252b2d58c09936b9911b7d6ef7b6ef5d1148a8293ac01699cb4a1
-          sig: 0E7w9CbI108hQo9fC0QR32TnUKTWvgjfTZf8FQDXcxARUc5mcdfGBJcKZZDcLAIqEvY15BDNlGF6HCCKhDbkAw==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: d7f86cbdc540b93b1883da2c6b8da4b755dbff6966f5845fcb44118be720930a
-          sig: GXBL1jQaNoDiYh5/nq/+x1B7q0O9u82YauC6v1tYLO/II0qMcUjDtNoM3K8fgzYmGOs6N42oEglvK/XatES1Aw==
+          sha256: 92eb04c32d7a1ecfcbd7a908fd5a4386176e97a21ae8eb921addb03773434290
+          sig: yo3xG8DPRDehpjkynyjkRLwtzN96ZsOGU3sYrYbPHOdzspXGelvX/REuWQD8aST8hvjn1zIiwzN+3auMhBTBAA==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 46fa434a35f2b23cdcaca0aa98940a8cfcd42e81b0778ada5c7e757cfb4a2a61
-          sig: KDL0ZbaATmEwrJ2X8igSnZO8z1f/zoFi3RD/XnOnUbAmtDK9pCQGZPKmHLRdBuLKMdyHOlI1YlFscRsJk6yWAg==
+          sha256: d6839fb5e12a167d068f5e94ac99349d122180cf39a4331e20e2015fe0409e08
+          sig: L4nvDPQdcknsKifizl8zUtnYHBcxL/mzAMSp5Igvc4k7bzCdVcfDKHvtnRew4da2jGmZRtZ6aisBeuRDKJ/ICg==

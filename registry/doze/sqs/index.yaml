@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: b5f8791212b79ff8776f170e70bf094a13e82a78f21a79c0f5192244e21a675e
-          sig: YZRGdl/UQxgq6USE0r2wGLllfFhwFF8BlT12JqYXeID/h0vVT9ZjCvvpRRiB20DJ6cRcvZgi9aITAe75r5nCAw==
+          sha256: da917fd060cb6b0c7c909c71d03d5893c49b8ac80b8f02a0b9a1c100225edddf
+          sig: uqvy3gCzQWGMQJ5CewkGJPxADqas7R6Kjuf0yAIujf/afMOXi7U8mxO1TPEAkqb33GQvjKGDk4FCpC2buNXHCg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 8ee9d6c15102e250a06926fc84348213eb34d22cfcdcd11540309a19c3c6ffb2
-          sig: lpIFRHjzUo5us4jH/vFr/bx/FVs2TlTEvo9JpYsqydCSQrpOj2tdfSPXANwN4XOWexNz+nnAs/7qL5WjicZpCg==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: f449745d83d01216c731495a0bd85ef3510cdc2e54a904ce299473166389feff
-          sig: 24zaSKltrcKNyzMFcsXpq4h7ZJIktNwvhWC8Tfe51jI76FbVz3PTizwyn5BmxBIaUMXsjO40mzFJkdNYzAcMCg==
+          sha256: d6085a68586522a6e510e38b19caaab4c8eecc048837d4fd4e6a859afc80b4da
+          sig: dARPHf7VmmS7dm5a3VZkNMOamVQv67kTKlIEMjhsoVMgiXl4ZRrl6uAf+s+/F42sD+gTja71ouixoHMhkDRWCQ==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: b0b524c081b868b0f320e3287ed215b255367927b7bb3d1ef2084458100b2204
-          sig: Tu5ZlmkvJs+I9vBXuvappwT505FfAdFUtcjhQcf9PgH9OmLBEwNEU3AMOXI7xz2XuQTzzktvVCfRMyxiukruDw==
+          sha256: 35181976c0641993413326d7f4d5c0fe049790d97dacae3437a7e7467b918c99
+          sig: ePZqkKXJEjvvrs+1HJivEYuvwJKZkzXnlqbHNENCrrQqDgtqVLU8ODRTtv5YVYnxqiuLUtyEJmWdGZOckXqECA==

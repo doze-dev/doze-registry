@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 50e461e2e19e93bd37e94319d6dec7bf37fdabf770c04c3dd742afbe072b9928
-          sig: fvjAz2/6NOZrdHPoA/U40B0UkGpNnUAE+R5dE1f2TSPy4YX1/SuosiS4IUFkVNiebPz4X02JLSIh3jvwr988BQ==
+          sha256: e59046edd2b418d947454ca8c9786f68ca6ce8ee8a9caea62103899adfa0b840
+          sig: lsVl5tXW1YM6uapXi32Wik2Os8XX5P0LkGacdTgVc+QFiPx7pzMhVfvIQZ0dKwBvGKQo7LB2pCiED24Bep8IDg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 69dc29d3c23c7406865bc0abd41c418800f7ce099a0c8dca9e8ae96136ac7ff0
-          sig: SSxvheuXOLun1aF22Uz0U+HU4lwSqTDH63ejtOZijg61HLSTTQQqIh350K6ZYJXFaEvsH3PolRvK4uRPZr+pAw==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: 8944357b046aad78581470985f271b0c074a13f911b13abeacb667b68cb8108b
-          sig: bEI5ornZZ5/zGXoARTPTiuShHT8kT6nacfcB3FLKFoP60c/F/PiCKYK0UWvgt95xv2a6lzoaNWVQFTJZLMCOCQ==
+          sha256: 35bf8d9ad97eebe56fdb3f3aa6fbbea3ad71f8432fb04c8febb5b1fadae94f1a
+          sig: UiHRaYclT+pAeBEc1jWX6duA6EEMSyKbMWeVI+4/bourVOZNYNqQu/7zB3kBGGVWdj4bQC0IxJGChTjHjUWdBA==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 73781cffe2399a313514b160082423f97db1128ce36cee6d313d94cbbdcd23b0
-          sig: e/cA1TMwG2UeXIHCBohjRSd2U/b9YBunGeOTOKB693jz36L/zXN1HtSL4uPdaQw4XC9kQ2wjYJPdG6ra1fP0AA==
+          sha256: 5c0fd1d9a2ab9369255bb4ee2db918e0cd14064e3fb5981210614e8993332fb6
+          sig: 1ewcYh9ki2Y0cyZph8gpMD0Ngc7+FfumEgnz7m4X2HzeJbecJxG5WFmZpI3WQJV1wTS1b15VLDK+o/bwmOsvAA==

@@ -7,17 +7,13 @@ engines:
       0.1.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 1bf93349a0027230d814bff70a80be2602f86a47206f673da5c2b6f4dcac7423
-          sig: fDpp0PhEYPil6hKs4pmCEBczUjzsRltbiDALUou+Vt9xldzjtUyyPbBW2jgTXElOHu14zSB9/rlQ4cSRg9S3Cg==
+          sha256: 7af4cbc3ab44bcc0f88d8cf69bf3e5d9d77acb21be6a5b91a5e308339c3d97f1
+          sig: kL1TcqSe/HlYja3Ocl4XgBCk3N9mpsXgyHz9AUq3CYOwXiPzrR6c5t7abPrpUu+8oT8PDmfKXA17LQK5bzUNAQ==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: d1b771bdca4254bc90d54c44ed61b4f222b331a327c7b3aa33dc7224e521a593
-          sig: C7ekWo+QhZlVgekiauFtnqQ0oH9qRgBATFqV9MDWLu0Cjy2yOgIJinbh6mMS/8rn88oVWLXpIiCM1uzOh8yxAg==
-        x86_64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-apple-darwin.tar.gz
-          sha256: 6651f0cb974bfe05017e629caeb96bbb278e870d438df631964758a760329480
-          sig: /HIslYhh1TWDuqZElSUhw5pQbDdirzxw1PCxjtdCu3OYy1pOKNgU3ugtpBFQL7jSP7MbETsf9WcF2wQpZIGIBw==
+          sha256: 8c657f1e1ad1d28d4ec7e391b4327e922d9e5b2caecf6f3fc7c33614c9dd76cf
+          sig: 2aot03QLgc89yGkvYYw+TYng+cE802E1oah91bLqc97w2mTttiCJYEmV/jB545N2fUi44ndhiNIEWnLJ8mDAAw==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 4b0e43a438f18500d235f707d6eeaf1711c693c06d8683f3ac3fef382c9a1b08
-          sig: j9FRhPf6T3mxfjkWaMmMT39xmmmVrSH/0yEwWg6eoTXOLkioSofb3XtoLY6p2J84XBNoi0zC/4bVEb5AnPrIDw==
+          sha256: 71af5888f931c82d0fb382c67eba052f1923241a1cee9f361bf1a4f2b4a6b948
+          sig: N5jfJXZoBfiAdffK9Ncycwr35+ML1T282IV9bg/o5XujwsNwSYwQ8IGpXNgnijOt3GvDoM5N0Mt/ymSEzm5WCg==
