@@ -13,7 +13,17 @@ example: |
   sqs "jobs" {
     queue "emails" {
       visibility_timeout = "30s"
+      retention          = "4d"
+      wait_time          = "10s"
+      max_message_size   = 262144
     }
+
+    queue "orders" {
+      fifo                = true
+      content_based_dedup = true
+      delay               = "5s"
+    }
+
     queue "emails-dlq" {}
 
     redrive "emails" {

@@ -12,7 +12,12 @@ exampleLabel: media
 example: |
   s3 "media" {
     bucket "uploads" {}
+
     bucket "thumbs" {
+      versioning = true
+    }
+
+    bucket "backups" {
       versioning = true
     }
   }

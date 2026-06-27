@@ -12,16 +12,47 @@ source: https://github.com/doze-dev/doze-modules
 exampleLabel: app
 example: |
   postgres "app" {
-    version = 18
-    owner   = "app"
+    version          = 18
+    owner            = "app"
+    encoding         = "UTF8"
+    locale           = "en_US.UTF-8"
+    connection_limit = 50
+    comment          = "primary app database"
+    shared_buffers   = "256MB"
+    max_connections  = 100
+
+    settings = {
+      log_min_duration_statement = "200ms"
+    }
 
     role "app" {
       password         = "app"
+      login            = true
+      createdb         = true
       connection_limit = 20
+      member_of        = ["readers"]
     }
 
-    schema "analytics" { owner = "app" }
+    role "readers" {
+      login = false
+    }
+
+    schema "analytics" {
+      owner = "app"
+    }
+
     extension "pgvector" {}
+
+    extension "postgis" {
+      version = "3.4"
+      cascade = true
+    }
+
+    grant "app" {
+      privileges = ["ALL"]
+      schema     = "analytics"
+      objects    = "tables"
+    }
   }
 config:
   arguments:

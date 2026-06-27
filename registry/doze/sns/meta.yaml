@@ -14,11 +14,21 @@ example: |
     sqs = sqs.jobs.name
 
     topic "signups" {}
+    topic "orders" {}
 
     subscribe "signups" {
       protocol = "sqs"
       endpoint = "emails"
       raw      = true
+    }
+
+    subscribe "orders" {
+      protocol = "sqs"
+      endpoint = "orders"
+
+      filter = {
+        event_type = ["created", "paid"]
+      }
     }
   }
 config:
