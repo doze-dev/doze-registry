@@ -70,7 +70,7 @@ const platformLabel = (t) =>
 				<div class="lg:sticky lg:top-24 space-y-6">
 					<div class="panel p-4">
 						<h3 class="t-label mb-3">Add to your stack</h3>
-						<CodeBlock code={`${mod.name} "${(mod.example.match(/"([^"]+)"/) || [null, mod.name])[1]}" {${versions ? `\n  version = ${versions[versions.length - 1]}\n` : ''}}`} />
+						<CodeBlock code={`${mod.name} "${(mod.example.match(/"([^"]+)"/) || [null, mod.name])[1]}" {${versions ? `\n  version = ${versions[versions.length - 1]}` : ''}${mod.port ? `\n  port    = ${mod.port}` : ''}\n}`} />
 						<p class="mt-3 mono text-xs text-faint leading-relaxed">
 							default source <span class="text-dim">{mod.source}</span> — no install step; doze fetches it on <span class="text-dim">doze up</span>.
 						</p>

@@ -11,6 +11,7 @@ source: https://github.com/doze-dev/doze-modules
 exampleLabel: events
 example: |
   sns "events" {
+    port = 9911
     sqs = sqs.jobs.name
 
     topic "signups" {}

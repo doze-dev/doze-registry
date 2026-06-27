@@ -11,7 +11,9 @@ homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/documentdb
 source: https://github.com/doze-dev/doze-modules
 exampleLabel: docs
 example: |
-  documentdb "docs" {}
+  documentdb "docs" {
+    port = 27017
+  }
 config:
   arguments: []
   note: >

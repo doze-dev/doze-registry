@@ -11,6 +11,7 @@ source: https://github.com/doze-dev/doze-modules
 exampleLabel: jobs
 example: |
   sqs "jobs" {
+    port = 9324
     queue "emails" {
       visibility_timeout = "30s"
       retention          = "4d"

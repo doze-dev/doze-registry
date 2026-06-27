@@ -13,6 +13,7 @@ exampleLabel: store
 example: |
   kvrocks "store" {
     version  = 2
+    port     = 6380
     workers  = 4
     password = "admin"
 

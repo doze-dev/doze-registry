@@ -12,6 +12,7 @@ exampleLabel: cache
 example: |
   valkey "cache" {
     version          = 9
+    port             = 6379
     maxmemory        = "256mb"
     maxmemory_policy = "allkeys-lru"
     appendonly       = true

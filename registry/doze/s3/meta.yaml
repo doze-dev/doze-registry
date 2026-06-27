@@ -11,6 +11,7 @@ source: https://github.com/doze-dev/doze-modules
 exampleLabel: media
 example: |
   s3 "media" {
+    port = 9000
     bucket "uploads" {}
 
     bucket "thumbs" {

@@ -8,6 +8,9 @@ import { publicKeyObject, verify, loadKeys, parseYaml, eachArtifact } from './li
 
 const BINARIES_ROOT = 'https://github.com/doze-dev/doze-binaries/releases/download';
 const OFFICIAL = new Set(['doze']);
+// Conventional client-facing port per engine, used in the generated usage snippets
+// (doze requires an explicit port = NNNN on every proxied instance).
+const PORTS = { postgres: 5432, valkey: 6379, kvrocks: 6380, documentdb: 27017, s3: 9000, sqs: 9324, sns: 9911 };
 
 // 1. Validate signatures (fails the build on a bad/unsigned artifact).
 execFileSync(process.execPath, ['scripts/validate.mjs'], { stdio: 'inherit' });
@@ -52,6 +55,7 @@ for (const ns of dirs('registry')) {
 			engine: meta.engine || name,
 			engineVersions: await engineVersions(meta.engine || name),
 			example: meta.example || `${name} "${meta.exampleLabel || name}" {}`,
+			port: PORTS[meta.engine || name] || null,
 			config: meta.config || {},
 			homepage: meta.homepage || '',
 			sourceRepo: meta.source || '',
