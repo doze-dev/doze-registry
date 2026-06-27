@@ -2,6 +2,8 @@ title: Valkey
 tagline: In-memory cache, Redis-compatible.
 category: cache
 engine: valkey
+port: 6379
+versions: ["8", "9"]
 description: >
   A local Valkey server — the open-source Redis fork. Speaks the Redis protocol,
   so any redis client works. Set a memory ceiling and an eviction policy and use

@@ -2,6 +2,7 @@ title: SQS
 tagline: Local SQS queues with DLQ + redrive.
 category: queue
 engine: sqs
+port: 9324
 description: >
   SQS-compatible message queues built into doze — declare queues, FIFO, visibility
   timeouts, retention and dead-letter redrive, then use any AWS SDK against the

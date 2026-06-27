@@ -2,6 +2,7 @@ title: SNS
 tagline: Local SNS topics + subscriptions.
 category: queue
 engine: sns
+port: 9911
 description: >
   SNS-compatible pub/sub built into doze — declare topics and subscriptions and
   fan out to SQS queues, with filter policies and raw delivery. Wires to an sqs

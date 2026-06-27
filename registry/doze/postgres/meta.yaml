@@ -2,6 +2,8 @@ title: PostgreSQL
 tagline: Real local Postgres, declared not scripted.
 category: database
 engine: postgres
+port: 5432
+versions: ["14", "15", "16", "17", "18"]
 description: >
   A real PostgreSQL server per instance — no Docker. Declare roles, schemas,
   extensions and grants in HCL and doze converges them: creating what's new,

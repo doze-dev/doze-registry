@@ -2,6 +2,8 @@ title: Kvrocks
 tagline: Redis API on RocksDB — durable, low-RAM.
 category: database
 engine: kvrocks
+port: 6380
+versions: ["2"]
 description: >
   A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk.
   Durable and memory-frugal — a drop-in Redis API when you want persistence

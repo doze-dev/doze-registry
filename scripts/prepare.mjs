@@ -1,16 +1,14 @@
 // prepare — gate on a clean validate, copy the machine discovery files into
 // public/registry/ (served verbatim — this is what doze fetches), and assemble
-// src/data/modules.json for the Astro site (metadata + engine versions + signature
-// status). Run before `astro build`/`astro dev`.
+// both the machine catalog (public/registry/index.json — the discovery API the
+// CLI reads) and src/data/modules.json for the Astro site. All module facts are
+// author-declared in each meta.yaml; nothing is inferred from doze-binaries, so
+// third-party modules work the same as official ones. Run before astro build/dev.
 import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { publicKeyObject, verify, loadKeys, parseYaml, eachArtifact } from './lib.mjs';
 
-const BINARIES_ROOT = 'https://github.com/doze-dev/doze-binaries/releases/download';
 const OFFICIAL = new Set(['doze']);
-// Conventional client-facing port per engine, used in the generated usage snippets
-// (doze requires an explicit port = NNNN on every proxied instance).
-const PORTS = { postgres: 5432, valkey: 6379, kvrocks: 6380, documentdb: 27017, s3: 9000, sqs: 9324, sns: 9911 };
 
 // 1. Validate signatures (fails the build on a bad/unsigned artifact).
 execFileSync(process.execPath, ['scripts/validate.mjs'], { stdio: 'inherit' });
@@ -43,6 +41,7 @@ for (const ns of dirs('registry')) {
 			triples.add(triple);
 			if (!art?.sig || !verify(pub, String(art.sha256).toLowerCase(), art.sig)) signed = false;
 		}
+		const versions = (meta.versions || []).map(String);
 		const mod = {
 			ns,
 			name,
@@ -53,9 +52,10 @@ for (const ns of dirs('registry')) {
 			description: meta.description || '',
 			category: meta.category || 'other',
 			engine: meta.engine || name,
-			engineVersions: await engineVersions(meta.engine || name),
+			engineVersions: versions.length ? versions : null,
 			example: meta.example || `${name} "${meta.exampleLabel || name}" {}`,
-			port: PORTS[meta.engine || name] || null,
+			label: meta.exampleLabel || name,
+			port: meta.port || null,
 			config: meta.config || {},
 			homepage: meta.homepage || '',
 			sourceRepo: meta.source || '',
@@ -64,7 +64,18 @@ for (const ns of dirs('registry')) {
 			indexUrl: `/registry/${ns}/${name}/index.yaml`,
 		};
 		modules.push(mod);
-		catalog.namespaces[ns].modules[name] = { source: mod.source, engineVersions: mod.engineVersions, platforms: mod.platforms };
+		// The catalog (discovery API) carries just enough for `doze modules search`
+		// and the init wizard to list + scaffold without a code change per module.
+		catalog.namespaces[ns].modules[name] = {
+			source: mod.source,
+			tagline: mod.tagline,
+			category: mod.category,
+			engineVersions: mod.engineVersions,
+			port: mod.port,
+			label: mod.label,
+			platforms: mod.platforms,
+			signed: mod.signed,
+		};
 	}
 }
 
@@ -89,20 +100,5 @@ function loadMeta(path) {
 	} catch (e) {
 		console.warn(`! ${path}: ${e.message}`);
 		return {};
-	}
-}
-
-// engineVersions returns the selectable backing-engine majors for a module from
-// doze-binaries; null for the built-in (versionless) AWS services.
-async function engineVersions(engine) {
-	try {
-		const res = await fetch(`${BINARIES_ROOT}/${engine}/index.yaml`);
-		if (!res.ok) return null;
-		const man = parseYaml(await res.text());
-		const vers = man?.engines?.[engine]?.versions ?? {};
-		const majors = Object.keys(vers).filter((k) => k !== 'default');
-		return majors.length ? majors.sort((a, b) => Number(a) - Number(b)) : null;
-	} catch {
-		return null;
 	}
 }

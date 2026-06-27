@@ -2,6 +2,7 @@ title: DocumentDB
 tagline: MongoDB-compatible, on Postgres.
 category: database
 engine: documentdb
+port: 27017
 description: >
   A local MongoDB-compatible database — FerretDB v2 speaking the Mongo wire
   protocol over a Postgres engine with the DocumentDB extension stack. Point any

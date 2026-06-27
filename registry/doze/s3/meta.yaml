@@ -2,6 +2,7 @@ title: S3
 tagline: Local S3 buckets, no LocalStack.
 category: storage
 engine: s3
+port: 9000
 description: >
   S3-compatible object storage built into doze — declare buckets (with
   versioning) and point any AWS SDK or the aws CLI at the instance endpoint. No
