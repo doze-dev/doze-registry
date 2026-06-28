@@ -1,19 +1,19 @@
 engines:
   sns:
     versions:
-      "0": 0.1.2
-      default: 0.1.2
+      "0": 0.1.3
+      default: 0.1.3
     artifacts:
-      0.1.2:
+      0.1.3:
         aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.2-aarch64-apple-darwin.tar.gz
-          sha256: 86c49bc175754e3ee27c76a7f7ad9c9d56489c258029d737968f8939a16905bf
-          sig: LQcAfT3c2vOCE5O4/+8cxEI2UwMmhAXKWy7/vpy45w5JeGaMO3gd0eJXt1LyQTKgKzoGl23r0nsH1kgFYR2UCw==
+          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.3-aarch64-apple-darwin.tar.gz
+          sha256: f399dc107887aea4e86606474daa5abc8f4f003d8f6572447b8940cf9f9fc9e4
+          sig: AZwhIjYOVz2dBZVHQ7qpYABQFhZrgYXy2+N41klCX0R04lTN+q+EHI1GkR04mRlgxo0CJanIM4A5y2pSyrT5BQ==
         aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.2-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 32c3b6c0d9391f8f9d0d8e7e5e502ed062cd2c93c331c1717e7e9b4b69d76c07
-          sig: qVPd7kvWGzhnBJl+g7ksr+Rudlvcxg4SRqC8coaa0rqFZszIHLasdpCfiSeHzh2PS3u+Rvm7T5XXsjbKC+6mCw==
+          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.3-aarch64-unknown-linux-gnu.tar.gz
+          sha256: d0dccd9da0cb0a706e8fe4b8cc666035efe3918b14fefc498028bf60390eded4
+          sig: I5K1hG9VdZP+6X6ENiCocOaVUFrVwca5YMrr1/DDMfjPUjZr2HZ+waXCgwsNm7lfATU8yQzjqaT0C2qFLIpFCw==
         x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.2-x86_64-unknown-linux-gnu.tar.gz
-          sha256: ed861f8c1899b1b836fb727ecb833c0810a339909e706bdd012d44b797de79af
-          sig: +56oZ0PyFv042pwvfdo3ouN+o+gLeqTtNECFhlYnCDn4sYe5vZiS9cPpnGBPHyC1sbhhtlF6HnYFHwNTKxD8BA==
+          url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.1.3-x86_64-unknown-linux-gnu.tar.gz
+          sha256: bc8cb5bace6f8a88ddf94085d312ce1d71869399ca6805ddfc38b6341891dc23
+          sig: HvrsCO4lFJnaiJaJrWz7z2xwf4azPhETCwuF4ae2OS0Vhknj/IbB4Wp132RGEH1lBolYmwZ2yHIscFAIXLOJBQ==

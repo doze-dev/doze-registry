@@ -1,19 +1,19 @@
 engines:
   s3:
     versions:
-      "0": 0.1.2
-      default: 0.1.2
+      "0": 0.1.3
+      default: 0.1.3
     artifacts:
-      0.1.2:
+      0.1.3:
         aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-aarch64-apple-darwin.tar.gz
-          sha256: 166f8b233f2a3fc658ecbfecba8990dcd99e280896393e2c4de83d5bac89e3bf
-          sig: PA3+XjMNCbMQw0AO/SQbXyc2gk1yrjinMfrIt3tf3oHVWQpv9Tmkkef6iBi8vW9jL63EWF4Tg5UX9/AUWrL5AA==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-aarch64-apple-darwin.tar.gz
+          sha256: 8ffeb0cf21a2b0922332d2e181054ca3fbcc64b3019119ccf36da44b4f377346
+          sig: yZK6QQUcrGr4E1bLGo9bE6SNtWPn4QQ6uVd2ro28kSn0W3chhvM2BHK+5zrvdUucxsmjQsdS+1ArJsoPtkWiBg==
         aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 06f45322c9e78de344fede68624df43f5c2a6cfdd40c97c2177e874e99103772
-          sig: XrSHCJwRPdFvdmqWnizB06u+xieh3WMwPE8fgX2r31sz3Cii5WFtwjn8psziNL3I/KN9vZbK9ZVM/6O8rnRZAA==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-aarch64-unknown-linux-gnu.tar.gz
+          sha256: b23dd85d71054e2dfca3686d177ccd699078be739f73eb518fe7507460b92f0a
+          sig: Z2GDPOPiu0c7gi1hlVzoxq52NQyHAZ1WZQPXhJ0KWEXMejI8h12oyr1RFKzhSl9q0FiykIbCxJ23gUg/qnHOCw==
         x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 89019b6eafaf98c528f44bf7ba39026aeef5bf0c6613848d51682aa54cf3009b
-          sig: jiY9IPN11ebOB42zVl7i2Eoc+sgdR/e5qRQzGUda6gpS/3Ng+zrVoIYMDokAuX0P8snHxKjDpR9xjyZofigwBg==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-x86_64-unknown-linux-gnu.tar.gz
+          sha256: 46bf1f344c1ebdcda5fe28d2854adc5d8b6a6d42731e1d47f713d0c83628092d
+          sig: 8FkVBM1I9WbopJi9zwF0L9Zwbrcohjrl/NMauNxqIsZNE/7CZ1S67khp0Gks9WNE7FZQv2x44TKUv7enrfRyBg==
