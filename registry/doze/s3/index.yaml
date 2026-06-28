@@ -1,32 +1,19 @@
 engines:
   s3:
     versions:
-      "0": 0.1.1
-      default: 0.1.1
+      "0": 0.1.2
+      default: 0.1.2
     artifacts:
-      0.1.0:
+      0.1.2:
         aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: 6c81c6e5df2a6ed294ae302a83648b4d12a6aed645b4ed9973f775bc7bdd5c73
-          sig: hFJ42hXd7KFrSIlR4JZT+CtT4ib0F2z0IUEdGmCw8+fFWCB3uAPcFsgQTGRTQSXqO0Aa9+wf6R/A09YuKfEuDQ==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-aarch64-apple-darwin.tar.gz
+          sha256: 166f8b233f2a3fc658ecbfecba8990dcd99e280896393e2c4de83d5bac89e3bf
+          sig: PA3+XjMNCbMQw0AO/SQbXyc2gk1yrjinMfrIt3tf3oHVWQpv9Tmkkef6iBi8vW9jL63EWF4Tg5UX9/AUWrL5AA==
         aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 6a988ce0762a6b37c171652063978720cec96ca797632ff36c497d5dc8f17506
-          sig: xc+Zk37Nf5sMb32X0c/8scDTclan9PLLRLUYEX0MYo9rBN/LoT/YEc+m7kLXfkpKdg3WqpetRVPF61XevfyZBA==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-aarch64-unknown-linux-gnu.tar.gz
+          sha256: 06f45322c9e78de344fede68624df43f5c2a6cfdd40c97c2177e874e99103772
+          sig: XrSHCJwRPdFvdmqWnizB06u+xieh3WMwPE8fgX2r31sz3Cii5WFtwjn8psziNL3I/KN9vZbK9ZVM/6O8rnRZAA==
         x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: be74563b174d3f78df6cebbfe1816c5d852d71cdf6574e92d2e54f11aa092aca
-          sig: P8Yr7vtbdh/4GO0hpWyz89fDbVLyhems1ZCTAxrHoDlQf9jey3M7yhu9T2x3H/28pax0P9UCiyJRtYn1l8SCDQ==
-      0.1.1:
-        aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.1-aarch64-apple-darwin.tar.gz
-          sha256: 9fa0eaba8010312e6560b2f8a16754fe60ab25661e2fc28d947ce40e789de020
-          sig: 3CZhAM/wkTGA/MmvC7Nzfa7w2opSpkPox05kLgLJyusVnPprUI/9yOIYDuaNdCjNV0FO9q2QRWjCBFpYAJaYAg==
-        aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.1-aarch64-unknown-linux-gnu.tar.gz
-          sha256: d6ebf79e39e6ae1fac4b84df5247210b5d10e20d033457211e4a1b5d1ed48a9f
-          sig: ERsaY5kLI10hRwnlXpQHRYa/1P59gc7P4KuYFkKghNWzSmVp6UTIOUW32+SIU7fLSlkKTkNl0HzCammtPILYCg==
-        x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.1-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 6753f516c0c386fb9bdae214214761c08d1ddaebc4e88303bebcac676aad3e33
-          sig: ETkHEDDTBrg1wDLEzqTlaqZdis7KgrRBr8mI0A4Jiy6ZxlucQDHYkfpfmOn0mvDAlxfiMSPBa7bE6AFRAtZPDw==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.2-x86_64-unknown-linux-gnu.tar.gz
+          sha256: 89019b6eafaf98c528f44bf7ba39026aeef5bf0c6613848d51682aa54cf3009b
+          sig: jiY9IPN11ebOB42zVl7i2Eoc+sgdR/e5qRQzGUda6gpS/3Ng+zrVoIYMDokAuX0P8snHxKjDpR9xjyZofigwBg==
