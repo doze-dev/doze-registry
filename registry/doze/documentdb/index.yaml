@@ -1,22 +1,9 @@
 engines:
   documentdb:
     versions:
-      "0": 0.1.2
-      default: 0.1.2
+      "0": 0.1.3
+      default: 0.1.3
     artifacts:
-      0.1.1:
-        aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.1-aarch64-apple-darwin.tar.gz
-          sha256: d7c19839398b7a67e724da4ce079bf0b961666f783b27abed93b3331e4c34b61
-          sig: tz1WDdw7olxTJJ4SqKD/tnQKh9WrSQOSH1BlR9LbhmlXp4KM+p4LVwoAiIXU4txMqV1q2daMX6DARb+NQ1h3BA==
-        aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.1-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 05c3b2ba833f66043e785a632e748979f0e1b0bf129e795f66ae4675d88546d2
-          sig: izfjhcg+SejPX1j2bYxKiaEmNe/YXE67zwdeyGesvzXK08K2kIH/G8TUCjTColrorgZ6PNL1xzr0hcwXnhE7AA==
-        x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.1-x86_64-unknown-linux-gnu.tar.gz
-          sha256: ff0f74cd04952dcfb15e014631875769066279ee7742c71f7b69f759103a9ad1
-          sig: 1D4buGxitQh+Cxqy8DyUqk+qerMHvU9FohlMKytC0U/9/oLCRKRO94AjVjj9CAVuBSF8BXp7SQ1M06drPC0JBA==
       0.1.2:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.2-aarch64-apple-darwin.tar.gz
@@ -30,3 +17,16 @@ engines:
           url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.2-x86_64-unknown-linux-gnu.tar.gz
           sha256: 797380fdaf71d2474f01952fd29f6aba8ec8ec555b326736b3a771e3c41bc635
           sig: OWqljv3/tvszftu8FvDwkFMR0cgpOf1B5iTIqXVJUeru9am4uKZ/kByPHFijXMqlV2IYvkajpfJwTMlZ8nrqCA==
+      0.1.3:
+        aarch64-apple-darwin:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.3-aarch64-apple-darwin.tar.gz
+          sha256: ce26e85e5f4b3b273aa0e8bbd9f9b39326c01e7543301a83aa3f29c7ce983802
+          sig: YVRIEVq5JSCmbu6zgxr8PdXIT6FiWn550nQgnXA/t3EaSiiqBSjprMmCi4Bv4qalCkSRXO3mg8QQI8Uv7XirDQ==
+        aarch64-unknown-linux-gnu:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.3-aarch64-unknown-linux-gnu.tar.gz
+          sha256: 157ca39f4d5fe6274bb354df8aa0b6d9d87545550b68d9a1522e60780940e648
+          sig: Db7ePH4TM1H5Uz2L4inZNEDn7L/AtXpk4IVJOUSO85vk6uroDZNNtXnYVt8UvQ1vpED3uHwo8KzEXKN4rAv8AQ==
+        x86_64-unknown-linux-gnu:
+          url: https://github.com/doze-dev/doze-modules/releases/download/documentdb/documentdb-plugin-0.1.3-x86_64-unknown-linux-gnu.tar.gz
+          sha256: efe6a7f0fe70d5176b3d9a85c89f5910717ea3f39048346c02f5908f228a86c5
+          sig: EEprseE4bDrOq4DcK+ZKG2GqSK42HQU3OXsaXar8iA2AayZ95+se04LDwP4wul8L6ty9yF4rfyR6f9giubnhAg==
