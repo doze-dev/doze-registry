@@ -1,19 +1,19 @@
 engines:
   s3:
     versions:
-      "0": 0.1.4
-      default: 0.1.4
+      "0": 0.2.0
+      default: 0.2.0
     artifacts:
-      0.1.4:
+      0.2.0:
         aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-aarch64-apple-darwin.tar.gz
-          sha256: 3f52620401d160e8800340b080b767c400f97361e87adc17054fe65cf2d6d581
-          sig: Hr9ZbswhfVYxLiz/VCIlSUvZJ80PnSyLoZ67B+M+UHtl4vWcs2+S6Eib1F3hO0ja7rRrHMXDubPMcpChEUw4AQ==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.2.0-aarch64-apple-darwin.tar.gz
+          sha256: 610a9fd841140f8147420e414d8530922aba8cd24cdf140dcd9d1d7f18ea017b
+          sig: dwhRB1R2wP2TGeRWDIVwmMvANT7Ymvx374JR/JlJbAvhUZvB1xDCRfqzHhxvAO7xhFAL8BCZhmz+Q3AepqvSAw==
         aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-aarch64-unknown-linux-gnu.tar.gz
-          sha256: c0265d119a81b0f0c54a8819d56a8c0baf38b233636ef97a1cbab665c4e549e4
-          sig: qEk+LJti95f1fWvnCPW9+n9+GTq3pfGIPgx8jnPi7G7oC3bC9gEki/q9sdNgdRYfgFhoLqAOWv8T+ie3WAciCA==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
+          sha256: 9df026d28a2f84201f4b3b2fc78a24652a80431f4e4813d1ba7786a4fe4dad61
+          sig: 1zuinNOFaGgCW2qFMbqZMnlGo9SIzqxq4m51KIGu6d8GnVH9CCVxAB1QFuLOYzOHCOZ6YGPCEnSLqYafAPdQAw==
         x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 8349edf23072323b3e13004f8eaf9cd099faf5da6a82ccc4ed8f26b0bbd5ba16
-          sig: 5585csheCiiA28kjVHLmEuHe8NW5GzmOfhueJRsLJ5VSWAPpzkGMLCRD7B2L6qxxcNV1iIF5EwOKgP6tqnyhDw==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
+          sha256: dca6421435d13808150776bf99d245843c2ab64eeab76a44ae02248e329f5cf6
+          sig: anLj7MCkA7iaO2VyIZ3wQibfBsTZY4MDehYIMbRHbQgZYIlSzOzRGOVInGwYnE2Oij6Oa7IB4G9dn/hYYyFOBA==
