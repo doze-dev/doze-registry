@@ -7,13 +7,13 @@ engines:
       0.2.0:
         aarch64-apple-darwin:
           url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-          sha256: 2df2584d2a894a6b9b7ac6abe681ae346408af6f4e17efbe5b8a9e75fe16358a
-          sig: fU6wrVz5LoSXorSgmJ7jK6cMMjP9CBpB63T38161iz4gDEatGRwTtANN0XQ6jg1r+jz5CyUgKMr5eEW7uZ6HAg==
+          sha256: 603d235aeeb98cdff808d95fd05d23721ed14cd2ca4c7cece7f87705bb09917a
+          sig: dHMgKIxaqeh1sm2II6526DBmItsgC2EbkVUnCSeI+smv8yGbfKBFDhEBQtQ1BdafY96AHj2gj9+9Gn9qNLDqCg==
         aarch64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: f95fe547147516a98ca6fa098604b1d936b9ad48383b007152a0d3c44be846dd
-          sig: ZX7ByarEzqnKfQCGZruALMfApKi/xT4eWyXM8reNBRjPv7soCyM+EnB4GaaZcD2FCHgxKIfL8/KHQbcU+9luBQ==
+          sha256: 68982225b3537041e6af7b300c86fc8349ee33011f2a4fa954b4ba8204bad138
+          sig: DKBdbh7CJOZx3aKa3KHUftS+2gmlvjjvYlcnwNxUifWDp5fuS2KQNdbKueruuDex58owfE2KSWeegf58HA33Dg==
         x86_64-unknown-linux-gnu:
           url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: db95a73c8e5925663b1ae0ef572e14ff1e3cb6f313bec5a7b4ffaf48354a53c3
-          sig: owV39/zI65QfDXf5HOApdpqw1DoP2qLcmbamcrg1X70Ccy8+ZBHXl7u9zuB1ogXAAfr6jqnEZUliEsN5qx++AA==
+          sha256: a6c4f200e385efbea667dd489f806b7d6dd850483f5695f1a219c3dc070e361b
+          sig: IV7RMOj4oABT9UY/nz4bBWL+utTZcTsey6F3gaAPCIWsgP895q7ZO/Y6SOE4c9JO3bmuNHpgwgQ/iwCSD9RODA==
