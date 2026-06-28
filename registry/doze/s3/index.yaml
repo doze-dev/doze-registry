@@ -1,19 +1,19 @@
 engines:
   s3:
     versions:
-      "0": 0.1.3
-      default: 0.1.3
+      "0": 0.1.4
+      default: 0.1.4
     artifacts:
-      0.1.3:
+      0.1.4:
         aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-aarch64-apple-darwin.tar.gz
-          sha256: 8ffeb0cf21a2b0922332d2e181054ca3fbcc64b3019119ccf36da44b4f377346
-          sig: yZK6QQUcrGr4E1bLGo9bE6SNtWPn4QQ6uVd2ro28kSn0W3chhvM2BHK+5zrvdUucxsmjQsdS+1ArJsoPtkWiBg==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-aarch64-apple-darwin.tar.gz
+          sha256: 3f52620401d160e8800340b080b767c400f97361e87adc17054fe65cf2d6d581
+          sig: Hr9ZbswhfVYxLiz/VCIlSUvZJ80PnSyLoZ67B+M+UHtl4vWcs2+S6Eib1F3hO0ja7rRrHMXDubPMcpChEUw4AQ==
         aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-aarch64-unknown-linux-gnu.tar.gz
-          sha256: b23dd85d71054e2dfca3686d177ccd699078be739f73eb518fe7507460b92f0a
-          sig: Z2GDPOPiu0c7gi1hlVzoxq52NQyHAZ1WZQPXhJ0KWEXMejI8h12oyr1RFKzhSl9q0FiykIbCxJ23gUg/qnHOCw==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-aarch64-unknown-linux-gnu.tar.gz
+          sha256: c0265d119a81b0f0c54a8819d56a8c0baf38b233636ef97a1cbab665c4e549e4
+          sig: qEk+LJti95f1fWvnCPW9+n9+GTq3pfGIPgx8jnPi7G7oC3bC9gEki/q9sdNgdRYfgFhoLqAOWv8T+ie3WAciCA==
         x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.3-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 46bf1f344c1ebdcda5fe28d2854adc5d8b6a6d42731e1d47f713d0c83628092d
-          sig: 8FkVBM1I9WbopJi9zwF0L9Zwbrcohjrl/NMauNxqIsZNE/7CZ1S67khp0Gks9WNE7FZQv2x44TKUv7enrfRyBg==
+          url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.1.4-x86_64-unknown-linux-gnu.tar.gz
+          sha256: 8349edf23072323b3e13004f8eaf9cd099faf5da6a82ccc4ed8f26b0bbd5ba16
+          sig: 5585csheCiiA28kjVHLmEuHe8NW5GzmOfhueJRsLJ5VSWAPpzkGMLCRD7B2L6qxxcNV1iIF5EwOKgP6tqnyhDw==
