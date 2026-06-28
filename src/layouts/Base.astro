@@ -10,10 +10,19 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<link rel="icon" href="/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#23242d" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://doze.nerdmenot.in/og.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content="https://doze.nerdmenot.in/og.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -25,7 +34,7 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 		<header class="sticky top-0 z-30 border-b border-line bg-ink/80 backdrop-blur-md">
 			<div class="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
 				<a href="/" class="group flex items-center gap-2.5">
-					<span class="text-awake text-lg leading-none transition group-hover:text-amber">‚óè</span>
+					<img src="/logo-mark.png" alt="doze" class="h-7 w-auto transition group-hover:opacity-80" />
 					<span class="mono text-sm tracking-tight">doze<span class="text-faint">/registry</span></span>
 				</a>
 				<nav class="flex items-center gap-7 text-sm text-dim">
