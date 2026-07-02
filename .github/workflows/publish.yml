@@ -51,7 +51,10 @@ jobs:
           INPUT: '${{ github.event.inputs.modules }}'
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            names=$(echo "$PAYLOAD" | jq -r '.[]' | xargs)
+            # Tolerate both a real JSON array and a stringified one (older
+            # senders used `gh api -f`, which stringifies everything).
+            names=$(echo "$PAYLOAD" | jq -r 'if type == "string" then fromjson else . end | .[]' | xargs)
+            [ -n "$names" ] || { echo "dispatch payload contained no module names"; exit 1; }
           elif [ "${INPUT:-all}" = "all" ] || [ -z "${INPUT:-}" ]; then
             names=$(find registry/doze -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | xargs)
           else
@@ -65,10 +68,10 @@ jobs:
       - name: Sign + publish each module
         env:
           DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
-          VERSIONS: '${{ github.event.client_payload.versions }}'
+          VERSIONS: '${{ toJSON(github.event.client_payload.versions) }}'
         run: |
           for name in ${{ steps.set.outputs.names }}; do
-            expect=$(echo "${VERSIONS:-{}}" | jq -r --arg n "$name" '.[$n] // empty' 2>/dev/null || true)
+            expect=$(echo "${VERSIONS:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
             echo "::group::publish doze/$name ${expect:+(expect $expect)}"
             node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"}
             echo "::endgroup::"
