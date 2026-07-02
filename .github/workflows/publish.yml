@@ -35,7 +35,9 @@ jobs:
           node-version: '20'
 
       # Resolve the module set: the dispatch payload is a JSON array; the manual
-      # input is a space-separated list or "all" (every doze/* module on disk).
+      # input is a space-separated list or "all" (every module DIRECTORY on disk —
+      # not keys.json). Names are space-joined: a multiline value interpolated
+      # into the `for` below is a bash syntax error.
       - name: Resolve module set
         id: set
         env:
@@ -43,15 +45,13 @@ jobs:
           INPUT: '${{ github.event.inputs.modules }}'
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            names=$(echo "$PAYLOAD" | jq -r '.[]')
+            names=$(echo "$PAYLOAD" | jq -r '.[]' | xargs)
           elif [ "${INPUT:-all}" = "all" ] || [ -z "${INPUT:-}" ]; then
-            names=$(ls registry/doze)
+            names=$(find registry/doze -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | xargs)
           else
             names="$INPUT"
           fi
-          echo "names<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$names" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "names=$names" >> "$GITHUB_OUTPUT"
 
       - name: Sign + publish each module
         env:
