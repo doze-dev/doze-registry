@@ -57,14 +57,22 @@ const { title = 'doze registry', description = 'Signed engine modules for doze â
 					<a href="/registry/" class="hover:text-fg transition">Modules</a>
 					<a href="https://github.com/doze-dev/doze" class="hover:text-fg transition">GitHub</a>
 					<a href="https://github.com/doze-dev/doze-registry" class="mono text-xs px-3 py-1.5 rounded-md border border-line2 text-fg hover:border-amber hover:text-amber transition">Publish</a>
-					<button
-						id="theme-toggle"
-						type="button"
-						aria-label="Toggle light/dark theme"
-						class="mono text-base leading-none px-2 py-1.5 rounded-md border border-line2 text-dim hover:border-amber hover:text-amber transition"
+					<div
+						id="theme-seg"
+						role="radiogroup"
+						aria-label="Color theme"
+						class="inline-flex items-center gap-0.5 p-0.5 rounded-lg border border-line2 bg-raise2"
 					>
-						<span class="theme-icon-dark">â˜¾</span><span class="theme-icon-light">â˜€</span>
-					</button>
+						<button type="button" data-pref="auto" role="radio" aria-label="System theme" title="System" class="grid place-items-center w-7 h-6 rounded-md text-faint transition">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6l1 2h2a1 1 0 1 1 0 2H7a1 1 0 1 1 0-2h2l1-2H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2v7h14V7H5Z"/></svg>
+						</button>
+						<button type="button" data-pref="light" role="radio" aria-label="Light theme" title="Light" class="grid place-items-center w-7 h-6 rounded-md text-faint transition">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 17a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1ZM3 11a1 1 0 1 1 0 2H2a1 1 0 1 1 0-2h1Zm19 0a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1ZM5.6 4.2 6.3 5a1 1 0 0 1-1.4 1.4l-.7-.7A1 1 0 0 1 5.6 4.2Zm12.7 12.7.7.7a1 1 0 0 1-1.4 1.4l-.7-.7a1 1 0 0 1 1.4-1.4ZM4.2 18.4l.7-.7A1 1 0 0 1 6.3 19l-.7.7a1 1 0 0 1-1.4-1.3Zm12.7-12.7.7-.7a1 1 0 1 1 1.4 1.4l-.7.7a1 1 0 0 1-1.4-1.4Z"/></svg>
+						</button>
+						<button type="button" data-pref="dark" role="radio" aria-label="Dark theme" title="Dark" class="grid place-items-center w-7 h-6 rounded-md text-faint transition">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12.7 2.4a1 1 0 0 1 .2 1.1 7 7 0 0 0 9.2 9.2 1 1 0 0 1 1.3 1.3A9 9 0 1 1 11.6 2.2a1 1 0 0 1 1.1.2Z"/></svg>
+						</button>
+					</div>
 				</nav>
 			</div>
 		</header>
@@ -83,11 +91,35 @@ const { title = 'doze registry', description = 'Signed engine modules for doze â
 			</div>
 		</footer>
 		<script is:inline>
-			document.getElementById('theme-toggle')?.addEventListener('click', () => {
-				const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-				document.documentElement.dataset.theme = next;
-				localStorage.setItem('starlight-theme', next);
-			});
+			// Three-way theme control, sharing the docs site's storage
+			// ('starlight-theme' = 'light' | 'dark' | '' for system) so flipping
+			// on either half of doze.nerdmenot.in flips both.
+			(() => {
+				const KEY = 'starlight-theme';
+				const seg = document.getElementById('theme-seg');
+				if (!seg) return;
+				const buttons = [...seg.querySelectorAll('button')];
+				const loadPref = () => {
+					const v = localStorage.getItem(KEY);
+					return v === 'light' || v === 'dark' ? v : 'auto';
+				};
+				const systemPref = () =>
+					matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+				const apply = (pref) => {
+					document.documentElement.dataset.theme = pref === 'auto' ? systemPref() : pref;
+					localStorage.setItem(KEY, pref === 'light' || pref === 'dark' ? pref : '');
+					for (const b of buttons) {
+						const on = b.dataset.pref === pref;
+						b.setAttribute('aria-checked', String(on));
+						b.classList.toggle('seg-active', on);
+					}
+				};
+				for (const b of buttons) b.addEventListener('click', () => apply(b.dataset.pref));
+				matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+					if (loadPref() === 'auto') apply('auto');
+				});
+				apply(loadPref());
+			})();
 		</script>
 	</body>
 </html>
