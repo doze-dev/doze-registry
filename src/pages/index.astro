@@ -51,6 +51,33 @@ const engineCount = new Set(modules.flatMap((m) => m.engineVersions || [])).size
 			<span><span class="text-fg mono text-sm">{engineCount}</span> engine versions</span>
 			<span><span class="text-awake mono text-sm">●</span> all signed</span>
 		</div>
+
+		<!-- The module lifecycle, in three beats -->
+		<div class="mt-10 grid gap-4 sm:grid-cols-3 max-w-4xl">
+			<div class="panel p-4">
+				<h3 class="t-label mb-1.5">Signed, always</h3>
+				<p class="text-sm text-dim leading-relaxed">
+					Every index and archive carries an ed25519 signature; doze pins each publisher's key on
+					first use. Tampered or unsigned&nbsp;→ rejected, not warned.
+				</p>
+			</div>
+			<div class="panel p-4">
+				<h3 class="t-label mb-1.5">Locked, automatically</h3>
+				<p class="text-sm text-dim leading-relaxed">
+					You declare only the engine version. doze selects the newest compatible module release and
+					freezes it in <span class="mono text-faint">doze.lock</span> — commit it, and CI runs
+					byte-identical software.
+				</p>
+			</div>
+			<div class="panel p-4">
+				<h3 class="t-label mb-1.5">Updated on your say-so</h3>
+				<p class="text-sm text-dim leading-relaxed">
+					Pins never drift. <span class="mono text-faint">doze modules upgrade --check</span> reports,
+					<span class="mono text-faint">upgrade</span> moves them — and errors that need a newer module
+					name that exact command.
+				</p>
+			</div>
+		</div>
 	</section>
 
 	<!-- Modules -->

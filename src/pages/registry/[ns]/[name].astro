@@ -55,7 +55,13 @@ const platformLabel = (t) =>
 				{versions && (
 					<div class="mt-12">
 						<h2 class="t-eyebrow">Engine versions</h2>
-						<p class="mt-2 text-sm text-dim">Choose one with <span class="mono text-amber">version =</span>. doze fetches & verifies it, then pins it in <span class="mono text-faint">doze.lock</span>.</p>
+						<p class="mt-2 text-sm text-dim">
+							Choose one with <span class="mono text-amber">version =</span> — the only version you
+							ever write. doze fetches & verifies the engine, then pins it in
+							<span class="mono text-faint">doze.lock</span>. The module release providing it is
+							selected automatically (newest compatible with your doze and the versions you declared)
+							and pinned alongside.
+						</p>
 						<div class="mt-3 flex flex-wrap gap-1.5">
 							{versions.map((v) => <span class="mono text-sm rounded-md border border-line2 bg-raise px-2.5 py-1 text-fg">{v}</span>)}
 						</div>
@@ -65,7 +71,11 @@ const platformLabel = (t) =>
 				<!-- Configuration -->
 				<div class="mt-12">
 					<h2 class="t-eyebrow">Configuration</h2>
-					<p class="mt-2 mb-5 text-sm text-dim">Arguments and nested blocks the engine accepts.</p>
+					<p class="mt-2 mb-5 text-sm text-dim">
+						Arguments and nested blocks the engine accepts — generated from the module itself, so it
+						can't drift. The same reference renders in your terminal:
+						<span class="mono text-amber">doze modules docs {mod.name}</span>.
+					</p>
 					<ConfigDoc config={mod.config} />
 				</div>
 			</div>
@@ -107,10 +117,22 @@ const platformLabel = (t) =>
 						</ul>
 					</div>
 
+					<div class="panel p-4">
+						<h3 class="t-label mb-2">Updates</h3>
+						<p class="text-sm text-dim leading-relaxed">
+							Pins never move on their own. When a new release ships:
+						</p>
+						<div class="mt-2 mono text-xs text-fg bg-raise border border-line2 rounded-md px-2.5 py-1.5">doze modules upgrade {mod.name}</div>
+						<p class="mt-2 mono text-xs text-faint leading-relaxed">
+							then commit <span class="text-dim">doze.lock</span> · CI: <span class="text-dim">upgrade --check</span>
+						</p>
+					</div>
+
 					<div class="px-1 space-y-1.5 text-sm border-t border-line pt-4">
 						{mod.sourceRepo && <a class="block text-dim hover:text-amber transition" href={mod.sourceRepo}>Source repository ↗</a>}
 						{mod.homepage && <a class="block text-dim hover:text-amber transition" href={mod.homepage}>Module home ↗</a>}
 						<a class="block text-faint hover:text-fg transition mono text-xs pt-1" href={mod.indexUrl}>raw index.yaml ↗</a>
+						<a class="block text-faint hover:text-fg transition mono text-xs" href={mod.indexUrl.replace('index.yaml', 'meta.yaml')}>raw meta.yaml ↗</a>
 					</div>
 				</div>
 			</aside>
