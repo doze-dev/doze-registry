@@ -35,6 +35,10 @@ for (const ns of dirs('registry')) {
 		if (!existsSync(idxPath)) continue;
 		mkdirSync(`public/registry/${ns}/${name}`, { recursive: true });
 		cpSync(idxPath, `public/registry/${ns}/${name}/index.yaml`);
+		// meta.yaml is served too: `doze modules docs <type>` renders it in the
+		// terminal, so config docs reach the person actually writing doze.hcl.
+		const metaPath = `registry/${ns}/${name}/meta.yaml`;
+		if (existsSync(metaPath)) cpSync(metaPath, `public/registry/${ns}/${name}/meta.yaml`);
 
 		const manifest = parseYaml(readFileSync(idxPath, 'utf8'));
 		const meta = loadMeta(`registry/${ns}/${name}/meta.yaml`);

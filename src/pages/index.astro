@@ -38,6 +38,14 @@ const engineCount = new Set(modules.flatMap((m) => m.engineVersions || [])).size
 &#125;</pre>
 		</div>
 
+		<!-- The door: get doze itself, right where the modules are browsed. -->
+		<div class="mt-5 max-w-xl mono text-sm text-dim flex flex-wrap items-center gap-x-3 gap-y-1">
+			<span class="text-faint select-none">$</span>
+			<span>brew install <span class="text-amber">doze-dev/tap/doze</span></span>
+			<span class="text-faint">·</span>
+			<a class="text-faint hover:text-amber transition text-xs" href="https://github.com/doze-dev/doze#install">more install options ↗</a>
+		</div>
+
 		<div class="mt-8 flex flex-wrap gap-x-8 gap-y-2 t-label">
 			<span><span class="text-fg mono text-sm">{count}</span> modules</span>
 			<span><span class="text-fg mono text-sm">{engineCount}</span> engine versions</span>

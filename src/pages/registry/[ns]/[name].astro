@@ -81,6 +81,19 @@ const platformLabel = (t) =>
 						</p>
 					</div>
 
+					<!-- The door for visitors who landed here without doze installed. -->
+					<div class="panel p-4">
+						<h3 class="t-label mb-3">New to doze?</h3>
+						<p class="text-sm text-dim leading-relaxed mb-3">
+							One binary runs this and every module here — no Docker, no toolchains.
+						</p>
+						<CodeBlock code={`brew install doze-dev/tap/doze\ndoze init && doze up`} />
+						<p class="mt-3 mono text-xs text-faint leading-relaxed">
+							also: <span class="text-dim">mise use -g ubi:doze-dev/doze</span> ·
+							<a class="text-dim hover:text-amber transition" href="https://github.com/doze-dev/doze#install">all install options ↗</a>
+						</p>
+					</div>
+
 					<dl class="text-sm space-y-3 px-1">
 						<div class="flex justify-between gap-3"><dt class="text-faint">Category</dt><dd class="capitalize">{mod.category}</dd></div>
 						<div class="flex justify-between gap-3"><dt class="text-faint">Publisher</dt><dd class="mono text-xs">{mod.ns}{mod.official ? ' · official' : ''}</dd></div>
