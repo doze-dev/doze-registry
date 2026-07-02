@@ -94,3 +94,41 @@
 }
 
 a { text-underline-offset: 3px; }
+
+/* ── light mode: warm paper counterpart (shared with the docs site) ─────────
+   Tailwind utilities compile to var(--color-*), so overriding the tokens per
+   theme re-skins every page. The dark palette above is the default; this
+   flips it when the shared toggle (localStorage 'starlight-theme') says so. */
+:root[data-theme='light'] {
+  --color-ink: #faf7f0;
+  --color-raise: #f3efe6;
+  --color-raise2: #ece7da;
+  --color-line: #e2ddd0;
+  --color-line2: #d9d4c7;
+  --color-fg: #1c1b18;
+  --color-dim: #5c5a52;
+  --color-faint: #8a877c;
+  --color-amber: #a36a10;
+  --color-amber2: #7a4e08;
+  --color-awake: #1e7d47;
+  --color-rose: #b3402f;
+}
+:root[data-theme='light'] body {
+  background-image: radial-gradient(
+    70rem 38rem at 50% -12rem,
+    color-mix(in oklab, #f0ad4e 9%, transparent),
+    transparent 70%
+  );
+}
+:root[data-theme='light'] body::after {
+  opacity: 0.02; /* the film grain whispers on paper */
+}
+:root[data-theme='light'] ::selection {
+  background: color-mix(in oklab, #f0ad4e 40%, transparent);
+  color: #1c1b18;
+}
+
+/* the header/footer theme toggle shows the icon for the mode you'd switch TO */
+.theme-icon-light { display: none; }
+:root[data-theme='light'] .theme-icon-dark { display: none; }
+:root[data-theme='light'] .theme-icon-light { display: inline; }
