@@ -13,8 +13,16 @@ releases:
     artifacts:
       aarch64-apple-darwin:
         url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 66d01af84d631ea45d8724731294ee25478118e4c751a54acb60d5966a27fe0a
-        sig: jHHBQAyBUPgX6nIiXo7XgGZ+Yf9nKKeQxS7y4nrDBMt2GeoN135WYj4AD8WCPREInV9oAONSWYSh+cNKPrANCQ==
+        sha256: 646ebe49abce955ac0329f2a122bcf8e8847933e829b17413df4c3b30fdb8d5b
+        sig: xSwVZTTNpAcE12X856Vj4AF8eCBiLZbJDm7M4HdRQD5MCAC2QbLBydUgkhCr9QxFyvxSG8nSZ628d1H/0tM1Ag==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 044e12f929d6835380a6333601146947a46d6d295ef4e1bf78c9d4f7991d6c13
+        sig: pXTnZLPX6ZnpKJL8abTCMpPurHVCM7r2WUP8XhlSCYHu8SIznluq6ZionpSaAHP1xyyD3980oyJe2ShSxQSFCQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 0d035fc927af079b1cb6d4b9ce44d9744ed4c7c2364e057a88b4ed5fdb9fe2a1
+        sig: 0am4mspIBa17+1YZadv51PqdsTypkyMm/3W0FKRvqoQ5xG8zVU2h9Oc28UG47fYKGYOWTS3/iZClinLzrJKQBw==
 channels:
   stable: 0.2.0
-signature: 8DjgtMGGwNbqJjaouLfoUcZwsmmgUDdJLNRR1LXUO2rD4Xd/32ZO6Q+CGNhBMYvWU46nj1VbkAmwK2caKFp/Ag==
+signature: 9NCB3S9BWxGjtBQBc8liGifFw/+toMNo4TztNSqyiBTqHjcNrvj0Xr0at6B1sy4gEu5ZiAMJFjxpbuXctXmXCg==

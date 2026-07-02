@@ -9,8 +9,16 @@ releases:
     artifacts:
       aarch64-apple-darwin:
         url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: f814b4f525b8198fa1f12c2daa85196361513c440336978e57a13fd03ac4ed66
-        sig: B1dfOjd8KjhRIh11ps8ajnSuac+xEu2LdxHYiet9uacXk9iCrpeFQ6zS+iIFEkZw6e3HLi125WpIWWCM6DtZDQ==
+        sha256: 7b4ae623d8f807a5be238a38db5eb49445e0d721c9d988b36300b0113bb772bd
+        sig: L71ffM50ce+NPKUkMYT7aTlI/IQtuFutUF1D6th8EVHA7Xkesk8DJaaM78z0QeQdwBDWOi7OAj6r8t2BCVNBCA==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 57d1a0d3f107576bcddb2b747354c6bfbcb4b22954fecebd208163686293cb7f
+        sig: aXUddffCORd8Q5XbmwvZF6UKdKZhFTBdIvbtPuGloVDhNnIpGhVdQM9nQJ9ZQ6fXdOqY/UKRzNdW6M31kX1bCQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 6bf6c0deaa14257a27b518466c48428c2de589f8b0d53d03d3f611d0f8a6b809
+        sig: v/0rJ4D78mdhK4twxFjmGe0qj1HK/VsKyXLRGtpdUmVX8a7XDbm7BsP0y4GlSfHhpVXVikkwZoCskKZ6uFoQAg==
 channels:
   stable: 0.2.0
-signature: bwnb41eiICb8dp/Xusg6INqAuywDOjwL+oqRLRWfGEl5n4oeHgGGoh8csUr7fXTUhfeuskTWO4EAGQyrkjDyCQ==
+signature: +P3A+i01LsY3g37myXKIy5dpjQ5Lvn5Ny4kKgjnS1rdybo8NaKQARd7QsZwGWtP4NkRyz77rh4dIvKYi8hpIDQ==

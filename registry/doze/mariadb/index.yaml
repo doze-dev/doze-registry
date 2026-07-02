@@ -9,8 +9,16 @@ releases:
     artifacts:
       aarch64-apple-darwin:
         url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 9119a9e67d405ae02f037b7b331b66c2cb656226a3fbcebe991b2694c639917e
-        sig: DZkn1M2mj+vJXjWSnD0iwXXoqoX0zCQu6Ju9U/nn2vMSh4yVMP/Iv7d/0s94barGlUdFRoRHKX0fHyaP5LISAA==
+        sha256: 8ae11d459b181927e251aeac42c0300ff72935265abf42f32aa23b9e6aaba5cd
+        sig: 3zGPx+P2HyAU7a0T4UamnUyNmKtro92fa8fgljWVGICpVqRGRKjO8bVu6t78zsO++T4cKWT3t16aWMRpBQ6tDg==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: c21ede4271054d8d4aa53df38bf8efd10a1ee19f7d4dfd7d651a2cf8a2fd2d7e
+        sig: /t3zVwAuauIAAlVYAtF8Y89Bn6Va4Zg0hBqID8nzCDoqWk7LRPiAWON/N6VMbtMhgu3pHD7N+y9RMNz0nUhdBQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 7e92d1b93e7e1bad59f1ec403425efa68c06213351b10900116ed82625a58a86
+        sig: USZlaPJ1gG9mQ49+GytfPqZU1NZWc+1LobNY/jiksI35u6cTyqAqE/rnVjdifBTKHM6Am95AGD/1G0lfupQOCA==
 channels:
   stable: 0.2.0
-signature: 2pvpms7HOkRSWQizcrb9qc8YCdl2l4OV5OzETtqN1bD/udvpdy4sat1dcb+TXr/TG5CEpVeWhnt00VjSH2mvCg==
+signature: eGfhsl2XPXqTLimsdF5pI7LjqFINB/9kqistyYbrd3HkS04s6huuXiQZcVA5/KFXtr7+6wVleDjgWChnQGNQDA==

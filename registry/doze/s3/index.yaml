@@ -7,8 +7,16 @@ releases:
     artifacts:
       aarch64-apple-darwin:
         url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-aarch64-apple-darwin.tar.gz
-        sha256: eca9f5b23c857df5d1a706a9ee78d282e4c448ee2795890497ddcb00081cf6b8
-        sig: p5PxwyfsSON6SA+ofcbfz1pMCpaz8/ujyD125AkiNrmspz+3vrTbQvs/CVlOfapM2Hao5leV8lfVJyKp9gDFCg==
+        sha256: dae8f861d5bb8cdb50d94d89ed25eb12586044cc241520ae74bf978a14e7a888
+        sig: 0EqlxyVX8oo571PF7Q+vrjjjk12cjcGz0NycbTbneMv4rETbfcGt+Z5o1Yq+gcgqI5QZEdwi1sUKy+9sFn/6Cg==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 782b44258b2ffb1fce40add74e59828c5935f2df6b609b0ff20b26754bf6c40b
+        sig: 4lb3e1fRgIQjmSLYDRSg8Q9wC/+5sFjt4Rim9LHvR5RgLpDkLv8WezIp137/HnBkXmJJKlg/rzp1XGGG4FfTAw==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 428de8c09b81538be85691192f08d7969e248d658e23835abfd4bd50a17b73e5
+        sig: Ts/rwtHoIvTBEn+4YthVEPhwPy6Tppsvr599Lun+HScTT4nrd8whgZWqTUnRZKU2avVOurf/scRFGZUIdhwkDA==
 channels:
   stable: 0.3.0
-signature: PbmjSLUk/EB4+tZ1CcBMurJ3W9Y0UfmoLNspbq8rz2/+MuvwHX1pJM7+EWOH47C0aEM+JZd6aky0wlHZbloYCw==
+signature: AnWPugR4ijUvhs/WAomIn3WsC3ffYrio1qHAuq+mDtoXIcCsNkGfIng2R3SuMvI8Qu/qopDjGjEiizh+4xsQBw==
