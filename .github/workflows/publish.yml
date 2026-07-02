@@ -34,6 +34,11 @@ jobs:
         with:
           node-version: '20'
 
+      # The publish/validate scripts import only 'yaml'; skip the full (astro)
+      # dependency tree — this job signs text files, it doesn't build the site.
+      - name: Install script dependencies
+        run: npm install --no-save yaml
+
       # Resolve the module set: the dispatch payload is a JSON array; the manual
       # input is a space-separated list or "all" (every module DIRECTORY on disk —
       # not keys.json). Names are space-joined: a multiline value interpolated
