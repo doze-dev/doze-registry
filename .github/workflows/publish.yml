@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: write
+  actions: write # to chain the deploy workflow after the bot commit
 
 jobs:
   publish:
@@ -77,13 +78,25 @@ jobs:
         run: npm run validate:remote
 
       - name: Commit signed indexes
+        id: commit
         run: |
           git config user.name  "doze-registry-bot"
           git config user.email "bot@doze.dev"
           git add registry/
           if git diff --cached --quiet; then
             echo "no registry changes to commit"
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "publish: sign ${{ steps.set.outputs.names }} into the registry"
             git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # A push made with GITHUB_TOKEN does NOT trigger other workflows (GitHub's
+      # recursion guard), so the bot commit above would never deploy on its own.
+      # workflow_dispatch is exempt from that guard — chain the deploy explicitly.
+      - name: Trigger deploy
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy --repo "$GITHUB_REPOSITORY"
