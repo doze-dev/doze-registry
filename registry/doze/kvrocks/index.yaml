@@ -1,19 +1,16 @@
-engines:
-  kvrocks:
-    versions:
-      "0": 0.1.0
-      default: 0.1.0
+schema: 1
+module: kvrocks
+namespace: doze
+releases:
+  0.2.0:
+    protocol: 1
+    engines:
+      - "2"
     artifacts:
-      0.1.0:
-        aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-apple-darwin.tar.gz
-          sha256: aac99a8bfb9c3fc909c9fe9044a3f71d7a3ccb74422b44b7116bf8fd0205e9eb
-          sig: NT+gQOibRdSSA+NC7F8wXhA/iZRE1yjvmOvktqjyNWZZWXZYqvYND/ZQhcBL5mp/oNUCfEUgV/MepLxgNvH3AA==
-        aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: f4ed3d055622786b174b2f042ec2fbffef65c26d11fd0231403b8a0affd670d5
-          sig: gOfyB4lt0muDR5aa64XGFG0owN8KE2vQZV5EOShQKdZqXkHhYgGOUYpVGtW7o7Ys+xNIpzkYmYnuwaXCoborCQ==
-        x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 1f4133c3fa92c97d7531e0e10a67bdf782c482bc511f48585cff71ccb8ee666d
-          sig: gnXX57WL12p5zJ8m/XPEzCfxulVadKPQ13KvNploiK9+iXPVgM5Az8mp/oglG3RigsQ2/Wti0t4dWME6l3VyAw==
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.0-aarch64-apple-darwin.tar.gz
+        sha256: c49cf94933408e70eb9bd4a0aa4ca21d9829722a23a67c266947a006a2bd2a87
+        sig: SvMpzPAclEmLNYJSdeP2/1oJ1b7okJe1FmOE0nAxhm7vp/gqos4ezQR80B/7aMOY8fHb+GjJTr3C4hy/wOPsDQ==
+channels:
+  stable: 0.2.0
+signature: 3ATT1GslaQXonD54wNubw1GJ/0Jj3CpwxADcVz1J7YQ4kK2UEyVglMIO4N8zoHEL8ZL7zwihiljseMcepl4SCw==

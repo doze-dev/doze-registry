@@ -3,34 +3,47 @@ tagline: In-memory cache, Redis-compatible.
 category: cache
 engine: valkey
 port: 6379
-versions: ["8", "9"]
-description: >
-  A local Valkey server — the open-source Redis fork. Speaks the Redis protocol,
-  so any redis client works. Set a memory ceiling and an eviction policy and use
-  it as a cache; doze boots it on first connect and reaps it when idle.
-homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/valkey
-source: https://github.com/doze-dev/doze-modules
-exampleLabel: cache
-example: |
-  valkey "cache" {
-    version          = 9
-    port             = 6379
-    maxmemory        = "256mb"
-    maxmemory_policy = "allkeys-lru"
-    appendonly       = true
-    password         = "cache"
-    save             = "900 1 300 10"
+example: |-
+    valkey "cache" {
+      version          = 9
+      port             = 6379
+      maxmemory        = "256mb"
+      maxmemory_policy = "allkeys-lru"
+      appendonly       = true
+      password         = "cache"
+      save             = "900 1 300 10"
 
-    settings = {
-      tcp-keepalive = "60"
+      settings = {
+        tcp-keepalive = "60"
+      }
     }
-  }
+exampleLabel: cache
+description: A local Valkey server — the open-source Redis fork. Speaks the Redis protocol, so any redis client works. Set a memory ceiling and an eviction policy and use it as a cache; doze boots it on first connect and reaps it when idle.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/valkey
+source: doze/valkey
 config:
-  arguments:
-    - { name: version, type: number, required: true, desc: "Engine major to run — 8 or 9." }
-    - { name: maxmemory, type: string, desc: "Memory ceiling before eviction, e.g. \"256mb\"." }
-    - { name: maxmemory_policy, type: string, default: "noeviction", desc: "Eviction policy (allkeys-lru, volatile-ttl, …)." }
-    - { name: appendonly, type: bool, default: "false", desc: "Enable the append-only file for durability." }
-    - { name: password, type: string, desc: "requirepass auth password." }
-    - { name: save, type: string, desc: "RDB snapshot schedule, e.g. \"900 1 300 10\" (empty disables)." }
-    - { name: settings, type: map(string), desc: "Arbitrary valkey.conf directives, applied verbatim." }
+    arguments:
+        - name: version
+          type: number
+          desc: Engine major to run — 8 or 9.
+          required: true
+        - name: maxmemory
+          type: string
+          desc: Memory ceiling before eviction, e.g. "256mb".
+        - name: maxmemory_policy
+          type: string
+          default: noeviction
+          desc: Eviction policy (allkeys-lru, volatile-ttl, …).
+        - name: appendonly
+          type: bool
+          default: "false"
+          desc: Enable the append-only file for durability.
+        - name: password
+          type: string
+          desc: requirepass auth password.
+        - name: save
+          type: string
+          desc: RDB snapshot schedule, e.g. "900 1 300 10" (empty disables).
+        - name: settings
+          type: map(string)
+          desc: Arbitrary valkey.conf directives, applied verbatim.

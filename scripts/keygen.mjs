@@ -1,17 +1,20 @@
 // keygen — create a namespace's publisher keypair.
 //
-//   bun scripts/keygen.mjs <namespace>
+//   npm run keygen <namespace>        (key operations run under node — see
+//                                      assertSigningRuntime in lib.mjs)
 //
 // Writes the PUBLIC key to registry/<namespace>/keys.json (commit this) and the
 // SECRET key to <namespace>.secret.key (gitignored — keep it safe; this is what
 // signs releases). The registry trusts a namespace by its committed public key,
 // so losing the secret means rotating the key (and every client re-pinning it).
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
-import { generateKeypair } from './lib.mjs';
+import { generateKeypair, assertSigningRuntime } from './lib.mjs';
+
+assertSigningRuntime();
 
 const ns = process.argv[2];
 if (!ns || !/^[a-z0-9][a-z0-9-]*$/.test(ns)) {
-	console.error('usage: bun scripts/keygen.mjs <namespace>   (lowercase, [a-z0-9-])');
+	console.error('usage: npm run keygen <namespace>   (lowercase, [a-z0-9-])');
 	process.exit(2);
 }
 

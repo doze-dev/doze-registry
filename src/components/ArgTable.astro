@@ -18,6 +18,8 @@ const { args } = Astro.props;
 					<td class="py-2.5 pr-5 whitespace-nowrap">
 						<span class="mono text-fg">{a.name}</span>
 						{a.required && <sup class="ml-1 mono text-[9px] text-rose tracking-wide">REQ</sup>}
+						{a.since && <span class="ml-1.5 mono text-[10px] text-amber border border-line rounded px-1">&ge; {a.since}</span>}
+						{a.until && <span class="ml-1.5 mono text-[10px] text-faint border border-line rounded px-1">&lt; {a.until}</span>}
 					</td>
 					<td class="py-2.5 pr-5 mono text-xs text-amber whitespace-nowrap">{a.type || 'string'}</td>
 					<td class="py-2.5 pr-5 mono text-xs text-faint whitespace-nowrap">{a.default ?? '—'}</td>

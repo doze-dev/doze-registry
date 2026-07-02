@@ -3,30 +3,18 @@ tagline: Local S3 buckets, no LocalStack.
 category: storage
 engine: s3
 port: 9000
-description: >
-  S3-compatible object storage built into doze — declare buckets (with
-  versioning) and point any AWS SDK or the aws CLI at the instance endpoint. No
-  Docker, no JVM, no LocalStack; it boots in milliseconds.
+example: |-
+    s3 "uploads" {
+      port       = 9000
+      versioning = true
+    }
+exampleLabel: uploads
+description: S3-compatible object storage built into doze — one bucket per instance (the bucket name is the instance name), with optional versioning. Point any AWS SDK or the aws CLI at the instance endpoint. No Docker, no JVM, no LocalStack; it boots in milliseconds.
 homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/s3
-source: https://github.com/doze-dev/doze-modules
-exampleLabel: media
-example: |
-  s3 "media" {
-    port = 9000
-    bucket "uploads" {}
-
-    bucket "thumbs" {
-      versioning = true
-    }
-
-    bucket "backups" {
-      versioning = true
-    }
-  }
+source: doze/s3
 config:
-  blocks:
-    - name: bucket
-      label: name
-      desc: "A bucket to create on boot."
-      arguments:
-        - { name: versioning, type: bool, default: "false", desc: "Enable object versioning on the bucket." }
+    arguments:
+        - name: versioning
+          type: bool
+          default: "false"
+          desc: Enable object versioning on the bucket.

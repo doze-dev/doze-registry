@@ -1,12 +1,15 @@
 // prepare — gate on a clean validate, copy the machine discovery files into
 // public/registry/ (served verbatim — this is what doze fetches), and assemble
 // both the machine catalog (public/registry/index.json — the discovery API the
-// CLI reads) and src/data/modules.json for the Astro site. All module facts are
-// author-declared in each meta.yaml; nothing is inferred from doze-binaries, so
-// third-party modules work the same as official ones. Run before astro build/dev.
+// CLI reads) and src/data/modules.json for the Astro site. Prose (title,
+// tagline, docs) comes from each meta.yaml; the module version, plugin
+// protocol, and engine support come from the SIGNED index's stable release —
+// code-derived via `dzm`, so docs can't drift from what a module actually
+// supports. Third-party modules work the same as official ones. Run before
+// astro build/dev.
 import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { publicKeyObject, verify, loadKeys, parseYaml, eachArtifact } from './lib.mjs';
+import { publicKeyObject, verify, verifyIndex, loadKeys, parseYaml, eachArtifact } from './lib.mjs';
 
 const OFFICIAL = new Set(['doze']);
 
@@ -36,12 +39,16 @@ for (const ns of dirs('registry')) {
 		const manifest = parseYaml(readFileSync(idxPath, 'utf8'));
 		const meta = loadMeta(`registry/${ns}/${name}/meta.yaml`);
 		const triples = new Set();
-		let signed = true;
+		let signed = verifyIndex(pub, manifest);
 		for (const { triple, art } of eachArtifact(manifest)) {
 			triples.add(triple);
 			if (!art?.sig || !verify(pub, String(art.sha256).toLowerCase(), art.sig)) signed = false;
 		}
-		const versions = (meta.versions || []).map(String);
+		// Engine support and the module version come from the SIGNED index's
+		// stable release — code-derived via dzm, never from docs metadata.
+		const stableVersion = manifest?.channels?.stable ?? null;
+		const stable = stableVersion ? manifest?.releases?.[stableVersion] : null;
+		const versions = (stable?.engines || []).map(String);
 		const mod = {
 			ns,
 			name,
@@ -52,6 +59,8 @@ for (const ns of dirs('registry')) {
 			description: meta.description || '',
 			category: meta.category || 'other',
 			engine: meta.engine || name,
+			version: stableVersion,
+			protocol: stable?.protocol ?? null,
 			engineVersions: versions.length ? versions : null,
 			example: meta.example || `${name} "${meta.exampleLabel || name}" {}`,
 			label: meta.exampleLabel || name,
@@ -68,6 +77,8 @@ for (const ns of dirs('registry')) {
 		// and the init wizard to list + scaffold without a code change per module.
 		catalog.namespaces[ns].modules[name] = {
 			source: mod.source,
+			version: mod.version,
+			protocol: mod.protocol,
 			tagline: mod.tagline,
 			category: mod.category,
 			engineVersions: mod.engineVersions,

@@ -1,0 +1,45 @@
+title: MariaDB
+tagline: MySQL-compatible relational database
+category: database
+engine: mariadb
+port: 3306
+example: |-
+    mariadb "app" {
+      version       = "11.4"
+      character_set = "utf8mb4"
+
+      user "app" {
+        password = "secret"
+        host     = "%"
+      }
+      grant {
+        user       = "app"
+        privileges = ["ALL PRIVILEGES"]
+        database   = "app"
+      }
+    }
+exampleLabel: app
+description: A socket-only MariaDB backend behind the doze proxy, with declarative databases, users, and grants. The instance database is created automatically; connect via DATABASE_URL.
+homepage: https://mariadb.org
+source: doze/mariadb
+config:
+    arguments:
+        - name: version
+          type: string
+          desc: MariaDB server version (e.g. 11.4)
+          required: true
+        - name: character_set
+          type: string
+          desc: default charset for the instance database (e.g. utf8mb4)
+        - name: collation
+          type: string
+          desc: default collation for the instance database
+        - name: settings
+          type: map(string)
+          desc: extra [mysqld] my.cnf entries
+        - name: user
+          type: block
+          desc: a MariaDB account (repeatable; label = name; host, password)
+        - name: grant
+          type: block
+          desc: a privilege grant (user, privileges, database, table)

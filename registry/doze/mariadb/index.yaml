@@ -1,0 +1,16 @@
+schema: 1
+module: mariadb
+namespace: doze
+releases:
+  0.2.0:
+    protocol: 1
+    engines:
+      - "11"
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-aarch64-apple-darwin.tar.gz
+        sha256: 9119a9e67d405ae02f037b7b331b66c2cb656226a3fbcebe991b2694c639917e
+        sig: DZkn1M2mj+vJXjWSnD0iwXXoqoX0zCQu6Ju9U/nn2vMSh4yVMP/Iv7d/0s94barGlUdFRoRHKX0fHyaP5LISAA==
+channels:
+  stable: 0.2.0
+signature: 2pvpms7HOkRSWQizcrb9qc8YCdl2l4OV5OzETtqN1bD/udvpdy4sat1dcb+TXr/TG5CEpVeWhnt00VjSH2mvCg==

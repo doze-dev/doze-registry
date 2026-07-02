@@ -1,0 +1,16 @@
+schema: 1
+module: ferret
+namespace: doze
+releases:
+  0.2.0:
+    protocol: 1
+    engines:
+      - "2"
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.0-aarch64-apple-darwin.tar.gz
+        sha256: 4d89f49453bbf1f7139462d787b29118d79d06f623dfe06c5f5cfdfbb7b186a9
+        sig: VsLbM05NaPcWQt6OOMe8SVz9d59/ipA559TKOg959eMCqdX4X+Bw0Ble+OaGbyq0pEqenENWMlsbnEY1sn7GDQ==
+channels:
+  stable: 0.2.0
+signature: N1rJhkmjhpLzTxbytt0p2ie+zZ7Jot2NzJvStdsb333meQwfZl+xWMslodpdXPI9WLZq8DHPvdaqDnXA2KI0BQ==

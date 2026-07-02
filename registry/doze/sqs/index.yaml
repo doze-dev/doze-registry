@@ -1,19 +1,14 @@
-engines:
-  sqs:
-    versions:
-      "0": 0.2.0
-      default: 0.2.0
+schema: 1
+module: sqs
+namespace: doze
+releases:
+  0.3.0:
+    protocol: 1
     artifacts:
-      0.2.0:
-        aarch64-apple-darwin:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-          sha256: 3de4485e569d5795e3f0e04e21beca6caaf6cae55c9f8092c23d44cf000ec94f
-          sig: r0WT0103f7Qz59c4QhEko+GxrwXmS91G2kQxwv3uDhhzipHVg2Qgu65FCZg3V1hG8jCkdL5h/JYp9ME5TOOqAQ==
-        aarch64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-          sha256: 75b765d37e65528daf779468ba068a2bba563cde8380f5a384dbf9dced6288dd
-          sig: YbDS3L+RK0hIfHqFvHd5tQIrY2/sUpy4b2wt+NJKyrVNdqdVtCDphxLFC6v9MMQnU1W6yjScEtdVm2GFprtTDg==
-        x86_64-unknown-linux-gnu:
-          url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-          sha256: 66250938cf5bc81fc5f420c8e682706d0d8c556eae34eb74abe67e865cbf1276
-          sig: Q+h9f/eudDklLlMK+fPBSrS4wvnk89d8tgtV9j8rARWWvtnkKNcobk50CRbb7myfNnyv+UgmUqMHN43ccidWDQ==
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/sqs/sqs-plugin-0.3.0-aarch64-apple-darwin.tar.gz
+        sha256: 612f5a18cfc5eee0047d2ce145f321830104c3bb43f21a6b11e6891cd420f34b
+        sig: Im/OMKbf3oHXRzzuqEStSxDwEjq4CVCzj381StNWMswv6222yHex+mNUPMtyoNDkYMN8TeFiDyIYmzGHrQixBg==
+channels:
+  stable: 0.3.0
+signature: E26QKPFJ9uTLk2BkqH+CaPiQTr/vM+LKrm2Ab7V7fWXdMS+oiOworKtJeddcP7ohRU8fCb/iiNyYTVhHEscABw==

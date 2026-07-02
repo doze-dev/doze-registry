@@ -1,0 +1,42 @@
+title: Temporal
+tagline: Durable workflow engine (local dev server)
+category: workflow
+engine: temporal
+port: 7233
+example: |-
+    temporal "dev" {
+      version = "1.1"
+      port    = 7233
+      ui_port = 8233
+
+      namespace "orders"  {}
+      namespace "billing" {}
+    }
+exampleLabel: dev
+description: 'A local Temporal dev server: a single pure-Go binary bundling the Temporal services, a SQLite store, and the Web UI, with no JVM or Docker. Supervised and always-on (workers long-poll it); connect via TEMPORAL_ADDRESS.'
+homepage: https://temporal.io
+source: doze/temporal
+config:
+    arguments:
+        - name: version
+          type: string
+          desc: temporal CLI version
+          required: true
+        - name: port
+          type: number
+          default: "7233"
+          desc: frontend gRPC port
+        - name: ui_port
+          type: number
+          default: "8233"
+          desc: Web UI port
+        - name: headless
+          type: bool
+          default: "false"
+          desc: disable the Web UI
+        - name: namespace
+          type: block
+          desc: a namespace to create (repeatable; label = name; retention, description)
+        - name: restart
+          type: block
+          desc: supervisor restart policy (policy, backoff, max_retries)

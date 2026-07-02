@@ -1,0 +1,84 @@
+# Sign + publish doze-modules releases into the signed registry.
+#
+# Triggered by a repository_dispatch from doze-modules' release workflow (after it
+# uploads the per-module GitHub releases), or manually to re-sign the full set
+# (reconciliation). The ed25519 signing key lives ONLY here, as an Actions secret
+# (DOZE_SIGNING_KEY) that matches the committed registry/doze/keys.json — so
+# signing happens where the key is, and doze-modules never needs it.
+#
+# The job re-runs the same publish + validate scripts a human would, then commits
+# the signed index.yaml files. The push to main triggers the existing deploy.yml,
+# which is the single Cloudflare deploy path.
+name: publish
+
+on:
+  repository_dispatch:
+    types: [modules-published]
+  workflow_dispatch:
+    inputs:
+      modules:
+        description: 'Space-separated module names to (re)sign, or "all"'
+        required: false
+        default: all
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Resolve the module set: the dispatch payload is a JSON array; the manual
+      # input is a space-separated list or "all" (every doze/* module on disk).
+      - name: Resolve module set
+        id: set
+        env:
+          PAYLOAD: '${{ toJSON(github.event.client_payload.modules) }}'
+          INPUT: '${{ github.event.inputs.modules }}'
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            names=$(echo "$PAYLOAD" | jq -r '.[]')
+          elif [ "${INPUT:-all}" = "all" ] || [ -z "${INPUT:-}" ]; then
+            names=$(ls registry/doze)
+          else
+            names="$INPUT"
+          fi
+          echo "names<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$names" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Sign + publish each module
+        env:
+          DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
+        run: |
+          for name in ${{ steps.set.outputs.names }}; do
+            echo "::group::publish doze/$name"
+            node scripts/publish.mjs "doze/$name"
+            echo "::endgroup::"
+          done
+
+      # Offline gate: structure + every signature. Then the trust gate: re-download
+      # each archive and confirm its SHA256 matches the signed value.
+      - name: Validate signatures
+        run: npm run validate
+
+      - name: Validate archives (remote)
+        run: npm run validate:remote
+
+      - name: Commit signed indexes
+        run: |
+          git config user.name  "doze-registry-bot"
+          git config user.email "bot@doze.dev"
+          git add registry/
+          if git diff --cached --quiet; then
+            echo "no registry changes to commit"
+          else
+            git commit -m "publish: sign ${{ steps.set.outputs.names }} into the registry"
+            git push
+          fi

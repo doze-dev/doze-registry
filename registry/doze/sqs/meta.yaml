@@ -3,52 +3,62 @@ tagline: Local SQS queues with DLQ + redrive.
 category: queue
 engine: sqs
 port: 9324
-description: >
-  SQS-compatible message queues built into doze — declare queues, FIFO, visibility
-  timeouts, retention and dead-letter redrive, then use any AWS SDK against the
-  instance endpoint. Ground-up implementation: no LocalStack, instant boot.
-homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/sqs
-source: https://github.com/doze-dev/doze-modules
-exampleLabel: jobs
-example: |
-  sqs "jobs" {
-    port = 9324
-    queue "emails" {
+example: |-
+    sqs "jobs" {
+      port               = 9324
+      fifo               = true
+      content_based_dedup = true
       visibility_timeout = "30s"
       retention          = "4d"
       wait_time          = "10s"
-      max_message_size   = 262144
-    }
 
-    queue "orders" {
-      fifo                = true
-      content_based_dedup = true
-      delay               = "5s"
+      dead_letter {
+        max_receive_count = 5
+        retention         = "14d"
+      }
     }
-
-    queue "emails-dlq" {}
-
-    redrive "emails" {
-      dead_letter       = "emails-dlq"
-      max_receive_count = 5
-    }
-  }
+exampleLabel: jobs
+description: 'SQS-compatible message queues built into doze — one queue per instance (the queue name is the instance name), with FIFO, visibility timeouts, retention, and an optional dead-letter companion queue. Use any AWS SDK against the instance endpoint. Ground-up implementation: no LocalStack, instant boot.'
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/sqs
+source: doze/sqs
 config:
-  blocks:
-    - name: queue
-      label: name
-      desc: "A queue to create on boot."
-      arguments:
-        - { name: fifo, type: bool, default: "false", desc: "Make it a FIFO (.fifo) queue." }
-        - { name: content_based_dedup, type: bool, default: "false", desc: "FIFO content-based deduplication." }
-        - { name: visibility_timeout, type: string, default: "30s", desc: "How long a received message stays hidden." }
-        - { name: delay, type: string, default: "0s", desc: "Delivery delay for new messages." }
-        - { name: retention, type: string, default: "4d", desc: "How long messages are retained." }
-        - { name: wait_time, type: string, default: "0s", desc: "Default long-poll wait time." }
-        - { name: max_message_size, type: number, default: "262144", desc: "Max message size in bytes." }
-    - name: redrive
-      label: queue
-      desc: "A dead-letter redrive policy for a queue."
-      arguments:
-        - { name: dead_letter, type: string, required: true, desc: "The queue failed messages move to." }
-        - { name: max_receive_count, type: number, required: true, desc: "Receives before a message is dead-lettered." }
+    arguments:
+        - name: fifo
+          type: bool
+          default: "false"
+          desc: Make it a FIFO (.fifo) queue.
+        - name: content_based_dedup
+          type: bool
+          default: "false"
+          desc: FIFO content-based deduplication.
+        - name: visibility_timeout
+          type: string
+          default: 30s
+          desc: How long a received message stays hidden.
+        - name: delay
+          type: string
+          default: 0s
+          desc: Delivery delay for new messages.
+        - name: retention
+          type: string
+          default: 4d
+          desc: How long messages are retained.
+        - name: wait_time
+          type: string
+          default: 0s
+          desc: Default long-poll wait time.
+        - name: max_message_size
+          type: number
+          default: "262144"
+          desc: Max message size in bytes.
+    blocks:
+        - name: dead_letter
+          desc: A companion dead-letter queue (<name>-dlq) with a redrive policy.
+          arguments:
+            - name: max_receive_count
+              type: number
+              default: "5"
+              desc: Receives before a message is dead-lettered.
+            - name: retention
+              type: string
+              desc: How long the DLQ retains messages.

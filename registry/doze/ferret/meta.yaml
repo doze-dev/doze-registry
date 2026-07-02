@@ -1,0 +1,46 @@
+title: FerretDB
+tagline: MongoDB-compatible database (FerretDB v2 over Postgres)
+category: database
+engine: ferret
+port: 27017
+example: |-
+    ferret "shop" {
+      version = "2.7"
+
+      database "catalog" {
+        collection "products" { seed = "./seed/products.json" }
+        collection "orders" {}
+      }
+    }
+exampleLabel: shop
+description: A MongoDB-wire database you connect to with any Mongo client. Under the hood it is FerretDB v2 fronting a private PostgreSQL with Microsoft's DocumentDB extension — no MongoDB server, no license worries.
+homepage: https://www.ferretdb.com
+source: doze/ferret
+config:
+    arguments:
+        - name: version
+          type: string
+          desc: FerretDB v2.x gateway version
+          required: true
+        - name: database
+          type: block
+          desc: a Mongo database to ensure (repeatable; label = name)
+        - name: collection
+          type: block
+          desc: a collection within a database (repeatable; label = name)
+        - name: seed
+          type: string
+          desc: path to a JSON array seeded into an empty collection
+        - name: index
+          type: block
+          desc: an index on a collection (keys = {field=1|-1}, unique)
+        - name: settings
+          type: map(string)
+          desc: extra FERRETDB_* gateway settings
+        - name: auth
+          type: bool
+          default: "false"
+          desc: enable auth + user convergence (scaffold; needs validation)
+        - name: user
+          type: block
+          desc: a Mongo user when auth is on (name, password, database, roles)

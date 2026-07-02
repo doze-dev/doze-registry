@@ -3,43 +3,50 @@ tagline: Redis API on RocksDB — durable, low-RAM.
 category: database
 engine: kvrocks
 port: 6380
-versions: ["2"]
-description: >
-  A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk.
-  Durable and memory-frugal — a drop-in Redis API when you want persistence
-  without holding the dataset in RAM. Supports namespaces with per-namespace
-  tokens.
-homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kvrocks
-source: https://github.com/doze-dev/doze-modules
+example: |-
+    kvrocks "store" {
+      version  = 2
+      port     = 6380
+      workers  = 4
+      password = "admin"
+
+      settings = {
+        rocksdb.block_cache_size = "256"
+      }
+
+      namespace "tenant_a" {
+        token = "tenant-a-token"
+      }
+
+      namespace "tenant_b" {
+        token = "tenant-b-token"
+      }
+    }
 exampleLabel: store
-example: |
-  kvrocks "store" {
-    version  = 2
-    port     = 6380
-    workers  = 4
-    password = "admin"
-
-    settings = {
-      rocksdb.block_cache_size = "256"
-    }
-
-    namespace "tenant_a" {
-      token = "tenant-a-token"
-    }
-
-    namespace "tenant_b" {
-      token = "tenant-b-token"
-    }
-  }
+description: 'A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk. Durable and memory-frugal — a drop-in Redis API when you want persistence without holding the dataset in RAM. Supports namespaces with per-namespace tokens.'
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kvrocks
+source: doze/kvrocks
 config:
-  arguments:
-    - { name: version, type: number, required: true, desc: "Engine major to run — 2." }
-    - { name: workers, type: number, desc: "Number of worker threads." }
-    - { name: password, type: string, desc: "requirepass auth password (the admin namespace)." }
-    - { name: settings, type: map(string), desc: "Arbitrary kvrocks.conf directives, applied verbatim." }
-  blocks:
-    - name: namespace
-      label: name
-      desc: "A logical namespace with its own access token."
-      arguments:
-        - { name: token, type: string, required: true, desc: "Auth token scoped to this namespace." }
+    arguments:
+        - name: version
+          type: number
+          desc: Engine major to run — 2.
+          required: true
+        - name: workers
+          type: number
+          desc: Number of worker threads.
+        - name: password
+          type: string
+          desc: requirepass auth password (the admin namespace); required when namespaces are declared.
+        - name: settings
+          type: map(string)
+          desc: Arbitrary kvrocks.conf directives, applied verbatim.
+    blocks:
+        - name: namespace
+          label: name
+          desc: A logical namespace with its own access token.
+          arguments:
+            - name: token
+              type: string
+              desc: Auth token scoped to this namespace.
+              required: true
