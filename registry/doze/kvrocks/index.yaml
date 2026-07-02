@@ -2,23 +2,23 @@ schema: 1
 module: kvrocks
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "2"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 1128f45cc1820121794e42d132f7432db41a14286f7cf8fcccf6faa82f80b9ae
-        sig: Asdf7iX5gbVYYyDCpOBrMcCLeekdgk1l/vD4BOnL2qgB3ATC01VS6SuaEZq6AT5x+v3wDes+mRFZ4M9MVrVGDw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 4f6c052ee05b538703b34ad3264384c55fc477664cf319e96c68e9ad8e06f657
+        sig: 4KmMAZyFWGVYfYiANLEGm4PX1AYGsN7nC8JT1Lq9VkUI6VMUuRbdJHrH6fqe21BEbEwyY6RvaGZQXWZYxLyaCg==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: d9bfd59f8856edca9a24dacf5941b238854bfb50e3528f56cb36dcf77fb5e62e
-        sig: O65NsdC/EAvecGbmMpsiyyMzi9c1vsgoV83Q19zJpc2rnYN0U6xxnhfChmdr3ZfUHITMo2Ny8Ena5Meo/w4rDg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 7a347288e232a6618b2861a72323430d6aa8456a4e32049e385c86c40b2886b7
+        sig: M0pGfo7rkLDvYhkrD1Mgx8STE82SNbBBI8AcG0Raz5tZKqHKf58EaYsrwoVcw/O30FScYMPoUn0d54dFyRswAw==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 627c2b6bc8fc34bffff0f6be572063ceeee24dca1681b1d7660a9fa342f7d7e5
-        sig: DEle/8AM6UkCTn2HVceXOqIYGgTGm5cdjDd5SRU8doreCVZkACZuPXJaqeBCGgZxZi/l/9UdMy5LoDjVNs0EBQ==
+        url: https://github.com/doze-dev/doze-modules/releases/download/kvrocks/kvrocks-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 275b8e40e02ae938bb6b67821f61c14237ab2b68c426cf77180a1871754f2c87
+        sig: zlLxv1p2z7aAgkga0MiIyqm0WI/GSewAfvT4iCgUvsKSQLe7Fj2y9zXut/kRnSPFWrqNqBws78EDNTMcVRqnDg==
 channels:
-  stable: 0.2.0
-signature: YGEuBCGztz9K3foONc8O9HhdFDxlGZ3czgf/C48v7r4ELjqxmzHXC49evqSXvKWnYut3l2NuYiP5IdWrUCIuDA==
+  stable: 0.2.1
+signature: t4GkMBn5Svht3Yuev/emk0A8KsqjvwRdjc3srmE2rCrF4Q2JAUT6IV+iYSZQd8LMu6ULVscvSYb9688Yo5klBQ==

@@ -2,21 +2,21 @@ schema: 1
 module: sns
 namespace: doze
 releases:
-  0.3.0:
+  0.3.1:
     protocol: 1
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.0-aarch64-apple-darwin.tar.gz
-        sha256: 0f18717474f5efcb4904c8f94a39d712391fc92ec0305671b6075bfa5038a815
-        sig: jiKnt+3+DSCxVhiHIRMMfMSpr85SQlGggS5HMevMzdR6g+c6VfmiCv2YYrAMLCpF8aTMHe3EaM6MwqOwmAEiCw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.1-aarch64-apple-darwin.tar.gz
+        sha256: 1a1f721ff76d39928225dce62b3fc1b1cf823390b45f2b78cffdd5813731270b
+        sig: WMBTq67/SVowNhe+0G4ntJnIUPAOT5wu0sJY61+jT9lV+aJMoKtaEwWA031lq4RpJ9DRhG0ymHbPWV2UYDF0AA==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: 5474af016859b997ece702288d87405020f6bd3353c377e9f6ba4e90ac0d7cda
-        sig: IkVyKN0MsC+pLTnYW5J2bWgShg19RXfm6nwoVvLmVRuD0UgTdQOukZCKkzIwnpSJEPtBxwV89s0/AntPjQ1uBg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: be6a77ec1bc3ebc2a436b2b16967f85b8bce9427589872879597d46b7cb0efad
+        sig: 8YIKVhH6fLsBFuWlwb4dFA/ifBgLsWoMAvx1F9IAYjtP2tCt4wI5hOlL8FRf9pWSPP7iqTQSNrOihpzcUZFYDA==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: fecfa00f70e826b1962e2314176bb5774ad37359e6b66ba6f42ae3ea84e89691
-        sig: mgIVBhQ8RLfdJFFA+mncllm5DWvB+GjOTU/Gzf9K6Q3aWEHqy+UzRpzgTjDhM5NvxC72YtNuPznV+LIJJv+5Ag==
+        url: https://github.com/doze-dev/doze-modules/releases/download/sns/sns-plugin-0.3.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 4433996b3a633e1f33596c3ccbe6dd42228f615c4e3a1ccb0513b7c7ca282ab6
+        sig: VwXvdWjw/s1bKujaw2cFhYd+N7vZwpOXdCySxOwX3kNPA0xHAM2gsiIY+vgSeQkSliTIwOjXUc/XZmvn0ywDDA==
 channels:
-  stable: 0.3.0
-signature: CTCgQg/f/E0lRrh0ydtfQ5m+AHa9yshqJJJ0Bg2Z87U9WRkG97XjegAP0SxqzAuFXA6LrBnXPerNZcZ3S72mAw==
+  stable: 0.3.1
+signature: JbfiRQav7ATFQK6bxc0XmmT43+NrYUWuEHJbCKjnXXBKtexcluDAS0cW7NowOxnRdEBmp8K4yGhd6JLtBL4qDw==

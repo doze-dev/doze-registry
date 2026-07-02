@@ -2,23 +2,23 @@ schema: 1
 module: temporal
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "1"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 7b4ae623d8f807a5be238a38db5eb49445e0d721c9d988b36300b0113bb772bd
-        sig: L71ffM50ce+NPKUkMYT7aTlI/IQtuFutUF1D6th8EVHA7Xkesk8DJaaM78z0QeQdwBDWOi7OAj6r8t2BCVNBCA==
+        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 304b2ea0e81a5732689fb5266030d62b5832825daaba8fdcb6de7edc63a2f57f
+        sig: K1maQidOKHCg/QDTWdL0oXnnX/0EIh/ETVJdDMXtzm6VvMTuyLi1ZlTjj7BqKJyAffBpfvJu47o1/z8DJDn4BA==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: 57d1a0d3f107576bcddb2b747354c6bfbcb4b22954fecebd208163686293cb7f
-        sig: aXUddffCORd8Q5XbmwvZF6UKdKZhFTBdIvbtPuGloVDhNnIpGhVdQM9nQJ9ZQ6fXdOqY/UKRzNdW6M31kX1bCQ==
+        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: f2c2fdc362092dad3267e0ac0c2fbd66ee4d2786dcb2f3d0436f79d7223fab11
+        sig: 0t+t2MIKcCscowPSSIUWKEALjxemEZtWtsZHjddDwUd/IF9afBzw6s8fBiHOeM8CgkA3Ch8YVgBa9RyZKxFMBA==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 6bf6c0deaa14257a27b518466c48428c2de589f8b0d53d03d3f611d0f8a6b809
-        sig: v/0rJ4D78mdhK4twxFjmGe0qj1HK/VsKyXLRGtpdUmVX8a7XDbm7BsP0y4GlSfHhpVXVikkwZoCskKZ6uFoQAg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/temporal/temporal-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 2aa60dda107a49c23c5a81e6929a31b31b84fc53bcd4b69e10d5c562b37ab6ab
+        sig: IkkC6DRXgGNXnxC+o3OYzc1CoQiAs8FhuS30pclVO4aZkO7SRdkOyIv9x8p+QHacsk95AC68gTFcmW0767rVDg==
 channels:
-  stable: 0.2.0
-signature: +P3A+i01LsY3g37myXKIy5dpjQ5Lvn5Ny4kKgjnS1rdybo8NaKQARd7QsZwGWtP4NkRyz77rh4dIvKYi8hpIDQ==
+  stable: 0.2.1
+signature: OpvTfbk1YwfiWYx/wtUmmN3S19PvL0MrR0Fbrz37d+XVIouh+RiLiTLhtL8yCMJNOjaaH9/wW3x/HPZG6RTxCA==

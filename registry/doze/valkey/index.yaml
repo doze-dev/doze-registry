@@ -2,24 +2,24 @@ schema: 1
 module: valkey
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "8"
       - "9"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: bddbb3d9dcc35c152f3bd29aaeef3349333a25c5711a3a1e699d805ce787ab1b
-        sig: 2PX0Jbi6YGsBzTOw6cwPXqjMWy3l/lQ6ugjmCBFf8FS3wb6ujBS2ObNNqfsFjTnr+LYsQIz6W2qRaT1r4U00Bg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 4d4ccc27eafeced61dc6597fb9089fac8ab64803dbf4d67e01f98fc52e987f13
+        sig: uY6lh8M7itDev/qNBD9GOwwASYNUYBeSr8UbolAXvWu5NvGJ/YAgjdyBetil7mtkOhZmRLMm4HSuP1IJ8SX5Bw==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: 5bbb34877ada302162352de8bbf0810ae4d52be37f40bd21f86c4fceb01fdd9f
-        sig: CIXfPZ27qm5H+54uPlUWmfjXInBuLHK/lx1659YLyaw9OwKV7sbufDS1If/wk2nr4i8BBuFWlM5ir/tATMvlAg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: f800301cfc0427474587d20cbee3387613593dda3cfc7819e9961e4b0f6a42b4
+        sig: zaCQ/dLpP2B1Vob0AGr1K/7loCTIQ8RzSOyHxbcbFWl9osjpudDsg8beUeubpiNGieE5VjB1AgcoCbCAITnFBA==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 7a5223659d1b18a071238e7a8a48f8db3ba1cd4bdbff0b272866f36f5cb0b0a8
-        sig: y6/RUknGOHOAw89ITXCrbIXp2FmxgeBAZk2O/8zy6pYShz7DgEFXqTLnFms0xGjZUc7KmHEPvPQbJCz4/WnNAg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/valkey/valkey-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: d06d41ea23051a8310dee5ad94bce2c6c06f0912c9bf3360fd73402d2fdac458
+        sig: nuajeQjI3AbOsU7J/qFgow3HGEpsf7gpwFN7gHS/aB2894trn7ZJtCzo8HBwi1cupxtnTnrx3RgJKczcdg4GAg==
 channels:
-  stable: 0.2.0
-signature: KkdncqVd+R2ALqhJwF/MiXqTj9MmRGsoTjkvAuK5FnRPGN5h4gr7jIbmEBW4xQZhKoWroRdQSbbahjYtK7KRCA==
+  stable: 0.2.1
+signature: vGTQgqEU5B1dfIatVCDHRnRlCebDWlwWx0H4mv0hwHa059fIKQfqfPfLvn3c0NMgvhV3o8swt2mw+JF28SrFBA==

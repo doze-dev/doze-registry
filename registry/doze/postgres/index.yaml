@@ -2,7 +2,7 @@ schema: 1
 module: postgres
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "14"
@@ -12,17 +12,17 @@ releases:
       - "18"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 646ebe49abce955ac0329f2a122bcf8e8847933e829b17413df4c3b30fdb8d5b
-        sig: xSwVZTTNpAcE12X856Vj4AF8eCBiLZbJDm7M4HdRQD5MCAC2QbLBydUgkhCr9QxFyvxSG8nSZ628d1H/0tM1Ag==
+        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 58e2a5bf4cf90e9b919581cb254f5445c698e7adff3ad0c1c85a007fc37df305
+        sig: CUay+yn0/9HHmYNEpYs+y4RcO6hupRo/0eBiuYs/yQXkx8huBZHUa3z+Od9Gnk8PhurIX14wqpOAVNd17E1ADQ==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: 044e12f929d6835380a6333601146947a46d6d295ef4e1bf78c9d4f7991d6c13
-        sig: pXTnZLPX6ZnpKJL8abTCMpPurHVCM7r2WUP8XhlSCYHu8SIznluq6ZionpSaAHP1xyyD3980oyJe2ShSxQSFCQ==
+        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 787bd6d42c6777aa2610d1784b70000c92b4a48304ab33f2c364af3e32d7b9bf
+        sig: ZN/PzzWXPBTBa8qVQzzFJvz7mnA9D5VJ6OIPeP2kHacyflbt848IUtIV/PmGZIh0nbfWRCw7OzIudguk3IxRBw==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 0d035fc927af079b1cb6d4b9ce44d9744ed4c7c2364e057a88b4ed5fdb9fe2a1
-        sig: 0am4mspIBa17+1YZadv51PqdsTypkyMm/3W0FKRvqoQ5xG8zVU2h9Oc28UG47fYKGYOWTS3/iZClinLzrJKQBw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/postgres/postgres-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 56a50ca979d03c1ca63915be2f81cd0d49a77c8dc84116c2584e48a4abbaf1e2
+        sig: HjDho0Ko991Ir3st3flJ+Vcssk+2fJSK9s4/cbMNm3TMgyP20oSZVuLvv0gqEj9J/8BhzFbajNJ0f5Sp8+YsDA==
 channels:
-  stable: 0.2.0
-signature: 9NCB3S9BWxGjtBQBc8liGifFw/+toMNo4TztNSqyiBTqHjcNrvj0Xr0at6B1sy4gEu5ZiAMJFjxpbuXctXmXCg==
+  stable: 0.2.1
+signature: 9vqyp4hgGgcOAcAY7JZzo+PjPd4IvYwwk+F2MMR0X6ihXLPrQsGgZTniiruhusbMlMeIRojWfLShlruR20t6Bg==

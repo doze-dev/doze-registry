@@ -2,23 +2,23 @@ schema: 1
 module: mariadb
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "11"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 8ae11d459b181927e251aeac42c0300ff72935265abf42f32aa23b9e6aaba5cd
-        sig: 3zGPx+P2HyAU7a0T4UamnUyNmKtro92fa8fgljWVGICpVqRGRKjO8bVu6t78zsO++T4cKWT3t16aWMRpBQ6tDg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 73cce951bb990a9a5a4c9e4ffb147e0afc6c3cb5c6ecb44a58fa88709a28dea3
+        sig: V8d8zXnAEUapWup+DCeiB3AWQnLoiVHy8M/24waQ/x2AqhV9uItSnoSvCyymdienYA2edRcqh41kj9vn9v4OCQ==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: c21ede4271054d8d4aa53df38bf8efd10a1ee19f7d4dfd7d651a2cf8a2fd2d7e
-        sig: /t3zVwAuauIAAlVYAtF8Y89Bn6Va4Zg0hBqID8nzCDoqWk7LRPiAWON/N6VMbtMhgu3pHD7N+y9RMNz0nUhdBQ==
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 8642d8fe452554f9428826a0ff7f1403d6e426268e9be55c7c0fcd12c9094f19
+        sig: PbtVEyBPu2L0p39EHs6VOaZlEhgyaocD8QCt70RUM+2JxQ2PtBpSVqiQ87yX5R5lSHTIkbEHp/WmbBoj88RRDw==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 7e92d1b93e7e1bad59f1ec403425efa68c06213351b10900116ed82625a58a86
-        sig: USZlaPJ1gG9mQ49+GytfPqZU1NZWc+1LobNY/jiksI35u6cTyqAqE/rnVjdifBTKHM6Am95AGD/1G0lfupQOCA==
+        url: https://github.com/doze-dev/doze-modules/releases/download/mariadb/mariadb-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: bec23a0a3bb1e4714a0378ce686db313adb280e531e5cbd65e5d9e1f14ef3433
+        sig: Z7wzQvlCkLNXduxlTyMhXAkC4xHWHILw8h+sEian+WTX6OGTmuW+TARc+rQZ/v2AVAEjcbrbq0IYkOznJ7TtBw==
 channels:
-  stable: 0.2.0
-signature: eGfhsl2XPXqTLimsdF5pI7LjqFINB/9kqistyYbrd3HkS04s6huuXiQZcVA5/KFXtr7+6wVleDjgWChnQGNQDA==
+  stable: 0.2.1
+signature: 8T4LoR+TSyJ2DgMERfK8bPcAETOK1bczSZ6yELp/cDD0KaDDmsHdk7GMzKFD8dTb+c8Rqx0ckeQZhIxVj0uMAg==

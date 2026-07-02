@@ -2,21 +2,21 @@ schema: 1
 module: s3
 namespace: doze
 releases:
-  0.3.0:
+  0.3.1:
     protocol: 1
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-aarch64-apple-darwin.tar.gz
-        sha256: dae8f861d5bb8cdb50d94d89ed25eb12586044cc241520ae74bf978a14e7a888
-        sig: 0EqlxyVX8oo571PF7Q+vrjjjk12cjcGz0NycbTbneMv4rETbfcGt+Z5o1Yq+gcgqI5QZEdwi1sUKy+9sFn/6Cg==
+        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.1-aarch64-apple-darwin.tar.gz
+        sha256: ce8170cd48926992cbdc8beece37791bd281c35c87767fb2e5b0c391d4158e5d
+        sig: pPfC5soturDKHd/lZIKJe9hQ2jlDyagujB0NBoLD5dW47q8dFvqcTLcgq8vuY2Yk7yaXDlSFmErV9+FpGr48Cw==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: 782b44258b2ffb1fce40add74e59828c5935f2df6b609b0ff20b26754bf6c40b
-        sig: 4lb3e1fRgIQjmSLYDRSg8Q9wC/+5sFjt4Rim9LHvR5RgLpDkLv8WezIp137/HnBkXmJJKlg/rzp1XGGG4FfTAw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 5513bb5cd994dbc547c777446807485393cecaaf1eaf992956073795db59392c
+        sig: keeQn11vU6WgHpIFwi5bcv7DJJ7JWqroY8hccfX0SSdE6qh4jNw+mnt0SHtYlROy/WF11IQFgsPr1cBCBm+QDg==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 428de8c09b81538be85691192f08d7969e248d658e23835abfd4bd50a17b73e5
-        sig: Ts/rwtHoIvTBEn+4YthVEPhwPy6Tppsvr599Lun+HScTT4nrd8whgZWqTUnRZKU2avVOurf/scRFGZUIdhwkDA==
+        url: https://github.com/doze-dev/doze-modules/releases/download/s3/s3-plugin-0.3.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: e45ce4aea90f3eb0c866c8e0875b536d454de86ab4fb3066abd1564cddf89233
+        sig: MM3wtJ/E59FiG60aJwSWmjizLaPiEWMM2/s8m2ZoeDev3YxybngK/9R4MU7eUaD0QaSaYuy4WJSXicV6RugIBg==
 channels:
-  stable: 0.3.0
-signature: AnWPugR4ijUvhs/WAomIn3WsC3ffYrio1qHAuq+mDtoXIcCsNkGfIng2R3SuMvI8Qu/qopDjGjEiizh+4xsQBw==
+  stable: 0.3.1
+signature: DPBgK3r2x/W4wMw7PT9WLgM7YUvq8vQfcK55upSssv3OaAZHhJ7TlgUgovAzDD0Zn7A1H90Zdlnsy1QlFk+zDg==

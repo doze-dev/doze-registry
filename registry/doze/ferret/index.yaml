@@ -2,23 +2,23 @@ schema: 1
 module: ferret
 namespace: doze
 releases:
-  0.2.0:
+  0.2.1:
     protocol: 1
     engines:
       - "2"
     artifacts:
       aarch64-apple-darwin:
-        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.0-aarch64-apple-darwin.tar.gz
-        sha256: 7621d88097ef371b0df36773747b74924f779c958d3e38ae117fc90cd015f133
-        sig: hEXQzroinT3of6xj+RZl5yXU5IZ+v/iBB0vooqyQc9MQpnkV8X35DeWSS+jyU4P6tq2/LMQF1zNQkt9vk1oCAw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.1-aarch64-apple-darwin.tar.gz
+        sha256: 2e1a2a88ed9510f067f3c38b8b00d059fb814bd76e985e9255ffbcb31bd2caf8
+        sig: dKvbFong591ITHHHI2T6HfF0BR3EOb94f7GpbgOvv4BbkIqWvlowDZxh+bUYwx5FUY1hgrE5GoSGxNgjdoTICw==
       aarch64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.0-aarch64-unknown-linux-gnu.tar.gz
-        sha256: ae5203948c57e61395c1fa2c536f1d66e994cfbf25a60796f8e2c2d6bd162183
-        sig: gnsEnj9AcWe6nF2SNfQYLK9Yt5oB1xgoJvUID2G29nQTzQqmPN8YwjpeaZTUhGbPYrOsZ+sVhzwRi7zVUHvqBw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.1-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 0e724c1fe516e2601a524df3a644f26dc80008c10ebe93f876e1d299a9cb81ea
+        sig: aMvUsIQJ3Gxxy430O5bGjKcR3duLMUvUhITS5HljhZ/Qc1kt79mztJ2WWMAS66+sHSPsARq+/UI9BRlrxVIMDw==
       x86_64-unknown-linux-gnu:
-        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.0-x86_64-unknown-linux-gnu.tar.gz
-        sha256: 970f8c63a8c114f7a44688ea1bacec8eef58efb33aea3013eb2c4cdd5edf1d78
-        sig: TJuW36OoJWNwhCbmvLLXhkPbUi8I7pFo009HUiXaBDa96NuOo+z01JuvAomkJwSDq+6GS81CHx9wIQxgPjEFDw==
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 626c367efe415fc2bced2f28bc4f3d61f678ff0ec2c07939a525149ad7f5cc96
+        sig: eualnVOvDMppVisXOshI64He5BXKpK19bgGsbRhnRwnC8ACgdYoZYXJFO7jlTth2AOICPoAR8diJ5EuuIHbYDQ==
 channels:
-  stable: 0.2.0
-signature: dnErv3davHsNA7mSGdcBIeak0bmr/vYclIEl6d3bT6lYa8m+S2LvVMm9s9Ppx0vCZXBixL2iLsCucZ5L0Ym/CA==
+  stable: 0.2.1
+signature: OgPvpnB596abIbu3TaDlk+ZTFMqWwuyk4KcmWdifcExLuG/PbzyKWQEThvVElI8RkeyRVrS+zIfBevvDt4rbBA==
