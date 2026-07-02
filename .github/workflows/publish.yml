@@ -59,13 +59,18 @@ jobs:
           fi
           echo "names=$names" >> "$GITHUB_OUTPUT"
 
+      # The dispatch payload's versions map (when present) tells the signer which
+      # release each module index must contain — publish.mjs retries the fetch
+      # until the asset CDN serves it, instead of signing a stale index.
       - name: Sign + publish each module
         env:
           DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
+          VERSIONS: '${{ github.event.client_payload.versions }}'
         run: |
           for name in ${{ steps.set.outputs.names }}; do
-            echo "::group::publish doze/$name"
-            node scripts/publish.mjs "doze/$name"
+            expect=$(echo "${VERSIONS:-{}}" | jq -r --arg n "$name" '.[$n] // empty' 2>/dev/null || true)
+            echo "::group::publish doze/$name ${expect:+(expect $expect)}"
+            node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"}
             echo "::endgroup::"
           done
 

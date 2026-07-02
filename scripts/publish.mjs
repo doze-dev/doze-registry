@@ -30,6 +30,11 @@ const DEFAULT_RELEASE_BASE = 'https://github.com/doze-dev/doze-modules/releases/
 const source = process.argv[2];
 const baseFlag = argValue('--release-base');
 const artifactBaseFlag = argValue('--artifact-base');
+// --expect <version>: retry the index fetch until it contains this release.
+// Release CI dispatches seconds after `gh release upload --clobber`, and the
+// asset CDN can briefly serve the previous index — signing that would silently
+// no-op the publish.
+const expectVersion = argValue('--expect');
 if (!source) {
 	console.error('usage: npm run publish <namespace>/<name> -- [--release-base <url>] [--artifact-base <url>]');
 	process.exit(2);
@@ -59,7 +64,17 @@ if (pub !== loadKeys(keysPath).key) {
 
 const releaseBase = (baseFlag || `${DEFAULT_RELEASE_BASE}/${name}`).replace(/\/+$/, '');
 const manifestUrl = `${releaseBase}/index.yaml`;
-const idx = parseYaml(await fetchText(manifestUrl));
+let idx;
+for (let attempt = 1; ; attempt++) {
+	idx = parseYaml(await fetchText(manifestUrl));
+	if (!expectVersion || idx?.releases?.[expectVersion]) break;
+	if (attempt >= 12) {
+		console.error(`${manifestUrl}: still has no release ${expectVersion} after ${attempt} attempts — is the release upload done?`);
+		process.exit(1);
+	}
+	console.log(`waiting for ${name} ${expectVersion} to appear in the release index (attempt ${attempt})…`);
+	await new Promise((r) => setTimeout(r, 10_000));
+}
 if (idx?.schema !== SCHEMA) {
 	console.error(`${manifestUrl}: not a schema-${SCHEMA} module index (got schema ${idx?.schema ?? 'none'}) — rebuild the release with a current dzm`);
 	process.exit(1);
