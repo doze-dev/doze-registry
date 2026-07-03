@@ -19,6 +19,23 @@ releases:
         url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.1-x86_64-unknown-linux-gnu.tar.gz
         sha256: 626c367efe415fc2bced2f28bc4f3d61f678ff0ec2c07939a525149ad7f5cc96
         sig: eualnVOvDMppVisXOshI64He5BXKpK19bgGsbRhnRwnC8ACgdYoZYXJFO7jlTth2AOICPoAR8diJ5EuuIHbYDQ==
+  0.2.2:
+    protocol: 1
+    engines:
+      - "2"
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.2-aarch64-apple-darwin.tar.gz
+        sha256: 7bdde3bfd9c41c01c9b14884e20432486fe82ab5c8e474ca19832cdd986753fb
+        sig: fvJkg7afxHEWvWPCxD/GO8iGTd+G9V6rrb69aaJk8Mjrrtv5r8iDhl2SOvGCCuABqLfdMtz6NndsJ/GTpjdRCw==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.2-aarch64-unknown-linux-gnu.tar.gz
+        sha256: e962983b1006a0a3469ef1b7b0c11610d07be6c82de0ef0babe0885f6318252b
+        sig: +C2CokfUoWp0Wu1fJ0tTZe269t0EpB+K8knSkQdqz3Ens+4EYuNUy8QBxxelynKFHmCTOX08I3N5Y90JeOhnCg==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ferret/ferret-plugin-0.2.2-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 53f98d691f348b3cafe59452083b905196a686521ee0ff0b2ecda44839bd1bcd
+        sig: 6baucRimkQ2D8faQ5T8HjcKJJ1mqA5MRAhXh82pKoPfczez+PzrlqFpsNlidTmorIgGSNUsDC79z3TVSPi3YCg==
 channels:
-  stable: 0.2.1
-signature: OgPvpnB596abIbu3TaDlk+ZTFMqWwuyk4KcmWdifcExLuG/PbzyKWQEThvVElI8RkeyRVrS+zIfBevvDt4rbBA==
+  stable: 0.2.2
+signature: bRqjtVZVIo7cgccZdAaTIJyvYlptSinL540EIRicYpLuO6bA5BmXwaqi0PiTkreDF6L/ktGd/ufspFANxj5AAg==
