@@ -1,0 +1,23 @@
+title: Secrets Manager
+tagline: Local AWS Secrets Manager for app secrets.
+category: config
+engine: secretsmanager
+port: 9040
+example: |-
+    secretsmanager "db_password" {
+      port = 9040
+      secret_string = "s3cr3t"
+      description   = "Primary database password"
+    }
+exampleLabel: db_password
+description: 'A local Secrets Manager backed by doze-aws — version stages (AWSCURRENT/AWSPREVIOUS), staging labels, and recovery-window deletes. One block is one secret: declare its value and doze creates (and keeps) it. SecureString values are encrypted at rest per data dir.'
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/secretsmanager
+source: doze/secretsmanager
+config:
+    arguments:
+        - name: secret_string
+          type: string
+          desc: The secret value (often set via a var, not committed).
+        - name: description
+          type: string
+          desc: Human description.

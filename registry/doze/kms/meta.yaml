@@ -1,0 +1,29 @@
+title: KMS
+tagline: Local AWS KMS with real local crypto.
+category: security
+engine: kms
+port: 9020
+example: |-
+    kms "app" {
+      port = 9020
+      description = "App data key"
+      key_spec    = "SYMMETRIC_DEFAULT"
+      key_usage   = "ENCRYPT_DECRYPT"
+    }
+exampleLabel: app
+description: A local KMS backed by doze-aws — symmetric (AES-GCM), asymmetric (RSA/ECC sign+encrypt), and HMAC keys, with REAL local crypto so encrypt/decrypt/sign/verify round-trip. One block is one key with the alias alias/<name>, created on boot.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kms
+source: doze/kms
+config:
+    arguments:
+        - name: description
+          type: string
+          desc: Human description.
+        - name: key_usage
+          type: string
+          default: ENCRYPT_DECRYPT
+          desc: ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MAC.
+        - name: key_spec
+          type: string
+          default: SYMMETRIC_DEFAULT
+          desc: SYMMETRIC_DEFAULT, RSA_2048, ECC_NIST_P256, HMAC_256, …

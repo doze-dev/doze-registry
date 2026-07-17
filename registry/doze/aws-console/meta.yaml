@@ -1,0 +1,15 @@
+title: AWS Console
+tagline: A local web console for your doze AWS services.
+category: observability
+engine: aws-console
+port: 9999
+example: |-
+    aws-console "console" {
+      depends_on = [uploads, jobs, events]
+    }
+exampleLabel: console
+description: A server-rendered web console for the doze-aws services — inspect and manage S3 buckets, SQS queues, SNS topics, DynamoDB tables, Lambda functions, EventBridge buses, KMS keys, Secrets Manager secrets, and SSM parameters from one page. Depends on the AWS instances it should surface; it reaches each over its backend socket. No Docker, no JVM.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/awsconsole
+source: doze/aws-console
+config:
+    arguments: []

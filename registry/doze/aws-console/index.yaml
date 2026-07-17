@@ -1,0 +1,22 @@
+schema: 1
+module: aws-console
+namespace: doze
+releases:
+  0.1.0:
+    protocol: 1
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws-console/aws-console-plugin-0.1.0-aarch64-apple-darwin.tar.gz
+        sha256: a9de51ac70341c627261c169201c25ec069cead57a14e2ce31078bdac567482a
+        sig: UwtCqUTjOfUsb6WQN38Q0q1iLyDsfsQBTbo/pJ590CQgkZz2IxsXrBt8UMdVR5EskLtYu3B7Le4EcslGln/kAQ==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws-console/aws-console-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: fb7db60b22948d188594c4061981f874a7ef8179dfbe2db5dafea2e80b0b3c99
+        sig: dgQ2fHCFXpCfnj55DkWr4C2kpEXCB6TVThIfEFqyxm2+OBl+jUCkpftJCrwuf19Hz7jcu5LVxuBM57tfoLqIAQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws-console/aws-console-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 6917ac5cec06a3eede5266831b54569a3961c7dba4d89fa3aee68582819a5c42
+        sig: 8s40pNqy0qj4uVsI3uv23YSVyeC4yRQjKjyTu3M/6bzrlsdlwKwQjyGZ1L8newvv9uKbGZjfUomHZvpd3PpbDA==
+channels:
+  stable: 0.1.0
+signature: jH8gY/UJUz79X3slbHiPHJf5UErAgJU9oc4ChzhRUg3Qw2oPNUxiEMFnd0E8CaFLvqG8CqvyACmNJvI+tGA3Ag==

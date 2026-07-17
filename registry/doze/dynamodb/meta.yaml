@@ -1,0 +1,61 @@
+title: DynamoDB
+tagline: Local DynamoDB-compatible key-value/document store.
+category: database
+engine: dynamodb
+port: 8000
+example: |-
+    dynamodb "orders" {
+      port = 8000
+      hash_key  = "id"
+      range_key = "created_at"
+
+      attribute "id"         { type = "S" }
+      attribute "created_at" { type = "N" }
+      attribute "status"     { type = "S" }
+
+      ttl_attribute = "expires_at"
+
+      global_secondary_index "by_status" {
+        hash_key = "status"
+      }
+    }
+exampleLabel: orders
+description: 'A local, disk-backed DynamoDB — the full expression engine (condition/filter/update/projection), GSIs and LSIs, transactions, and TTL. Backed by doze-aws; unmodified AWS SDK v1/v2 clients work. One block is one table: declare its keys, attributes, indexes, and TTL and doze creates it on boot.'
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/dynamodb
+source: doze/dynamodb
+config:
+    arguments:
+        - name: hash_key
+          type: string
+          desc: Partition key attribute name.
+          required: true
+        - name: range_key
+          type: string
+          desc: Sort key attribute name (optional).
+        - name: billing_mode
+          type: string
+          default: PAY_PER_REQUEST
+          desc: PAY_PER_REQUEST or PROVISIONED.
+        - name: ttl_attribute
+          type: string
+          desc: Attribute holding the epoch-seconds TTL (enables TTL).
+    blocks:
+        - name: attribute
+          label: name
+          desc: A key attribute definition.
+          arguments:
+            - name: type
+              type: string
+              default: S
+              desc: S (string), N (number), or B (binary).
+        - name: global_secondary_index
+          label: name
+          desc: A GSI.
+          arguments:
+            - name: hash_key
+              type: string
+              desc: GSI partition key.
+              required: true
+            - name: range_key
+              type: string
+              desc: GSI sort key.

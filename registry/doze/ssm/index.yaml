@@ -1,0 +1,22 @@
+schema: 1
+module: ssm
+namespace: doze
+releases:
+  0.1.0:
+    protocol: 1
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ssm/ssm-plugin-0.1.0-aarch64-apple-darwin.tar.gz
+        sha256: 159686cc82ffc838019c65ce566dfc3401e993a93e8e8d31b5ec6ce172df6093
+        sig: VF+JDrw9bi6ysErLIXCYBDJ2O2QoM5nzT2czTrPCjY2oONmBEFVRf4Bw01Z92q80R8hafggEoS8tqN8L+GmPAA==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ssm/ssm-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: e89bb0c86234883bb2b3ccff2cbac4e694577c9c22a899a0da1b51ed22c91596
+        sig: 6tGPihmPgzDHjzRIdcFevRT1Jxeub+Nx+v2IU1WXlXopxaC+9XvQ3QQIsqnZBQEN0wev1/dNzB07tDCW+UcbBw==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/ssm/ssm-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: b616c785332f8d3bf7b86c8a038878f0f957ee8be242a3eb1ab76a138c690f95
+        sig: cLrEDwkg5jeY/PNOg8TIiw1BQZmSjVGTUVUDuqdOpWd5AwEyEkFfNvcIAprGIqFnkPPOk9Lo8ODcIGg9QpudBQ==
+channels:
+  stable: 0.1.0
+signature: /JX9V8OGJh7991wGVr7OaVRat5Dy3NzN21FGWOnwP01dxLf2hj7cRY8VwIU4QALduNzHLDM1ThGbUHDg47XbBQ==

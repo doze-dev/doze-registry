@@ -1,0 +1,58 @@
+title: Kafka
+tagline: Single-node Kafka-protocol broker, no JVM.
+category: queue
+engine: kafka
+port: 9092
+example: |-
+    kafka "events" {
+      version = 4
+      port    = 9092
+
+      auto_create_topics = true
+      default_partitions = 1
+      retention          = "168h"
+
+      topic "orders" {
+        partitions = 3
+      }
+      topic "payments" {
+        partitions = 1
+        config = { "cleanup.policy" = "compact" }
+      }
+    }
+exampleLabel: events
+description: A local, disk-backed broker that speaks enough of the Kafka wire protocol that unmodified clients (franz-go, kcat, Sarama, the Java client) connect and work. No JVM, no ZooKeeper, no KRaft — the engine is doze-kafka, embedded in the module, and `version` selects the Kafka protocol profile it advertises (1–4). Declare topics and doze converges them on boot; auto-create handles the rest.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kafka
+source: doze/kafka
+config:
+    arguments:
+        - name: version
+          type: number
+          desc: Advertised Kafka protocol profile — 1, 2, 3, or 4.
+          required: true
+        - name: auto_create_topics
+          type: bool
+          default: "true"
+          desc: Create unknown topics on first reference.
+        - name: default_partitions
+          type: number
+          default: "1"
+          desc: Partition count for auto-created topics.
+        - name: retention
+          type: string
+          desc: Delete segments older than this (Go duration, e.g. "168h"); empty = unbounded.
+        - name: retention_bytes
+          type: number
+          desc: Delete old segments once a partition exceeds this size (0 = unbounded).
+    blocks:
+        - name: topic
+          label: name
+          desc: A topic to create on boot.
+          arguments:
+            - name: partitions
+              type: number
+              default: "1"
+              desc: Partition count.
+            - name: config
+              type: map(string)
+              desc: Per-topic config (e.g. cleanup.policy = compact).

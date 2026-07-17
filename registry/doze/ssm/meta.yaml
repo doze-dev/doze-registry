@@ -1,0 +1,35 @@
+title: SSM Parameter Store
+tagline: Local AWS SSM Parameter Store for config.
+category: config
+engine: ssm
+port: 9030
+example: |-
+    ssm "app" {
+      port = 9030
+      parameter "/app/db/url" {
+        value = "postgres://localhost/app"
+      }
+      parameter "/app/api/key" {
+        value = "secret"
+        type  = "SecureString"
+      }
+    }
+exampleLabel: app
+description: 'A local SSM Parameter Store backed by doze-aws — String/StringList/SecureString parameters, versions and labels, GetParametersByPath. One block is a parameter tree: declare the parameters and doze puts them on boot. SecureString values are encrypted at rest per data dir.'
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/ssm
+source: doze/ssm
+config:
+    arguments: []
+    blocks:
+        - name: parameter
+          label: name
+          desc: A parameter (name is the full /path).
+          arguments:
+            - name: value
+              type: string
+              desc: Parameter value.
+              required: true
+            - name: type
+              type: string
+              default: String
+              desc: String, StringList, or SecureString.
