@@ -11,6 +11,7 @@
     "sign": "node scripts/sign.mjs",
     "publish": "node scripts/publish.mjs",
     "prepare:data": "node scripts/prepare.mjs",
+    "test:conformance": "bun scripts/conformance-check.mjs",
     "dev": "node scripts/prepare.mjs && astro dev",
     "build": "node scripts/prepare.mjs && astro build",
     "preview": "astro preview",
