@@ -1,0 +1,22 @@
+schema: 1
+module: aws
+namespace: doze
+releases:
+  0.1.0:
+    protocol: 1
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws/aws-plugin-0.1.0-aarch64-apple-darwin.tar.gz
+        sha256: 10edd75a23bb969559bb65ea4191f92edfcad1cd52e2d506c48af9d538ccb9e3
+        sig: SfbU61h1paMQ7pUVcKoSbyhEEyK9aySg1p58xauoOvp0dPb2GBdwtGQt8nCDErc6uNqY5rtu2RkzqK/g8DpBDg==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws/aws-plugin-0.1.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 9a986d2836ee746bbc370539978bfd37c34aa8b7650277228f9f240f66c1f1b7
+        sig: eIqwGLXbw1nL3eEDyHuTzAZvhsUcY/cgs2A2dOOCW6ypOX3Kxcdh4cAovI/rN7ED3iTTTN6w37muKIuvNmQSAQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-modules/releases/download/aws/aws-plugin-0.1.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: dd0fd25000e0cf5514650b53f67acc3821b45c8140dc3b3caa1921631c93d02d
+        sig: e17fh9beKt1Mpfx4nzpNzlYTV9XDEIC95z8ohpNRuteqYQcFDdXgK/mVNVsprnKI9PgWiX8qhz29P9mp8sM8CA==
+channels:
+  stable: 0.1.0
+signature: 0ZkcNzHXNyXh5UHhaNg62sLHIWqDROSfskkAzrlLp/FIP0CERCoMvbEpeoD1TjiOq7KfpApw15G2OPds2l19Cw==

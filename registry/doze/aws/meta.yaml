@@ -1,0 +1,88 @@
+title: AWS
+tagline: The whole local AWS as ONE service — with its web console.
+category: cloud
+engine: aws
+port: 4566
+example: |-
+    aws "local" {
+      port = 4566
+
+      bucket "uploads" { versioning = true }
+      queue  "emails"  { dlq = "auto"  max_receives = 5 }
+      queue  "orders"  { fifo = true  content_dedup = true }
+
+      topic "signups" {
+        subscribe { queue = "emails"  raw = true }
+      }
+
+      table "sessions" {
+        key = "session_id:S"
+        ttl = "expires_at"
+      }
+
+      function "resize" {
+        code    = "./functions/resize"   # dir with a provided.al2 bootstrap
+        timeout = 10
+      }
+
+      rule "order_placed" {
+        pattern = "{\"source\":[\"shop.checkout\"]}"
+        targets = ["lambda:resize", "queue:emails"]
+      }
+
+      key "app_key" {}
+      secret "db_password" { value = "s3cr3t" }
+      parameter "/app/feature/banner" { value = "hello" }
+    }
+exampleLabel: local
+description: Every doze-aws service — S3, SQS, SNS, DynamoDB, Lambda, EventBridge, KMS, SSM, Secrets Manager, STS — behind one gateway on one endpoint, as one doze instance. Declare buckets, queues, topics, tables, functions, rules, keys, secrets and parameters as nested blocks (the same shape as doze-aws's stack.yaml); doze converges them on boot. A stock SDK or the aws CLI points AWS_ENDPOINT_URL at the one endpoint; the web console at /_console manages everything, with the live Flows graph and a Traffic tail capturing every call. One process, no Docker, no JVM, no LocalStack.
+homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/aws
+source: doze/aws
+config:
+    arguments: []
+    blocks:
+        - name: bucket
+          desc: One S3 bucket (the label is the bucket name).
+          arguments:
+            - name: versioning
+              type: bool
+              default: "false"
+              desc: Enable object versioning.
+            - name: object_lock
+              type: bool
+              default: "false"
+              desc: Enable object lock (implies versioning).
+        - name: queue
+          desc: One SQS queue; dlq = "auto" creates and wires a dead-letter companion.
+          arguments:
+            - name: fifo
+              type: bool
+              default: "false"
+              desc: FIFO queue (name gets .fifo).
+            - name: dlq
+              type: string
+              desc: '"auto" or an existing queue name.'
+            - name: max_receives
+              type: number
+              desc: Receives before dead-lettering.
+        - name: topic
+          desc: One SNS topic with subscribe blocks (queue/lambda/http, filter, raw).
+          arguments: []
+        - name: table
+          desc: One DynamoDB table; key uses the "pk:S sk:N" shorthand, plus gsi/lsi blocks.
+          arguments: []
+        - name: function
+          desc: One Lambda function running as a real local process (code = local dir).
+          arguments: []
+        - name: rule
+          desc: One EventBridge rule; targets use "queue:name"/"topic:name"/"lambda:name".
+          arguments: []
+        - name: key
+          desc: One KMS key with real local crypto.
+          arguments: []
+        - name: secret
+          desc: One Secrets Manager secret (never stomped without force).
+          arguments: []
+        - name: parameter
+          desc: One SSM parameter (the label is the full /path).
+          arguments: []
