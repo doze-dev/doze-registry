@@ -12,6 +12,15 @@ const { mod } = Astro.props;
 const versions = mod.engineVersions;
 const platformLabel = (t) =>
 	t.replace('aarch64', 'arm64').replace('x86_64', 'x86_64').replace('-apple-darwin', ' · macOS').replace('-unknown-linux-gnu', ' · Linux');
+// The header answers "can I use this?" — what it runs and where — in the
+// user's terms. Module versions and the plugin protocol are machinery; they
+// live in the Releases table, not the masthead.
+const plats = mod.enginePlatforms || mod.platforms;
+const hasMac = plats.some((t) => t.includes('apple-darwin'));
+const hasLinux = plats.some((t) => t.includes('linux'));
+const where =
+	hasMac && hasLinux ? 'macOS & Linux' : hasMac ? 'macOS only' : plats.length === 1 ? platformLabel(plats[0]).split(' · ').reverse().join(' ') + ' only' : 'Linux only';
+const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[versions.length - 1]}` : versions[0]) : null;
 ---
 
 <Base title={`${mod.title} — doze registry`} description={mod.tagline || mod.description}>
@@ -33,11 +42,9 @@ const platformLabel = (t) =>
 					{mod.signed && <span class="mono text-[10px] uppercase tracking-wider text-awake border border-awake/30 rounded px-1.5 py-0.5">● signed</span>}
 				</div>
 				<code class="mono text-sm text-dim">{mod.source}</code>
-				{mod.version && (
-					<div class="mt-1 mono text-xs text-faint">
-						module v{mod.version}{mod.protocol && <span> · plugin protocol {mod.protocol}</span>}
-					</div>
-				)}
+				<div class="mt-1 mono text-xs text-faint">
+					{runs && <span class="text-dim">runs {mod.title} {runs}</span>}{runs && ' · '}{where}
+				</div>
 			</div>
 		</div>
 
@@ -149,7 +156,7 @@ const platformLabel = (t) =>
 					<div class="px-1">
 						<h3 class="t-label mb-2">Platforms</h3>
 						<ul class="space-y-1 mono text-xs text-dim">
-							{mod.platforms.map((p) => <li>{platformLabel(p)}</li>)}
+							{plats.map((p) => <li>{platformLabel(p)}</li>)}
 						</ul>
 					</div>
 

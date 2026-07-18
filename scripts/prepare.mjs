@@ -13,6 +13,30 @@ import { publicKeyObject, verify, verifyIndex, loadKeys, parseYaml, eachArtifact
 
 const OFFICIAL = new Set(['doze']);
 
+// backendPlatforms resolves the platforms the ENGINE backend is published
+// for, from doze-binaries' rolling index — the module plugin itself is pure Go
+// and says nothing about where the engine can run. Embedded engines (no
+// fetched backend) and any fetch failure fall back to the plugin's triples.
+const BACKENDS = { postgres: ['postgres'], valkey: ['valkey'], kvrocks: ['kvrocks'], mariadb: ['mariadb'], temporal: ['temporal'], ferret: ['ferretdb', 'documentdb'] };
+async function backendPlatforms(name, plugin) {
+	const recipes = BACKENDS[name];
+	if (!recipes) return plugin; // embedded engine — the plugin IS the engine
+	try {
+		let acc = null;
+		for (const recipe of recipes) {
+			const res = await fetch(`https://github.com/doze-dev/doze-binaries/releases/download/${recipe}/index.yaml`, { redirect: 'follow' });
+			if (!res.ok) throw new Error(`${recipe}: ${res.status}`);
+			const triples = new Set([...(await res.text()).matchAll(/^\s+((?:aarch64|x86_64)-[a-z0-9_.-]+):\s*$/gm)].map((m) => m[1]));
+			acc = acc ? new Set([...acc].filter((t) => triples.has(t))) : triples;
+		}
+		return acc && acc.size ? [...acc].sort() : plugin;
+	} catch (e) {
+		console.warn(`  ⚠ ${name}: backend platform lookup failed (${e.message}); showing plugin platforms`);
+		return plugin;
+	}
+}
+
+
 // 1. Validate signatures (fails the build on a bad/unsigned artifact).
 execFileSync(process.execPath, ['scripts/validate.mjs'], { stdio: 'inherit' });
 
@@ -65,6 +89,11 @@ for (const ns of dirs('registry')) {
 				stable: version === stableVersion,
 			}))
 			.sort((a, b) => semverDesc(a.version, b.version));
+		// Where can you actually RUN this engine? The plugin is pure Go and
+		// builds everywhere; the ENGINE backend may not (mariadb publishes
+		// x86_64-linux only). doze-binaries' signed index is the truth for
+		// fetched backends; embedded engines (kafka, aws) are the plugin.
+		const enginePlatforms = await backendPlatforms(name, [...triples].sort());
 		const mod = {
 			ns,
 			name,
@@ -85,6 +114,7 @@ for (const ns of dirs('registry')) {
 			homepage: meta.homepage || '',
 			sourceRepo: meta.source || '',
 			platforms: [...triples].sort(),
+			enginePlatforms,
 			signed,
 			releases,
 			indexUrl: `/registry/${ns}/${name}/index.yaml`,
@@ -101,7 +131,7 @@ for (const ns of dirs('registry')) {
 			engineVersions: mod.engineVersions,
 			port: mod.port,
 			label: mod.label,
-			platforms: mod.platforms,
+			platforms: mod.enginePlatforms, // where the ENGINE runs — the honest answer
 			signed: mod.signed,
 			// every published release, newest first — so tooling can discover
 			// more than the stable channel without fetching each index.yaml
