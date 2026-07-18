@@ -53,6 +53,18 @@ for (const ns of dirs('registry')) {
 		const stableVersion = manifest?.channels?.stable ?? null;
 		const stable = stableVersion ? manifest?.releases?.[stableVersion] : null;
 		const versions = (stable?.engines || []).map(String);
+		// The FULL release history, newest first — the index is cumulative
+		// (published artifacts are immutable; old releases stay resolvable for
+		// pinned lockfiles), and the site is where a human discovers that.
+		const releases = Object.entries(manifest?.releases || {})
+			.map(([version, rel]) => ({
+				version,
+				protocol: rel?.protocol ?? null,
+				engines: (rel?.engines || []).map(String),
+				platforms: Object.keys(rel?.artifacts || {}).sort(),
+				stable: version === stableVersion,
+			}))
+			.sort((a, b) => semverDesc(a.version, b.version));
 		const mod = {
 			ns,
 			name,
@@ -74,6 +86,7 @@ for (const ns of dirs('registry')) {
 			sourceRepo: meta.source || '',
 			platforms: [...triples].sort(),
 			signed,
+			releases,
 			indexUrl: `/registry/${ns}/${name}/index.yaml`,
 		};
 		modules.push(mod);
@@ -90,6 +103,9 @@ for (const ns of dirs('registry')) {
 			label: mod.label,
 			platforms: mod.platforms,
 			signed: mod.signed,
+			// every published release, newest first — so tooling can discover
+			// more than the stable channel without fetching each index.yaml
+			versions: releases.map((r) => r.version),
 		};
 	}
 }
@@ -102,6 +118,17 @@ mkdirSync('src/data', { recursive: true });
 writeFileSync('src/data/modules.json', JSON.stringify({ modules, categories, count: modules.length }, null, 2) + '\n');
 
 console.log(`✓ prepared — ${modules.length} module(s), ${categories.length} categor(ies); machine files in public/registry/`);
+
+// semverDesc orders x.y.z strings newest-first (numeric per part).
+function semverDesc(a, b) {
+	const pa = a.split('.').map(Number);
+	const pb = b.split('.').map(Number);
+	for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+		const d = (pb[i] || 0) - (pa[i] || 0);
+		if (d) return d;
+	}
+	return 0;
+}
 
 function dirs(p) {
 	if (!existsSync(p)) return [];
