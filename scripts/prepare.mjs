@@ -18,21 +18,48 @@ const OFFICIAL = new Set(['doze']);
 // and says nothing about where the engine can run. Embedded engines (no
 // fetched backend) and any fetch failure fall back to the plugin's triples.
 const BACKENDS = { postgres: ['postgres'], valkey: ['valkey'], kvrocks: ['kvrocks'], mariadb: ['mariadb'], temporal: ['temporal'], ferret: ['ferretdb', 'documentdb'] };
-async function backendPlatforms(name, plugin) {
+const numDesc = (a, b) => b.localeCompare(a, undefined, { numeric: true });
+
+// backendInfo resolves, from doze-binaries' published index, BOTH sides of
+// "can I use this engine": the platforms its backend is actually built for
+// (the pure-Go plugin says nothing — mariadb publishes x86_64-linux only) and
+// the full version inventory — every series (the `version =` a user writes;
+// a bare series pins its newest build) with its exact builds, split into
+// supported (the current module accepts the major) and pending (published in
+// the mirror, awaiting module support). Embedded engines (kafka, aws) have no
+// fetched backend: platforms = the plugin's, versions = null. Lookup failures
+// degrade the same way rather than failing the site build.
+async function backendInfo(name, pluginTriples, supportedMajors) {
 	const recipes = BACKENDS[name];
-	if (!recipes) return plugin; // embedded engine — the plugin IS the engine
+	if (!recipes) return { platforms: pluginTriples, series: null, pending: [] };
 	try {
-		let acc = null;
+		let plats = null;
+		let eng = null; // the FIRST recipe carries the declarable versions (ferret: the gateway)
 		for (const recipe of recipes) {
 			const res = await fetch(`https://github.com/doze-dev/doze-binaries/releases/download/${recipe}/index.yaml`, { redirect: 'follow' });
 			if (!res.ok) throw new Error(`${recipe}: ${res.status}`);
-			const triples = new Set([...(await res.text()).matchAll(/^\s+((?:aarch64|x86_64)-[a-z0-9_.-]+):\s*$/gm)].map((m) => m[1]));
-			acc = acc ? new Set([...acc].filter((t) => triples.has(t))) : triples;
+			const doc = parseYaml(await res.text());
+			const e = doc?.engines?.[recipe];
+			if (!eng) eng = e;
+			const triples = new Set();
+			for (const art of Object.values(e?.artifacts || {})) for (const t of Object.keys(art || {})) triples.add(t);
+			plats = plats ? new Set([...plats].filter((t) => triples.has(t))) : triples;
 		}
-		return acc && acc.size ? [...acc].sort() : plugin;
+		const fulls = Object.keys(eng?.artifacts || {});
+		const all = Object.entries(eng?.versions || {}).map(([ser, latest]) => ({
+			series: ser,
+			latest,
+			supported: supportedMajors.some((m) => ser === m || ser.startsWith(m + '.')),
+			fulls: fulls.filter((f) => f === ser || f.startsWith(ser + '.')).sort(numDesc),
+		}));
+		return {
+			platforms: plats && plats.size ? [...plats].sort() : pluginTriples,
+			series: all.filter((x) => x.supported).sort((a, b) => numDesc(b.series, a.series)),
+			pending: all.filter((x) => !x.supported).map((x) => x.series).sort((a, b) => numDesc(b, a)),
+		};
 	} catch (e) {
-		console.warn(`  ⚠ ${name}: backend platform lookup failed (${e.message}); showing plugin platforms`);
-		return plugin;
+		console.warn(`  ⚠ ${name}: backend lookup failed (${e.message}); plugin platforms, no version inventory`);
+		return { platforms: pluginTriples, series: null, pending: [] };
 	}
 }
 
@@ -93,7 +120,8 @@ for (const ns of dirs('registry')) {
 		// builds everywhere; the ENGINE backend may not (mariadb publishes
 		// x86_64-linux only). doze-binaries' signed index is the truth for
 		// fetched backends; embedded engines (kafka, aws) are the plugin.
-		const enginePlatforms = await backendPlatforms(name, [...triples].sort());
+		const backend = await backendInfo(name, [...triples].sort(), versions);
+		const enginePlatforms = backend.platforms;
 		const mod = {
 			ns,
 			name,
@@ -115,6 +143,8 @@ for (const ns of dirs('registry')) {
 			sourceRepo: meta.source || '',
 			platforms: [...triples].sort(),
 			enginePlatforms,
+			engineSeries: backend.series,   // full declarable inventory, or null (embedded/unknown)
+			pendingSeries: backend.pending, // published in the mirror, awaiting module support
 			signed,
 			releases,
 			indexUrl: `/registry/${ns}/${name}/index.yaml`,

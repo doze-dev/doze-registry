@@ -10,17 +10,21 @@ export function getStaticPaths() {
 
 const { mod } = Astro.props;
 const versions = mod.engineVersions;
+const series = mod.engineSeries; // full declarable inventory (null = embedded engine / no fetched backend)
+const pending = mod.pendingSeries || [];
 const platformLabel = (t) =>
 	t.replace('aarch64', 'arm64').replace('x86_64', 'x86_64').replace('-apple-darwin', ' · macOS').replace('-unknown-linux-gnu', ' · Linux');
-// The header answers "can I use this?" — what it runs and where — in the
-// user's terms. Module versions and the plugin protocol are machinery; they
-// live in the Releases table, not the masthead.
+// The page documents the ENGINE for the person writing doze.hcl, ordered by
+// their questions: can I use it → how → what versions → what config. Module
+// releases, the plugin protocol, and signatures are machinery — one demoted
+// section at the end.
 const plats = mod.enginePlatforms || mod.platforms;
 const hasMac = plats.some((t) => t.includes('apple-darwin'));
 const hasLinux = plats.some((t) => t.includes('linux'));
 const where =
 	hasMac && hasLinux ? 'macOS & Linux' : hasMac ? 'macOS only' : plats.length === 1 ? platformLabel(plats[0]).split(' · ').reverse().join(' ') + ' only' : 'Linux only';
 const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[versions.length - 1]}` : versions[0]) : null;
+const declareVersion = series?.length ? series[0].series : versions?.length ? versions[versions.length - 1] : null;
 ---
 
 <Base title={`${mod.title} — doze registry`} description={mod.tagline || mod.description}>
@@ -30,7 +34,7 @@ const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[ve
 			<span class="mx-1.5">/</span><span class="text-dim">{mod.source}</span>
 		</nav>
 
-		<!-- Header -->
+		<!-- Masthead: what it is, and can I use it. -->
 		<div class="mt-6 flex items-start gap-5">
 			<span class="grid place-items-center w-14 h-14 shrink-0 rounded-xl border border-line2 bg-raise2 font-display text-3xl text-amber">
 				{(mod.title || mod.name)[0].toUpperCase()}
@@ -58,39 +62,107 @@ const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[ve
 				<p class="mt-2 mb-3 text-sm text-dim">Drop it in <span class="mono text-faint">doze.hcl</span> and run <span class="mono text-faint">doze up</span>.</p>
 				{mod.example && <CodeBlock code={mod.example} file="doze.hcl" />}
 
-				<!-- Engine versions -->
-				{versions && (
+				<!-- Versions you can run: the full inventory, not just majors. -->
+				{series && series.length > 0 && (
 					<div class="mt-12">
-						<h2 class="t-eyebrow">Engine versions</h2>
+						<h2 class="t-eyebrow">Versions you can run</h2>
 						<p class="mt-2 text-sm text-dim">
-							Choose one with <span class="mono text-amber">version =</span> — the only version you
-							ever write. doze fetches & verifies the engine, then pins it in
-							<span class="mono text-faint">doze.lock</span>. The module release providing it is
-							selected automatically (newest compatible with your doze and the versions you declared)
-							and pinned alongside.
+							The <span class="mono text-amber">version =</span> you write is the engine's own
+							version — the only version that's yours. Declare a series and doze pins its newest
+							published build, or declare an exact build; either way it's fetched, verified, and
+							pinned in <span class="mono text-faint">doze.lock</span>, so it never moves on its own.
+						</p>
+						<div class="mt-3 overflow-x-auto">
+							<table class="w-full text-sm">
+								<thead>
+									<tr class="text-left mono text-xs text-faint border-b border-line">
+										<th class="py-2 pr-4 font-normal">version =</th>
+										<th class="py-2 pr-4 font-normal">pins (today)</th>
+										<th class="py-2 font-normal">exact builds</th>
+									</tr>
+								</thead>
+								<tbody>
+									{series.map((sr) => (
+										<tr class="border-b border-line/50">
+											<td class="py-2 pr-4 mono text-fg whitespace-nowrap">{sr.series}</td>
+											<td class="py-2 pr-4 mono text-dim whitespace-nowrap">{sr.latest}</td>
+											<td class="py-2 mono text-xs text-faint">{sr.fulls.length}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						<details class="mt-3 group">
+							<summary class="mono text-xs text-faint cursor-pointer hover:text-dim transition">every exact build, per series</summary>
+							<div class="mt-3 space-y-2">
+								{series.map((sr) => (
+									<div class="text-sm">
+										<span class="mono text-dim">{sr.series}</span>
+										<span class="mono text-xs text-faint"> — {sr.fulls.join(' · ')}</span>
+									</div>
+								))}
+							</div>
+						</details>
+						{pending.length > 0 && (
+							<p class="mt-3 mono text-xs text-faint">
+								the mirror also publishes {pending.join(' · ')} — declarable once the module adds support
+							</p>
+						)}
+					</div>
+				)}
+				{!series && versions && (
+					<div class="mt-12">
+						<h2 class="t-eyebrow">Versions you can run</h2>
+						<p class="mt-2 text-sm text-dim">
+							The <span class="mono text-amber">version =</span> you write selects the
+							{mod.name === 'kafka' ? ' advertised protocol profile — the engine is built in, no download' : " engine's supported line"}.
 						</p>
 						<div class="mt-3 flex flex-wrap gap-1.5">
 							{versions.map((v) => <span class="mono text-sm rounded-md border border-line2 bg-raise px-2.5 py-1 text-fg">{v}</span>)}
 						</div>
 					</div>
 				)}
-
-				<!-- Releases -->
-				{mod.releases && mod.releases.length > 0 && (
+				{!series && !versions && (
 					<div class="mt-12">
-						<h2 class="t-eyebrow">Releases</h2>
+						<h2 class="t-eyebrow">Versions you can run</h2>
 						<p class="mt-2 text-sm text-dim">
-							Every published module release — the index is cumulative, so older releases stay
-							resolvable for pinned lockfiles. doze selects the newest compatible one automatically;
-							<span class="mono text-faint">modules {'{'} {mod.name} {'{'} version = "…" {'}'} {'}'}</span> pins one exactly.
+							This engine takes no <span class="mono text-amber">version =</span> — it tracks current APIs.
+						</p>
+					</div>
+				)}
+
+				<!-- Configuration -->
+				<div class="mt-12">
+					<h2 class="t-eyebrow">Configuration</h2>
+					<p class="mt-2 mb-5 text-sm text-dim">
+						Arguments and nested blocks the engine accepts — generated from the module itself, so it
+						can't drift.
+					</p>
+					<ConfigDoc config={mod.config} />
+				</div>
+
+				<!-- Machinery, for the curious: the plugin that provides the engine. -->
+				{mod.releases && mod.releases.length > 0 && (
+					<details class="mt-12 border-t border-line pt-6">
+						<summary class="cursor-pointer">
+							<span class="t-eyebrow">Under the hood — module releases</span>
+							<span class="mono text-xs text-faint ml-2">you never write these; doze picks and pins automatically</span>
+						</summary>
+						<p class="mt-3 text-sm text-dim">
+							The plugin releases that provide this engine. doze selects the newest one compatible
+							with your doze and your declared versions, pins it in
+							<span class="mono text-faint">doze.lock</span>, and the index is cumulative — older
+							releases stay resolvable for pinned lockfiles.
+							<span class="mono text-faint">modules {'{'} {mod.name} {'{'} version = "…" {'}'} {'}'}</span> pins one exactly
+							(the escape hatch for bisecting a regression).
 						</p>
 						<div class="mt-3 overflow-x-auto">
 							<table class="w-full text-sm">
 								<thead>
 									<tr class="text-left mono text-xs text-faint border-b border-line">
-										<th class="py-2 pr-4 font-normal">version</th>
+										<th class="py-2 pr-4 font-normal">release</th>
 										<th class="py-2 pr-4 font-normal">protocol</th>
-										<th class="py-2 pr-4 font-normal">engine versions</th>
+										<th class="py-2 pr-4 font-normal">engine support</th>
 										<th class="py-2 font-normal">platforms</th>
 									</tr>
 								</thead>
@@ -109,18 +181,13 @@ const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[ve
 								</tbody>
 							</table>
 						</div>
-					</div>
+						<p class="mt-3 mono text-xs text-faint">
+							raw signed data:
+							<a class="text-dim hover:text-amber transition" href={mod.indexUrl}>index.yaml ↗</a> ·
+							<a class="text-dim hover:text-amber transition" href={mod.indexUrl.replace('index.yaml', 'meta.yaml')}>meta.yaml ↗</a>
+						</p>
+					</details>
 				)}
-
-				<!-- Configuration -->
-				<div class="mt-12">
-					<h2 class="t-eyebrow">Configuration</h2>
-					<p class="mt-2 mb-5 text-sm text-dim">
-						Arguments and nested blocks the engine accepts — generated from the module itself, so it
-						can't drift.
-					</p>
-					<ConfigDoc config={mod.config} />
-				</div>
 			</div>
 
 			<!-- Sticky rail -->
@@ -128,7 +195,7 @@ const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[ve
 				<div class="lg:sticky lg:top-24 space-y-6">
 					<div class="panel p-4">
 						<h3 class="t-label mb-3">Add to your stack</h3>
-						<CodeBlock code={`${mod.name} "${(mod.example.match(/"([^"]+)"/) || [null, mod.name])[1]}" {${versions ? `\n  version = ${versions[versions.length - 1]}` : ''}${mod.port ? `\n  port    = ${mod.port}` : ''}\n}`} />
+						<CodeBlock code={`${mod.name} "${(mod.example.match(/"([^"]+)"/) || [null, mod.name])[1]}" {${declareVersion ? `\n  version = ${declareVersion}` : ''}${mod.port ? `\n  port    = ${mod.port}` : ''}\n}`} />
 						<p class="mt-3 mono text-xs text-faint leading-relaxed">
 							default source <span class="text-dim">{mod.source}</span> — no install step; doze fetches it on <span class="text-dim">doze up</span>.
 						</p>
@@ -174,8 +241,7 @@ const runs = versions ? (versions.length > 1 ? `${versions[0]} – ${versions[ve
 					<div class="px-1 space-y-1.5 text-sm border-t border-line pt-4">
 						{mod.sourceRepo && <a class="block text-dim hover:text-amber transition" href={mod.sourceRepo}>Source repository ↗</a>}
 						{mod.homepage && <a class="block text-dim hover:text-amber transition" href={mod.homepage}>Module home ↗</a>}
-						<a class="block text-faint hover:text-fg transition mono text-xs pt-1" href={mod.indexUrl}>raw index.yaml ↗</a>
-						<a class="block text-faint hover:text-fg transition mono text-xs" href={mod.indexUrl.replace('index.yaml', 'meta.yaml')}>raw meta.yaml ↗</a>
+						<a class="block text-dim hover:text-amber transition" href={`https://doze.nerdmenot.in/engines/${mod.name}/`}>Docs: this engine ↗</a>
 					</div>
 				</div>
 			</aside>
