@@ -205,3 +205,7 @@ doze pins both the resolved version+checksum and the publisher key in `doze.lock
 the registry only has to be *available*, not *trusted*: every byte doze runs is checked
 against keys committed here and a lock the user controls. Hosting it as static files on
 a CDN (rather than a server) keeps it cheap, fast, and tamper-evident.
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE).
