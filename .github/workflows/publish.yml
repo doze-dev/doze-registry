@@ -1,10 +1,15 @@
 # Sign + publish module releases into the signed registry.
 #
-# Triggered by a repository_dispatch from the release workflow of doze-modules, or of
-# a product that ships its own module (doze-aws, doze-kafka), after it uploads the
-# per-module GitHub release. The payload's "sources" map names the repo a module was
-# released from; a module without one is doze-modules'. Or manually to re-sign the full set
-# (reconciliation). The ed25519 signing key lives ONLY here, as an Actions secret
+# The registry PULLS. On a schedule it looks at each module's source release (the repo
+# in registry/doze/<name>/source, or doze-modules when there is none) and signs any
+# version the registry does not have yet. A product that ships its own module
+# (doze-aws, doze-kafka) only uploads a GitHub release; it needs no token here.
+#
+# It can also be run now: by a repository_dispatch from a release workflow (doze-modules
+# still does this; the payload's "sources" map is remembered as the module's source), or
+# manually, which re-signs the named modules or the full set (reconciliation).
+#
+# The ed25519 signing key lives ONLY here, as an Actions secret
 # (DOZE_SIGNING_KEY) that matches the committed registry/doze/keys.json — so
 # signing happens where the key is, and doze-modules never needs it.
 #
@@ -14,6 +19,8 @@
 name: publish
 
 on:
+  schedule:
+    - cron: '17 * * * *' # hourly
   repository_dispatch:
     types: [modules-published]
   workflow_dispatch:
@@ -52,7 +59,25 @@ jobs:
           PAYLOAD: '${{ toJSON(github.event.client_payload.modules) }}'
           INPUT: '${{ github.event.inputs.modules }}'
         run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # What is new: a version in the source's release index the registry lacks.
+            # A source with no release yet (404) is simply nothing new.
+            names=""
+            for dir in registry/doze/*/; do
+              name=$(basename "$dir")
+              src=doze-dev/doze-modules
+              [ -f "registry/doze/$name/source" ] && src=$(cat "registry/doze/$name/source")
+              curl -sfL "https://github.com/$src/releases/download/$name/index.yaml" -o /tmp/release.yaml || continue
+              for v in $(yq '.releases | keys | .[]' /tmp/release.yaml); do
+                if ! yq -e ".releases.\"$v\"" "registry/doze/$name/index.yaml" >/dev/null 2>&1; then
+                  names="$names $name"
+                  break
+                fi
+              done
+            done
+            names=$(echo $names | xargs)
+            echo "new releases: ${names:-none}"
+          elif [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             # Tolerate both a real JSON array and a stringified one (older
             # senders used `gh api -f`, which stringifies everything).
             names=$(echo "$PAYLOAD" | jq -r 'if type == "string" then fromjson else . end | .[]' | xargs)
@@ -68,6 +93,7 @@ jobs:
       # release each module index must contain — publish.mjs retries the fetch
       # until the asset CDN serves it, instead of signing a stale index.
       - name: Sign + publish each module
+        if: steps.set.outputs.names != ''
         env:
           DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
           VERSIONS: '${{ toJSON(github.event.client_payload.versions) }}'
@@ -90,13 +116,16 @@ jobs:
       # Offline gate: structure + every signature. Then the trust gate: re-download
       # each archive and confirm its SHA256 matches the signed value.
       - name: Validate signatures
+        if: steps.set.outputs.names != ''
         run: npm run validate
 
       - name: Validate archives (remote)
+        if: steps.set.outputs.names != ''
         run: npm run validate:remote
 
       - name: Commit signed indexes
         id: commit
+        if: steps.set.outputs.names != ''
         run: |
           git config user.name  "doze-registry-bot"
           git config user.email "bot@doze.dev"
