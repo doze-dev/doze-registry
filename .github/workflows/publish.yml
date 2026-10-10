@@ -1,7 +1,9 @@
-# Sign + publish doze-modules releases into the signed registry.
+# Sign + publish module releases into the signed registry.
 #
-# Triggered by a repository_dispatch from doze-modules' release workflow (after it
-# uploads the per-module GitHub releases), or manually to re-sign the full set
+# Triggered by a repository_dispatch from the release workflow of doze-modules, or of
+# a product that ships its own module (doze-aws, doze-kafka), after it uploads the
+# per-module GitHub release. The payload's "sources" map names the repo a module was
+# released from; a module without one is doze-modules'. Or manually to re-sign the full set
 # (reconciliation). The ed25519 signing key lives ONLY here, as an Actions secret
 # (DOZE_SIGNING_KEY) that matches the committed registry/doze/keys.json — so
 # signing happens where the key is, and doze-modules never needs it.
@@ -69,11 +71,19 @@ jobs:
         env:
           DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
           VERSIONS: '${{ toJSON(github.event.client_payload.versions) }}'
+          SOURCES: '${{ toJSON(github.event.client_payload.sources) }}'
         run: |
           for name in ${{ steps.set.outputs.names }}; do
             expect=$(echo "${VERSIONS:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
-            echo "::group::publish doze/$name ${expect:+(expect $expect)}"
-            node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"}
+            # A module released from its product's repo says where (owner/repo); the
+            # rest are doze-modules'. It is remembered beside the index, so a manual
+            # re-sign of the full set reads the same release again.
+            src=$(echo "${SOURCES:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
+            [ -n "$src" ] && echo "$src" > "registry/doze/$name/source"
+            [ -z "$src" ] && [ -f "registry/doze/$name/source" ] && src=$(cat "registry/doze/$name/source")
+            base=${src:+https://github.com/$src/releases/download/$name}
+            echo "::group::publish doze/$name ${expect:+(expect $expect)} ${src:+from $src}"
+            node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"} ${base:+--release-base "$base"}
             echo "::endgroup::"
           done
 
