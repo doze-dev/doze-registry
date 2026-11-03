@@ -22,7 +22,7 @@ example: |-
     }
 exampleLabel: events
 description: A local, disk-backed broker that speaks enough of the Kafka wire protocol that unmodified clients (franz-go, kcat, Sarama, the Java client) connect and work. No JVM, no ZooKeeper, no KRaft — the engine is doze-kafka, embedded in the module, and `version` selects the Kafka protocol profile it advertises (1–4). Declare topics and doze converges them on boot; auto-create handles the rest.
-homepage: https://github.com/doze-dev/doze-modules/tree/main/modules/kafka
+homepage: https://github.com/doze-dev/doze-kafka/tree/main/module
 source: doze/kafka
 config:
     arguments:
