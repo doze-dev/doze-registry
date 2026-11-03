@@ -21,7 +21,7 @@
 // re-downloads each archive and confirms the SHA256 matches the signed value
 // before anything is trusted or deployed.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { privateKeyObject, sign, signIndex, parseYaml, toYaml, eachArtifact, publicFromPrivate, loadKeys, SCHEMA, assertSigningRuntime } from './lib.mjs';
+import { privateKeyObject, sign, signIndex, parseYaml, toYaml, eachArtifact, publicFromPrivate, loadKeys, SCHEMA, assertSigningRuntime, history } from './lib.mjs';
 
 assertSigningRuntime();
 
@@ -91,6 +91,24 @@ if (!idx.releases || Object.keys(idx.releases).length === 0) {
 // carries the namespace the key actually belongs to.
 idx.namespace = ns;
 
+// Nothing published is ever dropped or changed (lib.mjs history): a version the
+// release index lacks, a release that lost its history, is carried over from
+// the registry's signed copy; one whose bytes changed stops the publish.
+const dir = `registry/${ns}/${name}`;
+if (existsSync(`${dir}/index.yaml`)) {
+	const prev = parseYaml(readFileSync(`${dir}/index.yaml`, 'utf8'));
+	const { carried, changed } = history(prev, idx);
+	if (changed.length) {
+		console.error(`${name}: a published artifact changed; versions are immutable, so bump the version instead:\n  ${changed.join('\n  ')}`);
+		process.exit(1);
+	}
+	for (const { version, triple, art, release } of carried) {
+		idx.releases[version] ??= { ...release, artifacts: {} };
+		idx.releases[version].artifacts[triple] = art;
+	}
+	if (carried.length) console.log(`kept ${carried.length} published artifact(s) the release index no longer listed`);
+}
+
 const artifactBase = (artifactBaseFlag || releaseBase).replace(/\/+$/, '');
 const priv = privateKeyObject(secret);
 let signed = 0;
@@ -107,7 +125,6 @@ for (const { triple, art, version } of eachArtifact(idx)) {
 }
 idx.signature = signIndex(priv, idx);
 
-const dir = `registry/${ns}/${name}`;
 mkdirSync(dir, { recursive: true });
 writeFileSync(`${dir}/index.yaml`, toYaml(idx));
 console.log(`✓ published ${source}: ${signed} artifact(s) + index signed -> ${dir}/index.yaml`);

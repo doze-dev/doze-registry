@@ -9,10 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       # Structure + every artifact's ed25519 signature against its namespace key.
       - run: bun run validate
+      # Nothing published may be dropped or changed: compare with the commit
+      # before this change (the PR base, or the previous commit on main).
+      - name: Published artifacts are kept, byte for byte
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE" ] || [ "$BASE" = 0000000000000000000000000000000000000000 ]; then BASE=HEAD^; fi
+          bun scripts/validate.mjs --against="$BASE"
       # On PRs, also confirm each archive is reachable and its SHA256 matches.
       - if: github.event_name == 'pull_request'
         run: bun run validate:remote

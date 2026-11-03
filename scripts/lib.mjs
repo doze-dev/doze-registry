@@ -179,3 +179,24 @@ export function verifyIndex(pubKeyObj, idx) {
 	if (!idx?.signature) return false;
 	return verify(pubKeyObj, sha256Hex(Buffer.from(canonicalIndexPayload(idx))), idx.signature);
 }
+
+// A published (version, triple) never goes away and never changes: a pinned
+// doze.lock names it by checksum, and a cold cache has to fetch exactly those
+// bytes again. history compares an index with the one it replaces.
+//
+// carried lists what prev had that next lacks; changed lists what both have
+// with different bytes. A publish carries the missing ones over and refuses the
+// changed ones.
+export function history(prev, next) {
+	const carried = [];
+	const changed = [];
+	for (const { version, triple, art } of eachArtifact(prev)) {
+		const now = next?.releases?.[version]?.artifacts?.[triple];
+		if (!now) {
+			carried.push({ version, triple, art, release: prev.releases[version] });
+		} else if (String(now.sha256).toLowerCase() !== String(art.sha256).toLowerCase()) {
+			changed.push(`${version} ${triple}: was sha256 ${art.sha256}, now ${now.sha256}`);
+		}
+	}
+	return { carried, changed };
+}

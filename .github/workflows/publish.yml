@@ -115,9 +115,9 @@ jobs:
 
       # Offline gate: structure + every signature. Then the trust gate: re-download
       # each archive and confirm its SHA256 matches the signed value.
-      - name: Validate signatures
+      - name: Validate signatures, and that nothing published was lost
         if: steps.set.outputs.names != ''
-        run: npm run validate
+        run: node scripts/validate.mjs --against=HEAD
 
       - name: Validate archives (remote)
         if: steps.set.outputs.names != ''

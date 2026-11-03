@@ -7,9 +7,13 @@
 //
 // Exits non-zero on the first failure class found (CI gate).
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
-import { publicKeyObject, verify, verifyIndex, sha256Hex, loadKeys, parseYaml, eachArtifact, RAW_PUBKEY_BYTES, SCHEMA } from './lib.mjs';
+import { execFileSync } from 'node:child_process';
+import { publicKeyObject, verify, verifyIndex, sha256Hex, loadKeys, parseYaml, eachArtifact, RAW_PUBKEY_BYTES, SCHEMA, history } from './lib.mjs';
 
 const remote = process.argv.includes('--remote');
+// --against=<git ref> also checks that nothing published at ref was dropped or
+// changed (lib.mjs history): CI passes the commit before the change.
+const against = process.argv.find((a) => a.startsWith('--against='))?.slice('--against='.length);
 const errors = [];
 const fail = (msg) => errors.push(msg);
 
@@ -116,6 +120,7 @@ for (const ns of namespaces) {
 	}
 }
 
+if (against) checkHistory(against);
 if (remote) await checkRemote(namespaces);
 
 if (errors.length) {
@@ -154,4 +159,24 @@ async function checkRemote(namespaces) {
 function dirsIn(p) {
 	if (!existsSync(p) || !statSync(p).isDirectory()) return [];
 	return readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
+}
+
+// checkHistory fails when an index dropped or changed anything it published at
+// ref. A module that did not exist at ref is new, and fine.
+function checkHistory(ref) {
+	for (const ns of namespaces) {
+		for (const d of readdirSync(`${root}/${ns}`, { withFileTypes: true }).filter((d) => d.isDirectory())) {
+			const path = `${root}/${ns}/${d.name}/index.yaml`;
+			if (!existsSync(path)) continue;
+			let before;
+			try {
+				before = execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+			} catch {
+				continue; // not published at ref
+			}
+			const { carried, changed } = history(parseYaml(before), parseYaml(readFileSync(path, 'utf8')));
+			for (const c of carried) fail(`${ns}/${d.name}: ${c.version} ${c.triple} was published and is gone`);
+			for (const c of changed) fail(`${ns}/${d.name}: ${c}`);
+		}
+	}
 }
