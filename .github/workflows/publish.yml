@@ -92,13 +92,18 @@ jobs:
       # The dispatch payload's versions map (when present) tells the signer which
       # release each module index must contain — publish.mjs retries the fetch
       # until the asset CDN serves it, instead of signing a stale index.
+      # One module that can't publish (an index refused for changing a published
+      # version, say) must not hold back the rest: each is tried, the ones that
+      # failed are named, and the run fails at the end, after the others commit.
       - name: Sign + publish each module
+        id: publish
         if: steps.set.outputs.names != ''
         env:
           DOZE_SIGNING_KEY: '${{ secrets.DOZE_SIGNING_KEY }}'
           VERSIONS: '${{ toJSON(github.event.client_payload.versions) }}'
           SOURCES: '${{ toJSON(github.event.client_payload.sources) }}'
         run: |
+          failed=""
           for name in ${{ steps.set.outputs.names }}; do
             expect=$(echo "${VERSIONS:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
             # A module released from its product's repo says where (owner/repo); the
@@ -109,9 +114,14 @@ jobs:
             [ -z "$src" ] && [ -f "registry/doze/$name/source" ] && src=$(cat "registry/doze/$name/source")
             base=${src:+https://github.com/$src/releases/download/$name}
             echo "::group::publish doze/$name ${expect:+(expect $expect)} ${src:+from $src}"
-            node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"} ${base:+--release-base "$base"}
+            if ! node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"} ${base:+--release-base "$base"}; then
+              git checkout -- "registry/doze/$name" 2>/dev/null || true
+              failed="$failed $name"
+              echo "::error::doze/$name was not published"
+            fi
             echo "::endgroup::"
           done
+          echo "failed=${failed# }" >> "$GITHUB_OUTPUT"
 
       # Offline gate: structure + every signature. Then the trust gate: re-download
       # each archive and confirm its SHA256 matches the signed value.
@@ -147,3 +157,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy --repo "$GITHUB_REPOSITORY"
+
+      - name: Fail for the modules that did not publish
+        if: steps.publish.outputs.failed != ''
+        run: |
+          echo "::error::not published: ${{ steps.publish.outputs.failed }}"
+          exit 1

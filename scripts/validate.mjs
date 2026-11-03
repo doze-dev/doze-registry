@@ -161,22 +161,31 @@ function dirsIn(p) {
 	return readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
 }
 
-// checkHistory fails when an index dropped or changed anything it published at
-// ref. A module that did not exist at ref is new, and fine.
+// checkHistory fails when anything published at ref was dropped or changed:
+// an artifact, a release, a whole module or namespace. Every index that
+// existed at ref is checked, so deleting a directory is caught too. A module
+// that did not exist at ref is new, and fine. A ref that can't be resolved is
+// an error: a missing base must never switch the check off.
 function checkHistory(ref) {
-	for (const ns of namespaces) {
-		for (const d of readdirSync(`${root}/${ns}`, { withFileTypes: true }).filter((d) => d.isDirectory())) {
-			const path = `${root}/${ns}/${d.name}/index.yaml`;
-			if (!existsSync(path)) continue;
-			let before;
-			try {
-				before = execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-			} catch {
-				continue; // not published at ref
-			}
-			const { carried, changed } = history(parseYaml(before), parseYaml(readFileSync(path, 'utf8')));
-			for (const c of carried) fail(`${ns}/${d.name}: ${c.version} ${c.triple} was published and is gone`);
-			for (const c of changed) fail(`${ns}/${d.name}: ${c}`);
+	const git = (args) => execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+	try {
+		git(['rev-parse', '--verify', '--quiet', `${ref}^{commit}`]);
+	} catch {
+		fail(`--against=${ref}: no such commit here (a shallow checkout needs fetch-depth: 0)`);
+		return;
+	}
+	const published = git(['ls-tree', '-r', '--name-only', ref, '--', root])
+		.split('\n')
+		.filter((p) => p.endsWith('/index.yaml'));
+	for (const path of published) {
+		const name = path.slice(root.length + 1, -'/index.yaml'.length);
+		if (!existsSync(path)) {
+			fail(`${name}: was published at ${ref} and its index is gone`);
+			continue;
 		}
+		const before = git(['show', `${ref}:${path}`]);
+		const { carried, changed } = history(parseYaml(before), parseYaml(readFileSync(path, 'utf8')));
+		for (const c of carried) fail(`${name}: ${c.version} ${c.triple} was published and is gone`);
+		for (const c of changed) fail(`${name}: ${c}`);
 	}
 }

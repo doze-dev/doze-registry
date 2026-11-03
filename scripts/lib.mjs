@@ -194,8 +194,24 @@ export function history(prev, next) {
 		const now = next?.releases?.[version]?.artifacts?.[triple];
 		if (!now) {
 			carried.push({ version, triple, art, release: prev.releases[version] });
-		} else if (String(now.sha256).toLowerCase() !== String(art.sha256).toLowerCase()) {
+			continue;
+		}
+		if (String(now.sha256).toLowerCase() !== String(art.sha256).toLowerCase()) {
 			changed.push(`${version} ${triple}: was sha256 ${art.sha256}, now ${now.sha256}`);
+		}
+		if (now.url !== art.url) {
+			changed.push(`${version} ${triple}: was at ${art.url}, now ${now.url}`);
+		}
+	}
+	// What a release declares decides which hosts select it, so it is as fixed
+	// as its bytes.
+	for (const [version, rel] of Object.entries(prev?.releases ?? {})) {
+		const now = next?.releases?.[version];
+		if (!now) continue;
+		for (const key of ['protocol', 'engines']) {
+			const was = JSON.stringify(rel[key] ?? null);
+			const is = JSON.stringify(now[key] ?? null);
+			if (was !== is) changed.push(`${version}: ${key} was ${was}, now ${is}`);
 		}
 	}
 	return { carried, changed };
