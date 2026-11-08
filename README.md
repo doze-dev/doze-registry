@@ -1,5 +1,8 @@
 # doze-registry
 
+> [!WARNING]
+> **Still in active development.** This project is not cleared for use yet. Expect breaking changes, and do not rely on it for real work.
+
 The signed module registry for [doze](https://github.com/doze-dev/doze). It serves
 the **discovery layer** — tiny, signed text files that tell doze where each engine
 module lives and let it verify the module is authentic. It is a static site deployed
