@@ -15,7 +15,7 @@
     "dev": "node scripts/prepare.mjs && astro dev",
     "build": "node scripts/prepare.mjs && astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=${CLOUDFLARE_PROJECT:-doze}"
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=${CLOUDFLARE_PROJECT:-doze-registry}"
   },
   "dependencies": {
     "astro": "^5.6.1",

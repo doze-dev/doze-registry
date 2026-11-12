@@ -18,8 +18,18 @@ function isRegistryPath(pathname) {
 	);
 }
 
-export async function onRequest({ request, next }) {
+export async function onRequest({ request, next, env }) {
 	const url = new URL(request.url);
+	// registry.<domain> (and this project's own pages.dev host) serves the signed
+	// registry at the root — /<ns>/<module>/index.yaml — which is what doze fetches.
+	if (
+		url.hostname.startsWith("registry.") ||
+		url.hostname.endsWith("doze-registry.pages.dev")
+	) {
+		if (isRegistryPath(url.pathname)) return next();
+		const inner = new URL("/registry" + url.pathname + url.search, url);
+		return env.ASSETS.fetch(new Request(inner, request));
+	}
 	if (isRegistryPath(url.pathname)) {
 		return next(); // this project's static assets
 	}
