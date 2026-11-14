@@ -276,6 +276,14 @@ async function install() {
 	await script('doze install script', APEX + '/install.sh');
 	await script('doze-aws install script', 'https://raw.githubusercontent.com/doze-dev/doze-aws/main/install.sh');
 	await script('doze-kafka install script', 'https://raw.githubusercontent.com/doze-dev/doze-kafka/main/install.sh');
+	// Those installers download from the repo's "latest" release, which must be
+	// the product's own v* release, not a module's rolling release (tag aws/kafka).
+	for (const repo of ['doze-aws', 'doze-kafka']) {
+		const r = await get(`https://api.github.com/repos/doze-dev/${repo}/releases/latest`, { headers: { accept: 'application/vnd.github+json' } });
+		const t = r.status === 200 ? (await r.json()).tag_name : null;
+		if (t && /^v\d/.test(t)) pass(g, `${repo} latest release is a v* tag`, t);
+		else fail(g, `${repo} latest release is a v* tag`, t ? `${t}: its install.sh asks this release for the product tarball` : why(r));
+	}
 
 	const rel = await get('https://api.github.com/repos/doze-dev/doze/releases/latest', { headers: { accept: 'application/vnd.github+json' } });
 	const latest = rel.status === 200 ? await rel.json() : null;
