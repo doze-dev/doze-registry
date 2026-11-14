@@ -18,11 +18,11 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
-		<meta property="og:image" content="https://doze.nerdmenot.in/og.png" />
+		<meta property="og:image" content="https://registry.doze-dev.com/og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:image" content="https://doze.nerdmenot.in/og.png" />
+		<meta name="twitter:image" content="https://registry.doze-dev.com/og.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -31,8 +31,7 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 		/>
 		<script is:inline>
 			// Theme init, before paint. Shares the docs site's localStorage key
-			// ('starlight-theme') so flipping the switch on either half of
-			// doze.nerdmenot.in flips both.
+			// ('starlight-theme'), the key the doze docs use.
 			(() => {
 				const stored = localStorage.getItem('starlight-theme');
 				const theme =
@@ -53,7 +52,7 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 					<span class="mono text-sm tracking-tight">doze<span class="text-faint">/registry</span></span>
 				</a>
 				<nav class="flex items-center gap-7 text-sm text-dim">
-					<a href="/" class="hover:text-fg transition">Docs</a>
+					<a href="https://doze-dev.com/docs/" class="hover:text-fg transition">Docs</a>
 					<a href="/registry/" class="hover:text-fg transition">Modules</a>
 					<a href="https://github.com/doze-dev/doze" class="hover:text-fg transition">GitHub</a>
 					<a href="https://github.com/doze-dev/doze-registry" class="mono text-xs px-3 py-1.5 rounded-md border border-line2 text-fg hover:border-amber hover:text-amber transition">Publish</a>
@@ -87,13 +86,12 @@ const { title = 'doze registry', description = 'Signed engine modules for doze ‚
 					<span class="text-awake">‚óè</span>
 					Every module is ed25519-signed and pinned on first use.
 				</span>
-				<span class="mono text-xs">doze.nerdmenot.in</span>
+				<span class="mono text-xs">registry.doze-dev.com</span>
 			</div>
 		</footer>
 		<script is:inline>
 			// Three-way theme control, sharing the docs site's storage
-			// ('starlight-theme' = 'light' | 'dark' | '' for system) so flipping
-			// on either half of doze.nerdmenot.in flips both.
+			// ('starlight-theme' = 'light' | 'dark' | '' for system).
 			(() => {
 				const KEY = 'starlight-theme';
 				const seg = document.getElementById('theme-seg');

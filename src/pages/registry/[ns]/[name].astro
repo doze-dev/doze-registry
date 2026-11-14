@@ -241,7 +241,7 @@ const declareVersion = series?.length ? series[0].series : versions?.length ? ve
 					<div class="px-1 space-y-1.5 text-sm border-t border-line pt-4">
 						{mod.sourceRepo && <a class="block text-dim hover:text-amber transition" href={mod.sourceRepo}>Source repository ↗</a>}
 						{mod.homepage && <a class="block text-dim hover:text-amber transition" href={mod.homepage}>Module home ↗</a>}
-						<a class="block text-dim hover:text-amber transition" href={`https://doze.nerdmenot.in/engines/${mod.name}/`}>Docs: this engine ↗</a>
+						<a class="block text-dim hover:text-amber transition" href={`https://doze-dev.com/docs/doze/services/${mod.name === 'ferret' ? 'ferretdb' : mod.name}/`}>Docs: this engine ↗</a>
 					</div>
 				</div>
 			</aside>
