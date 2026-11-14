@@ -3,27 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The doze module registry — signed discovery + a browsable site, served at doze.nerdmenot.in",
+  "description": "The doze module registry: signed module data, served at registry.doze-dev.com and read by the doze CLI",
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "validate:remote": "node scripts/validate.mjs --remote",
     "keygen": "node scripts/keygen.mjs",
     "sign": "node scripts/sign.mjs",
     "publish": "node scripts/publish.mjs",
-    "prepare:data": "node scripts/prepare.mjs",
     "test:conformance": "bun scripts/conformance-check.mjs",
-    "dev": "node scripts/prepare.mjs && astro dev",
-    "build": "node scripts/prepare.mjs && astro build",
-    "preview": "astro preview",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=${CLOUDFLARE_PROJECT:-doze-registry}"
+    "build": "node scripts/build.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=doze-registry --branch=main",
+    "domain-check": "sh scripts/domain-check.sh"
   },
   "dependencies": {
-    "astro": "^5.6.1",
     "yaml": "^2.6.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "tailwindcss": "^4.1.18",
     "wrangler": "^4"
   }
 }
