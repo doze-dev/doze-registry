@@ -15,7 +15,8 @@
 #
 # The job re-runs the same publish + validate scripts a human would, then commits
 # the signed index.yaml files. The push to main triggers the existing deploy.yml,
-# which is the single Cloudflare deploy path.
+# which is the single Cloudflare deploy path and then asks the website
+# (doze-dev.com/registry) to rebuild its registry pages.
 name: publish
 
 on:
@@ -44,8 +45,8 @@ jobs:
         with:
           node-version: '20'
 
-      # The publish/validate scripts import only 'yaml'; skip the full (astro)
-      # dependency tree — this job signs text files, it doesn't build the site.
+      # The publish/validate scripts import only 'yaml'; skip the rest (wrangler):
+      # this job signs text files, deploy.yml publishes them.
       - name: Install script dependencies
         run: npm install --no-save yaml
 
