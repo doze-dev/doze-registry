@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The doze module registry — signed discovery + a browsable site, served at doze.nerdmenot.in",
+  "description": "The doze module registry — signed discovery + a browsable site, served at registry.doze-dev.com",
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "validate:remote": "node scripts/validate.mjs --remote",

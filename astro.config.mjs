@@ -6,11 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 // index.yaml) is copied into public/registry/ by scripts/prepare.mjs and served
 // verbatim — doze fetches it; the generated HTML pages live alongside it.
 export default defineConfig({
-	site: 'https://doze.nerdmenot.in',
+	site: 'https://registry.doze-dev.com',
 	// Hashed assets live under a registry-owned prefix: the router function
-	// (functions/[[path]].js) proxies everything OUTSIDE /registry* and
-	// /_registry-assets* to the docs site, and the docs site has its own
-	// /_astro — the two must not collide.
+	// (functions/[[path]].js) serves /registry* and /_registry-assets* as
+	// they are and maps a registry host's root onto /registry.
 	build: { assets: '_registry-assets' },
 	vite: { plugins: [tailwindcss()] },
 });
