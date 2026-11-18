@@ -20,7 +20,7 @@ const DEEP = args.has('--deep');
 
 // The registry key doze compiles in (RegistryKey, doze internal/modules/modules.go).
 // doze trusts this and nothing else; keys.json must publish the same key.
-const COMPILED_KEY = process.env.DOZE_REGISTRY_KEY || 'Nu5y8mbjYv7XEtNFBXwPVl+C8SBteVApIROefBwGWjw=';
+const COMPILED_KEY = process.env.DOZE_REGISTRY_KEY || 'wC95e+48J4H5Em38vCj6YQuNjIdiYh9isRUWWeE9LUs=';
 // Where canonical/og:url/sitemap URLs must point, whichever host serves the page.
 const CANON = 'https://doze-dev.com';
 // Every module the registry must serve. A catalog missing one fails. Empty since 2026-11-18: every Go-built
