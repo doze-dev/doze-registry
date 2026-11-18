@@ -3,7 +3,7 @@
 # The registry PULLS. On a schedule it looks at each module's source release (the repo
 # in registry/doze/<name>/source, or doze-modules when there is none) and signs any
 # version the registry does not have yet. A product that ships its own module
-# (doze-aws) only uploads a GitHub release; it needs no token here.
+# only uploads a GitHub release; it needs no token here.
 #
 # It can also be run now: by a repository_dispatch from a release workflow (doze-modules
 # still does this; the payload's "sources" map is remembered as the module's source), or

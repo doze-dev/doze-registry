@@ -9,3 +9,9 @@ withdrawn:
       Its Go release repo (doze-dev/doze-kafka) was deleted, so every 0.1.2
       download returned 404. The Go doze was never released or promoted, so no
       user depended on it. The Rust kafka is published later from doze-rs.
+  - module: doze/aws
+    date: 2026-11-18
+    reason: >-
+      The Go doze-aws is retired and its repo (doze-dev/doze-aws) deleted, so its
+      downloads are gone. The Go doze was never released or promoted. The new
+      Rust doze-aws from doze-rs is published here when it is ready.

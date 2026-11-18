@@ -23,9 +23,9 @@ const DEEP = args.has('--deep');
 const COMPILED_KEY = process.env.DOZE_REGISTRY_KEY || 'Nu5y8mbjYv7XEtNFBXwPVl+C8SBteVApIROefBwGWjw=';
 // Where canonical/og:url/sitemap URLs must point, whichever host serves the page.
 const CANON = 'https://doze-dev.com';
-// Every module the website and docs promise. A catalog missing one fails. kafka left the registry on
-// 2026-11-18: its Go release repo (doze-kafka) was deleted, and the Rust kafka comes back from doze-rs later.
-const EXPECTED = (process.env.EXPECTED_MODULES || 'aws ferret kvrocks mariadb postgres temporal valkey').split(/\s+/);
+// Every module the website and docs promise. A catalog missing one fails. kafka and aws left the registry on
+// 2026-11-18 (withdrawn.yaml); the Rust editions come back from doze-rs later.
+const EXPECTED = (process.env.EXPECTED_MODULES || 'ferret kvrocks mariadb postgres temporal valkey').split(/\s+/);
 // Paths on the site that docs, the app and the READMEs link to.
 const SITE_PATHS = ['/', '/docs/', '/docs/doze/start/install/', '/download/', '/registry/', '/registry/doze/postgres/', '/changelog/'];
 // An old doze.nerdmenot.in docs path the website must still redirect.
@@ -294,15 +294,8 @@ async function install() {
 		else fail(g, label, `${url}: ${r.status === 200 ? 'not a shell script' + (isHTML(t) ? ' (HTML)' : '') : why(r)}`);
 	};
 	await script('doze install script', APEX + '/install.sh');
-	await script('doze-aws install script', 'https://raw.githubusercontent.com/doze-dev/doze-aws/main/install.sh');
-	// Those installers download from the repo's "latest" release, which must be
-	// the product's own v* release, not a module's rolling release (tag aws/kafka).
-	for (const repo of ['doze-aws']) {
-		const r = await get(`https://api.github.com/repos/doze-dev/${repo}/releases/latest`, { headers: { accept: 'application/vnd.github+json' } });
-		const t = r.status === 200 ? (await r.json()).tag_name : null;
-		if (t && /^v\d/.test(t)) pass(g, `${repo} latest release is a v* tag`, t);
-		else fail(g, `${repo} latest release is a v* tag`, t ? `${t}: its install.sh asks this release for the product tarball` : why(r));
-	}
+	// The doze-aws and doze-kafka install scripts went with their Go repos (2026-11-18); the
+	// Rust editions from doze-rs bring their own install path when they ship.
 
 	const rel = await get('https://api.github.com/repos/doze-dev/doze/releases/latest', { headers: { accept: 'application/vnd.github+json' } });
 	const latest = rel.status === 200 ? await rel.json() : null;
