@@ -161,6 +161,30 @@ function dirsIn(p) {
 	return readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
 }
 
+// loadWithdrawn reads withdrawn.yaml: the whole modules the owner chose to take
+// out of the registry, each with the date and the reason. It is the only way a
+// published module may disappear; a dropped release or artifact inside a module
+// that stays is still refused. Every entry needs ns/name, date and reason.
+function loadWithdrawn() {
+	const names = new Set();
+	if (!existsSync('withdrawn.yaml')) return names;
+	let doc;
+	try {
+		doc = parseYaml(readFileSync('withdrawn.yaml', 'utf8'));
+	} catch (e) {
+		fail(`withdrawn.yaml: ${e.message}`);
+		return names;
+	}
+	for (const [i, w] of (doc?.withdrawn ?? []).entries()) {
+		if (!w?.module || !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(w.module) || !w?.date || !w?.reason) {
+			fail(`withdrawn.yaml: entry ${i} needs module (<ns>/<name>), date and reason`);
+			continue;
+		}
+		names.add(w.module);
+	}
+	return names;
+}
+
 // checkHistory fails when anything published at ref was dropped or changed:
 // an artifact, a release, a whole module or namespace. Every index that
 // existed at ref is checked, so deleting a directory is caught too. A module
@@ -177,10 +201,15 @@ function checkHistory(ref) {
 	const published = git(['ls-tree', '-r', '--name-only', ref, '--', root])
 		.split('\n')
 		.filter((p) => p.endsWith('/index.yaml'));
+	const withdrawn = loadWithdrawn();
 	for (const path of published) {
 		const name = path.slice(root.length + 1, -'/index.yaml'.length);
 		if (!existsSync(path)) {
-			fail(`${name}: was published at ${ref} and its index is gone`);
+			if (!withdrawn.has(name)) fail(`${name}: was published at ${ref} and its index is gone (a deliberate removal is listed in withdrawn.yaml)`);
+			continue;
+		}
+		if (withdrawn.has(name)) {
+			fail(`${name}: is listed in withdrawn.yaml but its index is still here`);
 			continue;
 		}
 		const before = git(['show', `${ref}:${path}`]);

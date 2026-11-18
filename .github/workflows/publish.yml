@@ -20,8 +20,11 @@
 name: publish
 
 on:
-  schedule:
-    - cron: '17 * * * *' # hourly
+  # The hourly pull is off since 2026-11-18 (the owner's call): every run failed on doze/aws,
+  # whose Go release repo is archived, and the Go modules are being replaced by Rust ones from
+  # doze-rs. Restore the schedule when those publish here.
+  # schedule:
+  #   - cron: '17 * * * *' # hourly
   repository_dispatch:
     types: [modules-published]
   workflow_dispatch:

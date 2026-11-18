@@ -1,0 +1,11 @@
+# Modules taken out of the registry on purpose. The registry is otherwise
+# append-only: validate --against refuses any published module, release or
+# artifact that disappears (scripts/validate.mjs, checkHistory). A module listed
+# here may be gone as a whole; nothing else may. Each entry says when and why.
+withdrawn:
+  - module: doze/kafka
+    date: 2026-11-18
+    reason: >-
+      Its Go release repo (doze-dev/doze-kafka) was deleted, so every 0.1.2
+      download returned 404. The Go doze was never released or promoted, so no
+      user depended on it. The Rust kafka is published later from doze-rs.
