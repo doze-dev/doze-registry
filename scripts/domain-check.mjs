@@ -23,11 +23,11 @@ const DEEP = args.has('--deep');
 const COMPILED_KEY = process.env.DOZE_REGISTRY_KEY || 'Nu5y8mbjYv7XEtNFBXwPVl+C8SBteVApIROefBwGWjw=';
 // Where canonical/og:url/sitemap URLs must point, whichever host serves the page.
 const CANON = 'https://doze-dev.com';
-// Every module the website and docs promise. A catalog missing one fails. kafka and aws left the registry on
-// 2026-11-18 (withdrawn.yaml); the Rust editions come back from doze-rs later.
-const EXPECTED = (process.env.EXPECTED_MODULES || 'ferret kvrocks mariadb postgres temporal valkey').split(/\s+/);
+// Every module the registry must serve. A catalog missing one fails. Empty since 2026-11-18: every Go-built
+// module was withdrawn (withdrawn.yaml) and the registry is rebuilt from scratch with the Rust modules.
+const EXPECTED = (process.env.EXPECTED_MODULES || '').split(/\s+/).filter(Boolean);
 // Paths on the site that docs, the app and the READMEs link to.
-const SITE_PATHS = ['/', '/docs/', '/docs/doze/start/install/', '/download/', '/registry/', '/registry/doze/postgres/', '/changelog/'];
+const SITE_PATHS = ['/', '/docs/', '/docs/doze/start/install/', '/download/', '/changelog/'];
 // An old doze.nerdmenot.in docs path the website must still redirect.
 const OLD_PATH = '/guides/engines/';
 const MIN_CERT_DAYS = 14;
@@ -188,13 +188,13 @@ async function site() {
 async function registry() {
 	const g = 'registry';
 	await checkCert(g, REGISTRY);
-	// A browser on the registry host is sent to the website's registry pages.
+	// A browser on the registry host is sent to the website (it has no registry pages since 2026-11-18).
 	const home = await req(REGISTRY + '/');
 	const homeLoc = home.headers.get('location') || '';
-	if (home.status === 301 && homeLoc === CANON + '/registry/') pass(g, `${REGISTRY}/ → website`, `301 → ${homeLoc}`);
+	if (home.status === 301 && homeLoc === CANON + '/') pass(g, `${REGISTRY}/ → website`, `301 → ${homeLoc}`);
 	else fail(g, `${REGISTRY}/ → website`, `${why(home)} ${homeLoc}`);
-	// A module path a person might type goes to that module's page.
-	for (const [p, want] of [['/doze/postgres/', CANON + '/registry/doze/postgres/'], ['/doze/postgres', CANON + '/registry/doze/postgres/'], ['/registry/', '/']]) {
+	// The old /registry/ prefix drops itself.
+	for (const [p, want] of [['/registry/', '/']]) {
 		const r = await req(REGISTRY + p);
 		const loc = r.headers.get('location') || '';
 		if (r.status === 301 && (loc === want || loc === REGISTRY + want)) pass(g, `${REGISTRY}${p} → ${want}`, `301 → ${loc}`);

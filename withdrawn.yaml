@@ -15,3 +15,39 @@ withdrawn:
       The Go doze-aws is retired and its repo (doze-dev/doze-aws) deleted, so its
       downloads are gone. The Go doze was never released or promoted. The new
       Rust doze-aws from doze-rs is published here when it is ready.
+  - module: doze/ferret
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.
+  - module: doze/kvrocks
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.
+  - module: doze/mariadb
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.
+  - module: doze/postgres
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.
+  - module: doze/temporal
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.
+  - module: doze/valkey
+    date: 2026-11-18
+    reason: >-
+      Every Go-built module was withdrawn (the owner's call): the registry is
+      rebuilt from scratch with the Rust modules from doze-rs, and the Go
+      doze-modules repo these downloads came from is deleted.

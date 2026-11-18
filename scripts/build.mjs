@@ -1,6 +1,6 @@
 // build — the static data host for registry.doze-dev.com (the `doze-registry`
 // Cloudflare Pages project). Nobody browses it: the `doze` CLI reads it, and the
-// portal people read is the website (https://doze-dev.com/registry/).
+// website (https://doze-dev.com) has no registry pages since 2026-11-18.
 //
 // 1. validate (fails the build on a bad or unsigned artifact);
 // 2. copy the signed files to dist/ byte for byte:
@@ -17,7 +17,7 @@ import { execFileSync } from 'node:child_process';
 import { publicKeyObject, verify, verifyIndex, loadKeys, parseYaml, eachArtifact } from './lib.mjs';
 
 const OUT = 'dist';
-const PORTAL = 'https://doze-dev.com/registry';
+const SITE = 'https://doze-dev.com';
 const OFFICIAL = new Set(['doze']);
 
 // backendInfo resolves the platforms the ENGINE backend is published for, from
@@ -123,27 +123,17 @@ writeFileSync(
 
 const data = served().sort();
 
-// 4b. _redirects. A person who lands here is sent to the matching website page
-// (the website's routes are /registry/<ns>/ and /registry/<ns>/<module>/...).
-// On Pages a matching rule wins over a static file, so every data file comes
-// first as a 200 rule to itself (served as is), and only then the redirects.
-// /registry/* is the old portal's prefix (doze 0.1 read data under it): it drops
-// the prefix, which serves the data file or redirects onward to the website.
+// 4b. _redirects. On Pages a matching rule wins over a static file, so every data
+// file comes first as a 200 rule to itself (served as is). /registry/* is the old
+// prefix (doze 0.1 read data under it): it drops the prefix. Anything else a person
+// lands on goes to the website, which has no registry pages since 2026-11-18 (the
+// registry is being rebuilt from scratch).
 const lines = data.map((p) => `${p}  ${p}  200`);
 lines.push(
-	`/                    ${PORTAL}/ 301`,
 	`/registry            / 301`,
 	`/registry/*          /:splat 301`,
+	`/*                   ${SITE}/ 301`,
 );
-for (const ns of [...new Set(browse.map(([n]) => n))]) {
-	lines.push(`/${ns}                ${PORTAL}/${ns}/ 301`);
-	lines.push(`/${ns}/               ${PORTAL}/${ns}/ 301`);
-}
-for (const [ns, name] of browse) {
-	lines.push(`/${ns}/${name}          ${PORTAL}/${ns}/${name}/ 301`);
-	lines.push(`/${ns}/${name}/*        ${PORTAL}/${ns}/${name}/:splat 301`);
-}
-lines.push(`/*                   ${PORTAL}/ 301`);
 writeFileSync(`${OUT}/_redirects`, lines.join('\n') + '\n');
 
 // Every file served from dist/ (the data), as a URL path.
