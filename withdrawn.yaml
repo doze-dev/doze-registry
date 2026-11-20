@@ -1,52 +1,68 @@
 # Modules taken out of the registry on purpose. The registry is otherwise
 # append-only: validate --against refuses any published module, release or
 # artifact that disappears (scripts/validate.mjs, checkHistory). A module listed
-# here may be gone as a whole; nothing else may. Each entry says when and why.
+# here may be gone as a whole; nothing else may. Each entry says when, why and
+# which versions it took out.
+#
+# A withdrawal covers its versions, not the name: the module may be published
+# again (the Rust modules from doze-rs are), but a withdrawn version may never
+# come back, and once the module is back the usual append-only rules hold for
+# every new version. So a new index can't resurrect a Go release, and an old
+# withdrawal can't excuse dropping a new one. Publish new versions above the
+# withdrawn ones.
 withdrawn:
   - module: doze/kafka
     date: 2026-11-18
+    versions: ["0.1.0", "0.1.1", "0.1.2"]
     reason: >-
       Its Go release repo (doze-dev/doze-kafka) was deleted, so every 0.1.2
       download returned 404. The Go doze was never released or promoted, so no
       user depended on it. The Rust kafka is published later from doze-rs.
   - module: doze/aws
     date: 2026-11-18
+    versions: ["0.1.0", "0.1.1", "0.2.0"]
     reason: >-
       The Go doze-aws is retired and its repo (doze-dev/doze-aws) deleted, so its
       downloads are gone. The Go doze was never released or promoted. The new
       Rust doze-aws from doze-rs is published here when it is ready.
   - module: doze/ferret
     date: 2026-11-18
+    versions: ["0.2.1", "0.2.2", "0.2.3"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go
       doze-modules repo these downloads came from is deleted.
   - module: doze/kvrocks
     date: 2026-11-18
+    versions: ["0.2.1"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go
       doze-modules repo these downloads came from is deleted.
   - module: doze/mariadb
     date: 2026-11-18
+    versions: ["0.2.1"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go
       doze-modules repo these downloads came from is deleted.
   - module: doze/postgres
     date: 2026-11-18
+    versions: ["0.2.1", "0.2.2", "0.2.3", "0.2.4"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go
       doze-modules repo these downloads came from is deleted.
   - module: doze/temporal
     date: 2026-11-18
+    versions: ["0.2.1", "0.2.2"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go
       doze-modules repo these downloads came from is deleted.
   - module: doze/valkey
     date: 2026-11-18
+    versions: ["0.2.1"]
     reason: >-
       Every Go-built module was withdrawn (the owner's call): the registry is
       rebuilt from scratch with the Rust modules from doze-rs, and the Go

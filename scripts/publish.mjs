@@ -9,8 +9,8 @@
 // artifact names (defaults to --release-base) — so a locally built release can
 // be signed against its canonical GitHub download URLs.
 //
-// Reads the module's schema-1 release index (default: the doze-modules GitHub
-// release for <name>; dzm builds it), rewrites every artifact URL to an
+// Reads the module's schema-1 release index (default: the doze-rs GitHub
+// release for <name>, which doze-rs's modules-release.yml uploads), rewrites every artifact URL to an
 // absolute link, signs each artifact's SHA256 with the namespace key, and then
 // signs the index itself — the index signature covers the release metadata
 // (protocol, engine support, channels), so a compromised host can't lie about
@@ -21,11 +21,13 @@
 // re-downloads each archive and confirms the SHA256 matches the signed value
 // before anything is trusted or deployed.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { privateKeyObject, sign, signIndex, parseYaml, toYaml, eachArtifact, publicFromPrivate, loadKeys, SCHEMA, assertSigningRuntime, history } from './lib.mjs';
+import { privateKeyObject, sign, signIndex, parseYaml, toYaml, eachArtifact, publicFromPrivate, loadKeys, SCHEMA, assertSigningRuntime, history, loadWithdrawn } from './lib.mjs';
 
 assertSigningRuntime();
 
-const DEFAULT_RELEASE_BASE = 'https://github.com/doze-dev/doze-modules/releases/download';
+// Every module is built and released from doze-rs (its modules-release.yml): one rolling
+// release per module, tag = the module's name. The Go doze-modules repo is retired.
+const DEFAULT_RELEASE_BASE = 'https://github.com/doze-dev/doze-rs/releases/download';
 
 const source = process.argv[2];
 const baseFlag = argValue('--release-base');
@@ -85,6 +87,13 @@ if (idx.module !== name) {
 }
 if (!idx.releases || Object.keys(idx.releases).length === 0) {
 	console.error(`${manifestUrl}: index has no releases`);
+	process.exit(1);
+}
+// A withdrawn version (withdrawn.yaml) never comes back, whatever the release index says.
+const withdrawnHere = loadWithdrawn().byModule.get(source) ?? new Set();
+const resurrected = Object.keys(idx.releases).filter((v) => withdrawnHere.has(v));
+if (resurrected.length) {
+	console.error(`${manifestUrl}: ${resurrected.join(', ')} of ${source} ${resurrected.length > 1 ? 'were' : 'was'} withdrawn (withdrawn.yaml) and may not be published again; release a higher version`);
 	process.exit(1);
 }
 // The signer owns the namespace claim: whatever dzm stamped, the signed copy
