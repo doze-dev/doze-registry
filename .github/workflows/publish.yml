@@ -1,13 +1,16 @@
 # Sign + publish module releases into the signed registry.
 #
 # The registry PULLS. On a schedule it looks at each module's source release (the repo
-# in registry/doze/<name>/source, or doze-modules when there is none) and signs any
-# version the registry does not have yet. A product that ships its own module
-# only uploads a GitHub release; it needs no token here.
+# in registry/doze/<name>/source, or doze-dev/doze-rs when there is none) and signs any
+# version the registry does not have yet. doze-rs's modules-release.yml uploads each
+# module, after its acceptance passed on every target, to a rolling release in doze-rs
+# whose tag is the module's name (index.yaml, meta.yaml, the archives); the schedule
+# also finds modules the registry has never had by listing those releases. So doze-rs
+# needs no token here.
 #
-# It can also be run now: by a repository_dispatch from a release workflow (doze-modules
-# still does this; the payload's "sources" map is remembered as the module's source), or
-# manually, which re-signs the named modules or the full set (reconciliation).
+# It can also be run now: by a repository_dispatch from a release workflow (the
+# payload's "sources" map is remembered as the module's source), or manually, which
+# signs the named modules (new ones included) or re-signs the full set (reconciliation).
 #
 # The ed25519 signing key lives ONLY here, as an Actions secret
 # (DOZE_SIGNING_KEY) that matches the committed registry/doze/keys.json — so
@@ -20,11 +23,10 @@
 name: publish
 
 on:
-  # The hourly pull is off since 2026-11-18 (the owner's call): every run failed on doze/aws,
-  # whose Go release repo is archived, and the Go modules are being replaced by Rust ones from
-  # doze-rs. Restore the schedule when those publish here.
-  # schedule:
-  #   - cron: '17 * * * *' # hourly
+  # Hourly pull of doze-rs's module releases. (It was off 2026-11-18 to 2026-11-21 while the
+  # withdrawn Go modules were replaced by the Rust ones from doze-rs.)
+  schedule:
+    - cron: '17 * * * *' # hourly
   repository_dispatch:
     types: [modules-published]
   workflow_dispatch:
@@ -62,18 +64,22 @@ jobs:
         env:
           PAYLOAD: '${{ toJSON(github.event.client_payload.modules) }}'
           INPUT: '${{ github.event.inputs.modules }}'
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             # What is new: a version in the source's release index the registry lacks.
-            # A source with no release yet (404) is simply nothing new.
+            # A source with no release yet (404) is simply nothing new. Candidates: every
+            # module here, and every rolling module release in doze-rs (a tag that is a bare
+            # name; doze's own v* releases live in doze-dev/doze).
+            known=$(find registry/doze -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+            released=$(gh release list -R doze-dev/doze-rs --limit 200 --json tagName --jq '.[].tagName' | grep -E '^[a-z][a-z0-9-]*$' || true)
             names=""
-            for dir in registry/doze/*/; do
-              name=$(basename "$dir")
-              src=doze-dev/doze-modules
+            for name in $(printf '%s\n%s\n' "$known" "$released" | grep -v '^$' | sort -u); do
+              src=doze-dev/doze-rs
               [ -f "registry/doze/$name/source" ] && src=$(cat "registry/doze/$name/source")
               curl -sfL "https://github.com/$src/releases/download/$name/index.yaml" -o /tmp/release.yaml || continue
               for v in $(yq '.releases | keys | .[]' /tmp/release.yaml); do
-                if ! yq -e ".releases.\"$v\"" "registry/doze/$name/index.yaml" >/dev/null 2>&1; then
+                if [ ! -f "registry/doze/$name/index.yaml" ] || ! yq -e ".releases.\"$v\"" "registry/doze/$name/index.yaml" >/dev/null 2>&1; then
                   names="$names $name"
                   break
                 fi
@@ -110,16 +116,20 @@ jobs:
           failed=""
           for name in ${{ steps.set.outputs.names }}; do
             expect=$(echo "${VERSIONS:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
-            # A module released from its product's repo says where (owner/repo); the
-            # rest are doze-modules'. It is remembered beside the index, so a manual
-            # re-sign of the full set reads the same release again.
+            # Where the module's release lives (owner/repo): the dispatch's sources map,
+            # else the file beside its index, else doze-rs. It is remembered beside the
+            # index, so a manual re-sign of the full set reads the same release again.
             src=$(echo "${SOURCES:-null}" | jq -r --arg n "$name" 'if type == "string" then fromjson else . end | .[$n]? // empty' 2>/dev/null || true)
-            [ -n "$src" ] && echo "$src" > "registry/doze/$name/source"
             [ -z "$src" ] && [ -f "registry/doze/$name/source" ] && src=$(cat "registry/doze/$name/source")
-            base=${src:+https://github.com/$src/releases/download/$name}
+            src=${src:-doze-dev/doze-rs}
+            mkdir -p "registry/doze/$name"
+            echo "$src" > "registry/doze/$name/source"
+            base=https://github.com/$src/releases/download/$name
             echo "::group::publish doze/$name ${expect:+(expect $expect)} ${src:+from $src}"
-            if ! node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"} ${base:+--release-base "$base"}; then
+            if ! node scripts/publish.mjs "doze/$name" ${expect:+--expect "$expect"} --release-base "$base"; then
+              # Put the module back as it was: a module new here leaves nothing behind.
               git checkout -- "registry/doze/$name" 2>/dev/null || true
+              git clean -fdq -- "registry/doze/$name" 2>/dev/null || true
               failed="$failed $name"
               echo "::error::doze/$name was not published"
             fi

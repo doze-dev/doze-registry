@@ -13,7 +13,7 @@ import {
 	sign as nodeSign,
 	verify as nodeVerify,
 } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { parse, stringify } from 'yaml';
 
 export const RAW_PUBKEY_BYTES = 32;
@@ -215,4 +215,34 @@ export function history(prev, next) {
 		}
 	}
 	return { carried, changed };
+}
+
+// loadWithdrawn reads withdrawn.yaml: the modules the owner took out of the
+// registry, each with its date, reason and the versions it withdrew. Returns
+// { byModule: Map<"ns/name", Set<version>>, problems: [string] }. A withdrawal
+// covers its versions only: the module may be published again with new ones,
+// but a withdrawn version may never reappear (it would be a different binary
+// under a number a Go doze.lock may still name).
+export function loadWithdrawn(path = 'withdrawn.yaml') {
+	const byModule = new Map();
+	const problems = [];
+	if (!existsSync(path)) return { byModule, problems };
+	let doc;
+	try {
+		doc = parse(readFileSync(path, 'utf8'));
+	} catch (e) {
+		problems.push(`${path}: ${e.message}`);
+		return { byModule, problems };
+	}
+	for (const [i, w] of (doc?.withdrawn ?? []).entries()) {
+		const okVersions = Array.isArray(w?.versions) && w.versions.length > 0 && w.versions.every((v) => typeof v === 'string' && /^\d+(\.\d+)*$/.test(v));
+		if (!w?.module || !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(w.module) || !w?.date || !w?.reason || !okVersions) {
+			problems.push(`${path}: entry ${i} needs module (<ns>/<name>), date, reason and versions (the dotted versions it withdrew)`);
+			continue;
+		}
+		const set = byModule.get(w.module) ?? new Set();
+		for (const v of w.versions) set.add(v);
+		byModule.set(w.module, set);
+	}
+	return { byModule, problems };
 }

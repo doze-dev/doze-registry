@@ -8,7 +8,7 @@
 // Exits non-zero on the first failure class found (CI gate).
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { publicKeyObject, verify, verifyIndex, sha256Hex, loadKeys, parseYaml, eachArtifact, RAW_PUBKEY_BYTES, SCHEMA, history } from './lib.mjs';
+import { publicKeyObject, verify, verifyIndex, sha256Hex, loadKeys, parseYaml, eachArtifact, RAW_PUBKEY_BYTES, SCHEMA, history, loadWithdrawn } from './lib.mjs';
 
 const remote = process.argv.includes('--remote');
 // --against=<git ref> also checks that nothing published at ref was dropped or
@@ -16,6 +16,8 @@ const remote = process.argv.includes('--remote');
 const against = process.argv.find((a) => a.startsWith('--against='))?.slice('--against='.length);
 const errors = [];
 const fail = (msg) => errors.push(msg);
+const withdrawn = loadWithdrawn();
+for (const p of withdrawn.problems) fail(p);
 
 const root = 'registry';
 const namespaces = existsSync(root)
@@ -71,8 +73,10 @@ for (const ns of namespaces) {
 		if (idx.namespace !== ns) fail(`${idxPath}: namespace "${idx.namespace}" != directory "${ns}"`);
 		const releases = Object.entries(idx.releases ?? {});
 		if (releases.length === 0) fail(`${idxPath}: no releases`);
+		const gone = withdrawn.byModule.get(`${ns}/${name}`);
 		for (const [version, rel] of releases) {
 			const where = `${ns}/${name} ${version}`;
+			if (gone?.has(version)) fail(`${where}: was withdrawn (withdrawn.yaml) and may not be published again; publish a new version`);
 			if (!/^\d+(\.\d+)*$/.test(version)) fail(`${where}: release version is not a dotted number`);
 			if (!Number.isInteger(rel?.protocol) || rel.protocol < 1) {
 				fail(`${where}: missing/invalid plugin protocol`);
@@ -161,35 +165,13 @@ function dirsIn(p) {
 	return readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
 }
 
-// loadWithdrawn reads withdrawn.yaml: the whole modules the owner chose to take
-// out of the registry, each with the date and the reason. It is the only way a
-// published module may disappear; a dropped release or artifact inside a module
-// that stays is still refused. Every entry needs ns/name, date and reason.
-function loadWithdrawn() {
-	const names = new Set();
-	if (!existsSync('withdrawn.yaml')) return names;
-	let doc;
-	try {
-		doc = parseYaml(readFileSync('withdrawn.yaml', 'utf8'));
-	} catch (e) {
-		fail(`withdrawn.yaml: ${e.message}`);
-		return names;
-	}
-	for (const [i, w] of (doc?.withdrawn ?? []).entries()) {
-		if (!w?.module || !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(w.module) || !w?.date || !w?.reason) {
-			fail(`withdrawn.yaml: entry ${i} needs module (<ns>/<name>), date and reason`);
-			continue;
-		}
-		names.add(w.module);
-	}
-	return names;
-}
-
 // checkHistory fails when anything published at ref was dropped or changed:
 // an artifact, a release, a whole module or namespace. Every index that
 // existed at ref is checked, so deleting a directory is caught too. A module
 // that did not exist at ref is new, and fine. A ref that can't be resolved is
-// an error: a missing base must never switch the check off.
+// an error: a missing base must never switch the check off. withdrawn.yaml
+// excuses exactly the versions it lists, and nothing else: a module may go as
+// a whole only when every version it had is withdrawn.
 function checkHistory(ref) {
 	const git = (args) => execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 	try {
@@ -201,20 +183,17 @@ function checkHistory(ref) {
 	const published = git(['ls-tree', '-r', '--name-only', ref, '--', root])
 		.split('\n')
 		.filter((p) => p.endsWith('/index.yaml'));
-	const withdrawn = loadWithdrawn();
 	for (const path of published) {
 		const name = path.slice(root.length + 1, -'/index.yaml'.length);
+		const gone = withdrawn.byModule.get(name) ?? new Set();
+		const before = parseYaml(git(['show', `${ref}:${path}`]));
 		if (!existsSync(path)) {
-			if (!withdrawn.has(name)) fail(`${name}: was published at ${ref} and its index is gone (a deliberate removal is listed in withdrawn.yaml)`);
+			const kept = Object.keys(before?.releases ?? {}).filter((v) => !gone.has(v));
+			if (kept.length) fail(`${name}: was published at ${ref} and its index is gone (${kept.join(', ')} not withdrawn in withdrawn.yaml)`);
 			continue;
 		}
-		if (withdrawn.has(name)) {
-			fail(`${name}: is listed in withdrawn.yaml but its index is still here`);
-			continue;
-		}
-		const before = git(['show', `${ref}:${path}`]);
-		const { carried, changed } = history(parseYaml(before), parseYaml(readFileSync(path, 'utf8')));
-		for (const c of carried) fail(`${name}: ${c.version} ${c.triple} was published and is gone`);
+		const { carried, changed } = history(before, parseYaml(readFileSync(path, 'utf8')));
+		for (const c of carried) if (!gone.has(c.version)) fail(`${name}: ${c.version} ${c.triple} was published and is gone`);
 		for (const c of changed) fail(`${name}: ${c}`);
 	}
 }
