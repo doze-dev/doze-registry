@@ -148,8 +148,9 @@ the Go doze (protocol 1) never picks a protocol-2 release; it says no release fi
 The Go-built modules (protocol 1) were withdrawn on 2026-11-18. `withdrawn.yaml` lists each one
 with the versions it took out. A withdrawal covers those versions, not the name: `validate` and
 `publish` refuse a withdrawn version anywhere, and once the module is back every new version is
-append-only as usual. The Rust releases start at 0.3.0, above every Go version (the highest was
-aws 0.2.0 and postgres 0.2.4).
+append-only as usual. Each Rust module starts above
+every withdrawn version of its own: 0.3.0 for most (Go reached postgres 0.2.4, aws 0.2.0),
+0.2.0 for kafka (Go reached 0.1.2).
 
 ## The publishing lifecycle (and provisional indexes)
 
