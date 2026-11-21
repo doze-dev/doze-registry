@@ -1,0 +1,248 @@
+---
+title: AWS
+tagline: The whole local AWS as one service.
+category: cloud
+engine: aws
+port: 4566
+example: "aws \"local\" {\n  port = 4566\n\n  bucket \"uploads\" { versioning = true }\n  queue  \"emails\"  {\n    dlq          = \"auto\"\n    max_receives = 5\n  }\n  queue  \"orders\"  {\n    fifo          = true\n    content_dedup = true\n  }\n\n  topic \"signups\" {\n    subscribe {\n      queue = \"emails\"\n      raw   = true\n    }\n  }\n\n  table \"sessions\" {\n    key = \"session_id:S\"\n    ttl = \"expires_at\"\n  }\n\n  rule \"order_placed\" {\n    pattern = \"{\\\"source\\\":[\\\"shop.checkout\\\"]}\"\n    targets = [\"queue:emails\"]\n  }\n\n  key \"app_key\" {}\n  secret \"db_password\" { value = \"s3cr3t\" }\n  parameter \"/app/feature/banner\" { value = \"hello\" }\n}\n"
+exampleLabel: local
+description: "Every doze-aws service (S3, SQS, SNS, DynamoDB, Lambda, EventBridge, Step Functions, Kinesis, API Gateway, CloudFormation, IAM, KMS, SSM, Secrets Manager, STS) behind one endpoint, as one doze instance. Declare buckets, queues, topics, tables, functions, rules, keys, secrets, parameters and state machines as nested blocks; doze keeps them as a CloudFormation stack on the instance. A stock SDK or the aws CLI points AWS_ENDPOINT_URL at the one endpoint. One process, no Docker, no JVM."
+homepage: "https://github.com/doze-dev/doze-rs"
+source: doze/aws
+client:
+  program: aws
+  args:
+    - "--cli-auto-prompt"
+  env:
+    AWS_ACCESS_KEY_ID: test
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_ENDPOINT_URL: "http://{host}:{port}"
+    AWS_SECRET_ACCESS_KEY: test
+detect:
+  packages:
+    cargo:
+      - aws-config
+      - aws-sdk-s3
+    go:
+      - github.com/aws/aws-sdk-go-v2
+      - github.com/aws/aws-sdk-go
+    npm:
+      - aws-sdk
+      - "@aws-sdk/client-s3"
+      - "@aws-sdk/client-sqs"
+      - "@aws-sdk/client-dynamodb"
+    pypi:
+      - boto3
+      - botocore
+  images:
+    - localstack/localstack
+    - amazon/dynamodb-local
+    - softwaremill/elasticmq
+  env:
+    AWS_ENDPOINT: url
+    AWS_ENDPOINT_URL: url
+    LOCALSTACK_HOST: address
+config:
+  arguments: []
+  blocks:
+    - name: bucket
+      label: name
+      desc: One S3 bucket (the label is the bucket name).
+      arguments:
+        - name: versioning
+          type: bool
+          default: "false"
+          desc: Enable object versioning.
+        - name: object_lock
+          type: bool
+          default: "false"
+          desc: Enable object lock (implies versioning).
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: queue
+      label: name
+      desc: "One SQS queue; dlq = \"auto\" creates and wires a dead-letter companion."
+      arguments:
+        - name: fifo
+          type: bool
+          default: "false"
+          desc: FIFO queue (its name gets .fifo).
+        - name: content_dedup
+          type: bool
+          default: "false"
+          desc: Content-based deduplication (FIFO only).
+        - name: dlq
+          type: string
+          desc: "\"auto\" or the name of another queue of this block."
+        - name: max_receives
+          type: number
+          desc: Receives before a message is dead-lettered (needs dlq).
+        - name: visibility
+          type: number
+          desc: "Visibility timeout, seconds."
+        - name: delay
+          type: number
+          desc: "Delivery delay, seconds."
+        - name: retention
+          type: number
+          desc: "Message retention, seconds."
+        - name: receive_wait
+          type: number
+          desc: "Long-poll wait, seconds."
+        - name: max_size
+          type: number
+          desc: "Largest message, bytes."
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: topic
+      label: name
+      desc: "One SNS topic with subscribe blocks (queue, lambda or http; filter, raw)."
+      arguments:
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: table
+      label: name
+      desc: "One DynamoDB table; key uses the \"pk:S sk:N\" shorthand, plus gsi and lsi blocks."
+      arguments:
+        - name: key
+          type: string
+          desc: "The key: \"pk:S\" or \"pk:S sk:N\" (types S, N or B)."
+          required: true
+        - name: ttl
+          type: string
+          desc: "The attribute holding each item's expiry time."
+        - name: deletion_protection
+          type: bool
+          desc: Refuse to delete the table.
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: function
+      label: name
+      desc: One Lambda function running as a real local process (code = a local directory).
+      arguments:
+        - name: runtime
+          type: string
+          desc: The runtime; provided.al2023 (a bootstrap in code) when left out.
+        - name: handler
+          type: string
+          desc: "The handler, for runtimes that take one."
+        - name: code
+          type: string
+          desc: "A local directory with the function's code, relative to doze.hcl."
+          required: true
+        - name: env
+          type: map(string)
+          desc: Environment variables.
+        - name: timeout
+          type: number
+          desc: "Timeout, seconds."
+        - name: memory
+          type: number
+          desc: "Memory, MB."
+        - name: retries
+          type: number
+          desc: Retries of an asynchronous invocation (0 to 2).
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: rule
+      label: name
+      desc: "One EventBridge rule; targets are \"queue:name\", \"topic:name\" or \"lambda:name\"."
+      arguments:
+        - name: bus
+          type: string
+          desc: The event bus; the default bus when left out.
+        - name: pattern
+          type: string
+          desc: "An event pattern, JSON."
+        - name: schedule
+          type: string
+          desc: "A schedule: rate(...) or cron(...)."
+        - name: enabled
+          type: bool
+          desc: Whether the rule runs.
+        - name: targets
+          type: list(string)
+          desc: "\"queue:name\", \"topic:name\" or \"lambda:name\", each of this block."
+    - name: key
+      label: name
+      desc: One KMS key with real local crypto.
+      arguments:
+        - name: spec
+          type: string
+          desc: The key spec; SYMMETRIC_DEFAULT when left out.
+        - name: usage
+          type: string
+          desc: The key usage; ENCRYPT_DECRYPT when left out.
+        - name: description
+          type: string
+          desc: A description.
+        - name: rotation
+          type: bool
+          default: "false"
+          desc: Rotate the key yearly.
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: secret
+      label: name
+      desc: One Secrets Manager secret.
+      arguments:
+        - name: value
+          type: string
+          desc: "The secret's value, as text."
+        - name: binary
+          type: string
+          desc: "The secret's value as base64, for binary secrets."
+        - name: description
+          type: string
+          desc: A description.
+        - name: force
+          type: bool
+          default: "false"
+          desc: "Accepted for the Go module's blocks; the declared value is written whenever the declaration changes."
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: parameter
+      label: name
+      desc: One SSM parameter (the label is the full /path).
+      arguments:
+        - name: value
+          type: string
+          desc: "The parameter's value."
+          required: true
+        - name: type
+          type: string
+          desc: String (the default) or StringList.
+        - name: description
+          type: string
+          desc: A description.
+        - name: force
+          type: bool
+          default: "false"
+          desc: "Accepted for the Go module's blocks; the declared value is written whenever the declaration changes."
+        - name: tags
+          type: map(string)
+          desc: Tags.
+    - name: state_machine
+      label: name
+      desc: "One Step Functions state machine, run locally against the stack's functions, queues and topics."
+      arguments:
+        - name: definition
+          type: string
+          desc: "The States Language document: a heredoc, or file(\"./flow.asl.json\")."
+          required: true
+        - name: role
+          type: string
+          desc: "Role ARN; the API requires one and nothing local evaluates it, so it defaults."
+        - name: type
+          type: string
+          desc: STANDARD (the default) or EXPRESS.
+        - name: tags
+          type: map(string)
+          desc: Tags.
