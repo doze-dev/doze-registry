@@ -1,0 +1,63 @@
+---
+title: Valkey
+tagline: "In-memory cache, Redis-compatible."
+category: cache
+engine: valkey
+port: 6379
+example: "valkey \"cache\" {\n  version          = 9\n  port             = 6379\n  maxmemory        = \"256mb\"\n  maxmemory_policy = \"allkeys-lru\"\n  appendonly       = true\n  password         = \"cache\"\n  save             = \"900 1 300 10\"\n\n  settings = {\n    tcp-keepalive = \"60\"\n  }\n}\n"
+exampleLabel: cache
+description: "A local Valkey server — the open-source Redis fork. Speaks the Redis protocol, so any redis client works. Set a memory ceiling and an eviction policy and use it as a cache; doze boots it on first connect and reaps it when idle."
+homepage: "https://github.com/doze-dev/doze-rs/tree/main/crates/doze-module-valkey"
+source: doze/valkey
+defaultVersion: "9"
+client:
+  program: valkey-cli
+  args:
+    - "-h"
+    - "{host}"
+    - "-p"
+    - "{port}"
+  env:
+    REDISCLI_AUTH: "{password}"
+  fallbacks:
+    - redis-cli
+detect:
+  packages:
+    go:
+      - github.com/redis/go-redis
+      - github.com/go-redis/redis
+      - github.com/gomodule/redigo
+      - github.com/valkey-io/valkey-go
+    npm:
+      - redis
+      - ioredis
+      - bullmq
+  images:
+    - redis
+    - valkey/valkey
+  env:
+    CACHE_ADDR: address
+    REDIS_ADDR: address
+    REDIS_URL: url
+    VALKEY_URL: url
+config:
+  arguments:
+    - name: maxmemory
+      type: string
+      desc: "Memory ceiling before eviction, e.g. \"256mb\"."
+    - name: maxmemory_policy
+      type: string
+      desc: "Eviction policy (allkeys-lru, volatile-ttl, …); unset, valkey's own default is noeviction."
+    - name: appendonly
+      type: bool
+      default: "false"
+      desc: Enable the append-only file for durability.
+    - name: password
+      type: string
+      desc: requirepass auth password.
+    - name: save
+      type: string
+      desc: "RDB snapshot schedule, e.g. \"900 1 300 10\". Unset, a snapshot is written when doze stops the server, so a sleeping cache keeps its keys; \"\" keeps nothing."
+    - name: settings
+      type: map(string)
+      desc: "Arbitrary valkey.conf directives, applied verbatim."

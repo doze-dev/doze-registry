@@ -1,0 +1,46 @@
+---
+title: Kvrocks
+tagline: "Redis API on RocksDB — durable, low-RAM."
+category: database
+engine: kvrocks
+port: 6380
+example: "kvrocks \"store\" {\n  version  = 2\n  port     = 6380\n  workers  = 4\n  password = \"admin\"\n  settings = {\n    \"rocksdb.block_cache_size\" = \"256\"\n  }\n  namespace \"tenant_a\" {\n    token = \"tenant-a-token\"\n  }\n  namespace \"tenant_b\" {\n    token = \"tenant-b-token\"\n  }\n}\n"
+exampleLabel: store
+description: "A local Apache Kvrocks server: the Redis protocol backed by RocksDB on disk. Durable and memory-frugal — a drop-in Redis API when you want persistence without holding the dataset in RAM. Supports namespaces with per-namespace tokens."
+homepage: "https://github.com/doze-dev/doze-rs/tree/main/crates/doze-module-kvrocks"
+source: doze/kvrocks
+defaultVersion: "2"
+client:
+  program: valkey-cli
+  args:
+    - "-h"
+    - "{host}"
+    - "-p"
+    - "{port}"
+  env:
+    REDISCLI_AUTH: "{password}"
+  fallbacks:
+    - redis-cli
+detect:
+  images:
+    - apache/kvrocks
+config:
+  arguments:
+    - name: workers
+      type: number
+      desc: Number of worker threads.
+    - name: password
+      type: string
+      desc: requirepass auth password (the admin namespace); required when namespaces are declared.
+    - name: settings
+      type: map(string)
+      desc: "Arbitrary kvrocks.conf directives, applied verbatim."
+  blocks:
+    - name: namespace
+      label: name
+      desc: A logical namespace with its own access token.
+      arguments:
+        - name: token
+          type: string
+          desc: Auth token scoped to this namespace.
+          required: true

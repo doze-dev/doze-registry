@@ -1,0 +1,82 @@
+---
+title: MariaDB
+tagline: MySQL-compatible relational database
+category: database
+engine: mariadb
+port: 3306
+example: "mariadb \"app\" {\n  version       = \"11.4\"\n  character_set = \"utf8mb4\"\n\n  user \"app\" {\n    password = \"secret\"\n    host     = \"%\"\n  }\n  grant {\n    user       = \"app\"\n    privileges = [\"ALL PRIVILEGES\"]\n    database   = \"app\"\n  }\n}\n"
+exampleLabel: app
+description: "A local MariaDB server behind doze, with declared databases, users and grants kept as declared. The instance database is created for you; connect with DATABASE_URL."
+homepage: "https://mariadb.org"
+source: doze/mariadb
+defaultVersion: "11.4"
+client:
+  program: mariadb
+  args:
+    - "--host={host}"
+    - "--port={port}"
+    - "--protocol=TCP"
+    - "--user=root"
+  env:
+    MYSQL_PWD: "{password}"
+  fallbacks:
+    - mysql
+detect:
+  packages:
+    go:
+      - github.com/go-sql-driver/mysql
+    npm:
+      - mysql
+      - mysql2
+      - mariadb
+    pypi:
+      - mysqlclient
+      - pymysql
+      - mariadb
+  images:
+    - mariadb
+    - mysql
+  env:
+    MARIADB_URL: url
+    MYSQL_URL: url
+config:
+  arguments:
+    - name: character_set
+      type: string
+      desc: "Default character set of the instance database, e.g. \"utf8mb4\"."
+    - name: collation
+      type: string
+      desc: "Default collation of the instance database, e.g. \"utf8mb4_unicode_ci\"."
+    - name: settings
+      type: map(string)
+      desc: "Extra [mysqld] my.cnf entries, applied verbatim."
+  blocks:
+    - name: user
+      label: name
+      desc: A MariaDB account (repeatable; the label is its name).
+      arguments:
+        - name: host
+          type: string
+          desc: "The host the account is for; \"%\" (any) when left out."
+        - name: password
+          type: string
+          desc: "Its password; none, the account has no password."
+    - name: grant
+      desc: "Privileges for an account on a database, or one table of it."
+      arguments:
+        - name: user
+          type: string
+          desc: "The account's name (a `user` block, or one that exists already)."
+          required: true
+        - name: host
+          type: string
+          desc: "The account's host; \"%\" when left out."
+        - name: privileges
+          type: list(string)
+          desc: "Privileges, e.g. [\"SELECT\", \"INSERT\"] or [\"ALL PRIVILEGES\"]."
+        - name: database
+          type: string
+          desc: "The database; every database (\"*\") when left out."
+        - name: table
+          type: string
+          desc: One table of it; every table when left out.

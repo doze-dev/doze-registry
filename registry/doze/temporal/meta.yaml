@@ -1,0 +1,66 @@
+---
+title: Temporal
+tagline: Durable workflow engine (local dev server)
+category: workflow
+engine: temporal
+port: 7233
+example: "temporal \"dev\" {\n  version = 1\n  port    = 7233\n  ui_port = 8233\n\n  search_attributes = {\n    CustomerId = \"Keyword\"\n  }\n\n  namespace \"orders\" {\n    retention = \"7d\"\n  }\n  namespace \"billing\" {}\n}\n"
+exampleLabel: dev
+description: "A local Temporal dev server: a single pure-Go binary bundling the Temporal services, a SQLite store and the Web UI, with no JVM or Docker. Supervised and always on (workers long-poll it); connect via TEMPORAL_ADDRESS. Declared namespaces exist the moment it is ready."
+homepage: "https://temporal.io"
+source: doze/temporal
+defaultVersion: "1"
+detect:
+  packages:
+    go:
+      - go.temporal.io/sdk
+    npm:
+      - "@temporalio/client"
+      - "@temporalio/worker"
+    pypi:
+      - temporalio
+  images:
+    - temporalio/auto-setup
+    - temporalio/server
+    - temporalio/temporal
+  env:
+    TEMPORAL_ADDRESS: address
+config:
+  arguments:
+    - name: ui_port
+      type: number
+      default: "8233"
+      desc: "The Web UI's port."
+    - name: headless
+      type: bool
+      default: "false"
+      desc: Run without the Web UI.
+    - name: search_attributes
+      type: map(string)
+      desc: "Custom search attributes to register, name = type (Text, Keyword, Int, Double, Bool, Datetime, KeywordList)."
+    - name: dynamic_config
+      type: map(string)
+      desc: "Dev-server dynamic config, key = value (the value is read as YAML: true, 10, \"text\")."
+  blocks:
+    - name: namespace
+      label: name
+      desc: A namespace to create and keep as declared.
+      arguments:
+        - name: retention
+          type: string
+          desc: "How long closed workflows are kept, e.g. \"7d\" or \"168h\"."
+        - name: description
+          type: string
+          desc: What the namespace is for.
+    - name: restart
+      desc: How the supervisor restarts the server when it exits (at most one).
+      arguments:
+        - name: policy
+          type: string
+          desc: "no, on_failure (the default) or always."
+        - name: backoff
+          type: string
+          desc: "The wait before a restart, e.g. \"1s\" (the default)."
+        - name: max_retries
+          type: number
+          desc: Restarts before giving up (5 by default).

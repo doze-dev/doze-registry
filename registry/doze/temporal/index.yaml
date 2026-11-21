@@ -1,0 +1,25 @@
+schema: 1
+module: temporal
+namespace: doze
+releases:
+  0.3.0:
+    protocol: 2
+    engines:
+      - "1"
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-rs/releases/download/temporal/temporal-plugin-0.3.0-aarch64-apple-darwin.tar.gz
+        sha256: ad8af139365543a70d3d8bb30430c54aaef9a2dc9abe194435be3e27e1f5b45d
+        sig: DeUEbT+76l2hnxoYr/v0d0cUIR3BEMrX3XiQEZ6D0kVbiw+aKEMfphI0QMAqrFrXSPJN5M0zL6u2AsjNtYDZDg==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/temporal/temporal-plugin-0.3.0-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 2a2d896f59179f26b513bc4b452a70c7dc21f6903b55d4643bde3a5f8576c7bb
+        sig: WTSpFHZfyDo7rIdcxn4irQtqRLOgnjrm3cdMvebLsSZ9hQAgfNAjJTNvcBEeBjOeKnHNXiAsJiGGE+A2God2CQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/temporal/temporal-plugin-0.3.0-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 81a51ac5c3489608b6ffa52628c1ace43412266cc3969f98f941262e15d972e2
+        sig: /MOP3qru1x9YzdvmMl+tF49mqQm8SpUzKCw1JBzgu7w9UjKqUUz/UEZ7DFQDIOpmBRHrErU2hdX1gaI64G/KDA==
+    doze: 0.3.0
+channels:
+  stable: 0.3.0
+signature: 4eVZlzJ3YPKsAgJ5TIFd9L9H8wgoOtE1kl3fXMU89vL8hJdRn+uxUmScFNQVgmYx0Wyrdaszjpb/ToztireGBw==

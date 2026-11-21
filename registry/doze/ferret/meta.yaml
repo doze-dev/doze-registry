@@ -1,0 +1,64 @@
+---
+title: FerretDB
+tagline: MongoDB-compatible database (FerretDB v2 over Postgres)
+category: database
+engine: ferret
+port: 27017
+example: "ferret \"shop\" {\n  version = \"2.7\"\n\n  database \"catalog\" {\n    collection \"products\" {\n      index {\n        keys   = { sku = 1 }\n        unique = true\n      }\n    }\n    collection \"orders\" {}\n  }\n}\n"
+exampleLabel: shop
+description: "A MongoDB-wire database you connect to with any Mongo client. Under the hood it is FerretDB v2 fronting a private PostgreSQL with Microsoft's DocumentDB extension: no MongoDB server, no licence worries. Declared databases, collections, indexes and seed data are kept for you."
+homepage: "https://www.ferretdb.com"
+source: doze/ferret
+defaultVersion: "2.7"
+client:
+  program: mongosh
+  args:
+    - "{url}"
+  fallbacks:
+    - mongo
+detect:
+  packages:
+    go:
+      - go.mongodb.org/mongo-driver
+      - go.mongodb.org/mongo-driver/v2
+    npm:
+      - mongodb
+      - mongoose
+    pypi:
+      - pymongo
+      - motor
+      - mongoengine
+  images:
+    - mongo
+    - ferretdb/ferretdb
+  env:
+    MONGODB_URI: url
+    MONGODB_URL: url
+    MONGO_URL: url
+config:
+  arguments:
+    - name: settings
+      type: map(string)
+      desc: "Extra FerretDB settings, each passed as FERRETDB_<KEY> (e.g. log_level = \"debug\")."
+    - name: auth
+      type: bool
+      default: "false"
+      desc: "Require clients to authenticate (not supported yet: refused)."
+  blocks:
+    - name: database
+      label: name
+      desc: A MongoDB database to keep (repeatable; the label is its name).
+      arguments: []
+    - name: user
+      label: name
+      desc: "A MongoDB user (needs auth, which is not supported yet: refused)."
+      arguments:
+        - name: password
+          type: string
+          desc: Its password.
+        - name: database
+          type: string
+          desc: "The database it authenticates against; \"admin\" when left out."
+        - name: roles
+          type: list(string)
+          desc: "Its roles on that database, e.g. [\"readWrite\"]."

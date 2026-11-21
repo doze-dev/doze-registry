@@ -1,0 +1,202 @@
+---
+title: PostgreSQL
+tagline: "Real local Postgres, declared not scripted."
+category: database
+engine: postgres
+port: 5432
+example: "postgres \"app\" {\n  version          = 18\n  owner            = \"app\"\n  encoding         = \"UTF8\"\n  locale           = \"en_US.UTF-8\"\n  connection_limit = 50\n  comment          = \"primary app database\"\n  shared_buffers   = \"256MB\"\n  max_connections  = 100\n\n  settings = {\n    log_min_duration_statement = \"200ms\"\n  }\n\n  role \"app\" {\n    password         = \"app\"\n    login            = true\n    createdb         = true\n    connection_limit = 20\n    member_of        = [\"readers\"]\n  }\n\n  role \"readers\" {\n    login = false\n  }\n\n  schema \"analytics\" {\n    owner = \"app\"\n  }\n\n  extension \"pg_trgm\" {}\n\n  grant {\n    role       = \"app\"\n    privileges = [\"ALL\"]\n    schema     = \"analytics\"\n    objects    = \"tables\"\n  }\n}\n"
+exampleLabel: app
+description: "A real PostgreSQL server per instance — no Docker. Declare roles, schemas, extensions and grants in HCL and doze converges them: creating what's new, updating what changed, dropping what you removed. Boots on first connect, reaps when idle."
+homepage: "https://www.postgresql.org"
+source: doze/postgres
+defaultVersion: "18"
+client:
+  program: psql
+  args:
+    - "{url}"
+detect:
+  packages:
+    cargo:
+      - tokio-postgres
+      - postgres
+    go:
+      - github.com/jackc/pgx
+      - github.com/lib/pq
+    npm:
+      - pg
+      - postgres
+      - pg-promise
+    pypi:
+      - psycopg
+      - psycopg2
+      - psycopg2-binary
+      - asyncpg
+  images:
+    - postgres
+    - postgis/postgis
+    - pgvector/pgvector
+  env:
+    PGHOST: address
+    POSTGRESQL_URL: url
+    POSTGRES_URL: url
+config:
+  arguments:
+    - name: owner
+      type: string
+      desc: "Owner role for the instance's database."
+    - name: encoding
+      type: string
+      desc: "Character-set encoding for the database; the cluster's (UTF8) when left out."
+    - name: locale
+      type: string
+      desc: Locale (LC_COLLATE and LC_CTYPE) for the database.
+    - name: lc_collate
+      type: string
+      desc: "Collation order, overriding locale."
+    - name: lc_ctype
+      type: string
+      desc: "Character classification, overriding locale."
+    - name: template
+      type: string
+      desc: Template database to create from.
+    - name: tablespace
+      type: string
+      desc: Tablespace the database lives in.
+    - name: comment
+      type: string
+      desc: COMMENT on the database; removing it clears it.
+    - name: connection_limit
+      type: number
+      desc: Max concurrent connections to the database; no limit (-1) when left out.
+    - name: is_template
+      type: bool
+      default: "false"
+      desc: Mark the database as a template.
+    - name: allow_connections
+      type: bool
+      default: "true"
+      desc: Whether the database accepts connections.
+    - name: shared_buffers
+      type: string
+      default: 16MB
+      desc: "shared_buffers server setting, e.g. \"256MB\"."
+    - name: max_connections
+      type: number
+      default: "50"
+      desc: max_connections server setting.
+    - name: fsync
+      type: bool
+      default: "false"
+      desc: fsync server setting (off for the dev tuning profile; synchronous_commit and full_page_writes follow it).
+    - name: autovacuum
+      type: bool
+      default: "true"
+      desc: autovacuum server setting.
+    - name: settings
+      type: map(string)
+      desc: "Any other postgresql.conf setting, applied verbatim."
+    - name: extensions
+      type: list(string)
+      desc: "Extensions to CREATE, by name (contrib: pg_trgm, hstore, …). Or use extension blocks."
+  blocks:
+    - name: role
+      label: name
+      desc: "A role (a user when it may log in), kept as declared."
+      arguments:
+        - name: password
+          type: string
+          desc: Login password; removing it clears it.
+        - name: login
+          type: bool
+          default: "true"
+          desc: Whether the role may log in.
+        - name: superuser
+          type: bool
+          default: "false"
+          desc: Grant SUPERUSER.
+        - name: createdb
+          type: bool
+          default: "false"
+          desc: Allow creating databases.
+        - name: createrole
+          type: bool
+          default: "false"
+          desc: Allow creating other roles.
+        - name: replication
+          type: bool
+          default: "false"
+          desc: Allow streaming replication.
+        - name: inherit
+          type: bool
+          default: "true"
+          desc: Inherit the privileges of the roles it is a member of.
+        - name: bypassrls
+          type: bool
+          default: "false"
+          desc: Bypass row-level security.
+        - name: connection_limit
+          type: number
+          desc: Per-role connection cap; none (-1) when left out.
+        - name: valid_until
+          type: string
+          desc: Password expiry timestamp; removing it means never.
+        - name: member_of
+          type: list(string)
+          desc: Roles this role is a member of; one removed is revoked.
+        - name: comment
+          type: string
+          desc: COMMENT on the role; removing it clears it.
+        - name: config
+          type: map(string)
+          desc: Per-role settings (ALTER ROLE … SET); one removed is reset.
+    - name: schema
+      label: name
+      desc: A schema within the database.
+      arguments:
+        - name: owner
+          type: string
+          desc: Role that owns the schema.
+    - name: extension
+      label: name
+      desc: A PostgreSQL extension created in the database.
+      arguments:
+        - name: version
+          type: string
+          desc: The SQL version to create; a different one later updates it in place.
+        - name: schema
+          type: string
+          desc: Schema to install the extension into.
+        - name: source
+          type: string
+          desc: "Path of a bundle (.tar.gz with share/ and lib/) for an extension the toolchain does not ship, relative to this file."
+        - name: optional
+          type: bool
+          default: "false"
+          desc: "Skip (don't fail) if the extension is unavailable."
+        - name: cascade
+          type: bool
+          default: "false"
+          desc: CREATE EXTENSION … CASCADE for its dependencies.
+    - name: grant
+      desc: "Privileges for a role on the database, or on a schema or its objects."
+      arguments:
+        - name: role
+          type: string
+          desc: The role granted to.
+          required: true
+        - name: privileges
+          type: list(string)
+          desc: "Privileges to grant (SELECT, INSERT, ALL, …)."
+        - name: database
+          type: string
+          desc: The database granted on (one of database or schema).
+        - name: schema
+          type: string
+          desc: The schema granted on.
+        - name: objects
+          type: string
+          desc: "Objects in the schema: tables, sequences or functions; the schema itself when left out."
+        - name: with_grant_option
+          type: bool
+          default: "false"
+          desc: Allow the grantee to re-grant.
