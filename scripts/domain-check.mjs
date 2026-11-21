@@ -23,9 +23,10 @@ const DEEP = args.has('--deep');
 const COMPILED_KEY = process.env.DOZE_REGISTRY_KEY || 'wC95e+48J4H5Em38vCj6YQuNjIdiYh9isRUWWeE9LUs=';
 // Where canonical/og:url/sitemap URLs must point, whichever host serves the page.
 const CANON = 'https://doze-dev.com';
-// Every module the registry must serve. A catalog missing one fails. Empty since 2026-11-18: every Go-built
-// module was withdrawn (withdrawn.yaml) and the registry is rebuilt from scratch with the Rust modules.
-const EXPECTED = (process.env.EXPECTED_MODULES || '').split(/\s+/).filter(Boolean);
+// Every module the registry must serve. A catalog missing one fails. The Go-built modules were withdrawn on
+// 2026-11-18 (withdrawn.yaml keeps that record, by version); since 2026-11-21 these are the Rust modules from
+// doze-rs, aws and kafka included.
+const EXPECTED = (process.env.EXPECTED_MODULES || 'aws ferret kafka kvrocks mariadb postgres temporal valkey').split(/\s+/).filter(Boolean);
 // Paths on the site that docs, the app and the READMEs link to.
 const SITE_PATHS = ['/', '/docs/', '/docs/doze/start/install/', '/download/', '/changelog/'];
 // An old doze.nerdmenot.in docs path the website must still redirect.
