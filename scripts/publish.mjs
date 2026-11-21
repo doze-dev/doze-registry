@@ -100,6 +100,15 @@ if (resurrected.length) {
 // carries the namespace the key actually belongs to.
 idx.namespace = ns;
 
+// Every artifact URL absolute first, as it will be signed: a release index names
+// its archives relatively (doze-module-release writes the file name), and the
+// registry's signed copy holds the absolute URL, so comparing before this would
+// call every already-published version "changed" and refuse any second release.
+const artifactBase = (artifactBaseFlag || releaseBase).replace(/\/+$/, '');
+for (const { art } of eachArtifact(idx)) {
+	if (art?.url && !/:\/\//.test(art.url)) art.url = `${artifactBase}/${String(art.url).replace(/^\/+/, '')}`;
+}
+
 // Nothing published is ever dropped or changed (lib.mjs history): a version the
 // release index lacks, a release that lost its history, is carried over from
 // the registry's signed copy; one whose bytes changed stops the publish.
@@ -118,7 +127,6 @@ if (existsSync(`${dir}/index.yaml`)) {
 	if (carried.length) console.log(`kept ${carried.length} published artifact(s) the release index no longer listed`);
 }
 
-const artifactBase = (artifactBaseFlag || releaseBase).replace(/\/+$/, '');
 const priv = privateKeyObject(secret);
 let signed = 0;
 for (const { triple, art, version } of eachArtifact(idx)) {
@@ -126,8 +134,6 @@ for (const { triple, art, version } of eachArtifact(idx)) {
 		console.error(`${name} ${version} ${triple}: release manifest has no sha256`);
 		process.exit(1);
 	}
-	const url = /:\/\//.test(art.url) ? art.url : `${artifactBase}/${String(art.url).replace(/^\/+/, '')}`;
-	art.url = url;
 	art.sha256 = String(art.sha256).toLowerCase();
 	art.sig = sign(priv, art.sha256);
 	signed++;
