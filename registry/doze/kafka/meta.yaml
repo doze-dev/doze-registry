@@ -1,0 +1,69 @@
+---
+title: Kafka
+tagline: "Single-node Kafka-protocol broker, no JVM."
+category: queue
+engine: kafka
+port: 9092
+example: "kafka \"events\" {\n  version = 4\n  port    = 9092\n\n  auto_create_topics = true\n  default_partitions = 1\n  retention          = \"168h\"\n\n  topic \"orders\" {\n    partitions = 3\n  }\n  topic \"payments\" {\n    partitions = 1\n    config = { \"cleanup.policy\" = \"compact\" }\n  }\n}\n"
+exampleLabel: events
+description: "A local, disk-backed broker that speaks the Kafka wire protocol well enough that unmodified clients (franz-go, librdkafka, kcat, Sarama, the Java client) connect and work. No JVM, no ZooKeeper, no KRaft: the engine is doze-kafka, the module binary itself, and `version` selects the Kafka major it stands for (1-4). Declared topics are created on boot and kept as declared; auto-create handles the rest."
+homepage: "https://github.com/doze-dev/doze-rs"
+source: doze/kafka
+defaultVersion: "4"
+client:
+  program: kcat
+  args:
+    - "-b"
+    - "{host}:{port}"
+    - "-L"
+  fallbacks:
+    - kafkacat
+detect:
+  packages:
+    go:
+      - github.com/twmb/franz-go
+      - github.com/segmentio/kafka-go
+      - github.com/IBM/sarama
+      - github.com/Shopify/sarama
+      - github.com/confluentinc/confluent-kafka-go
+    npm:
+      - kafkajs
+      - node-rdkafka
+  images:
+    - confluentinc/cp-kafka
+    - bitnami/kafka
+    - apache/kafka
+    - redpandadata/redpanda
+  env:
+    KAFKA_BOOTSTRAP_SERVERS: address
+    KAFKA_BROKERS: address
+    KAFKA_URL: address
+config:
+  arguments:
+    - name: auto_create_topics
+      type: bool
+      default: "true"
+      desc: Create unknown topics on first reference.
+    - name: default_partitions
+      type: number
+      default: "1"
+      desc: Partition count for auto-created topics (1 to 1000).
+    - name: retention
+      type: string
+      desc: "Delete segments older than this: a duration such as \"168h\", \"90m\" or \"7d\"; unset keeps them for ever."
+    - name: retention_bytes
+      type: number
+      default: "0"
+      desc: Delete old segments once a partition exceeds this many bytes (0 = unbounded).
+  blocks:
+    - name: topic
+      label: name
+      desc: A topic to create on boot and keep as declared.
+      arguments:
+        - name: partitions
+          type: number
+          default: "1"
+          desc: Partition count (1 to 1000). Raised on a topic that has fewer; Kafka cannot remove partitions.
+        - name: config
+          type: map(string)
+          desc: "Per-topic config, as Kafka names it (e.g. cleanup.policy = compact)."
