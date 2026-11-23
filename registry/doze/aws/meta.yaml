@@ -15,7 +15,7 @@ client:
     - "--cli-auto-prompt"
   env:
     AWS_ACCESS_KEY_ID: test
-    AWS_DEFAULT_REGION: us-east-1
+    AWS_DEFAULT_REGION: "{region}"
     AWS_ENDPOINT_URL: "http://{host}:{port}"
     AWS_SECRET_ACCESS_KEY: test
 detect:
@@ -43,7 +43,11 @@ detect:
     AWS_ENDPOINT_URL: url
     LOCALSTACK_HOST: address
 config:
-  arguments: []
+  arguments:
+    - name: region
+      type: string
+      default: us-east-1
+      desc: "The AWS Region this stack lives in: its resources are made there, the server answers as that Region, and a client must use the same one (an SDK's region, AWS_REGION). Other modules read it as module.<name>.region. One of AWS's Region names, such as eu-west-2."
   blocks:
     - name: bucket
       label: name

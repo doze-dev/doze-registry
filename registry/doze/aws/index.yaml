@@ -34,6 +34,22 @@ releases:
         sha256: 42c190f4f6ff74bcf57293337485fcc2aea2f879155b78c377e845012deb94fa
         sig: 4sbUCY3vp2yz9lTsjKubI3v3XGu8UGCBxghgNi+ZJMsQsfG1GsTDdE8rzn/d+ROLL8y29pOr0h/UAsrHXUs2Aw==
     doze: 0.3.0
+  0.3.2:
+    protocol: 2
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-rs/releases/download/aws/aws-plugin-0.3.2-aarch64-apple-darwin.tar.gz
+        sha256: 0b4a349edea7de8a410e5eefac8e91869efa65f24d95a9704862c9d3d0f06371
+        sig: wFzRH7ZQiafxADvz9ktv6qiANuNFUdZ7S+oxZMO5geda427+bTIFDBLWws1DE7UnAUQY52o1FJXr+DDEqi85AQ==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/aws/aws-plugin-0.3.2-aarch64-unknown-linux-gnu.tar.gz
+        sha256: c6e39ed517be4f4078f92e0a7018ebd87d1f0b1cff25dba523c42ccc80c50fbc
+        sig: cbIaWm9aNaakWdaR/ptrhQhKTFp6OiDAXt4a9FRxxvmeTbIlgK2GnxygTCZjzLvZ2FzoUdR1DhcfHZ0WpZgCBA==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/aws/aws-plugin-0.3.2-x86_64-unknown-linux-gnu.tar.gz
+        sha256: dd0930d8bdba6e9b1802190155adfcbbd10a8704c73a9c9365a0986d4d89e951
+        sig: GMbJ2NiaaVX2liQe4AKx0c7e4OiDZTZn6GiT/TrQnw8PD6CH0DdIxRlot1pw/sQFkH7VJX8XnXQKIG1PrxmgCQ==
+    doze: 0.3.0
 channels:
-  stable: 0.3.1
-signature: qRngd712mNWHFGhM+cDUDvBmrEOkb+eBQ0ep9ylCl516hJpZ2RbgKKRaKCpeVL31QTeTPF9ggh7frHHsVxtxBg==
+  stable: 0.3.2
+signature: PcD2iOCfS+tuUVnzdftKiBFOK36ZvD5NfuNAHpO5FpBsPmk+chs5yNLHcTgU8/71ts5VVbOE1xAuIShWAS8eCA==
