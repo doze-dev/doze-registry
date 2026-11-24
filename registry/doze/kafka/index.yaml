@@ -44,6 +44,27 @@ releases:
         sha256: 7f48da41e65805d01601c724089e329ac6762e68eb0bc41eb322c07bfd4bf761
         sig: BPb2/JPfiMtXWmxasocniBY2gg1E+iF3+ZvFggNldAy3n6WyuPnfIyk1aWYIMOvtCBwLYdCwpzMDTOEC8uuVAw==
     doze: 0.3.0
+  0.2.2:
+    protocol: 2
+    engines:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+    artifacts:
+      aarch64-apple-darwin:
+        url: https://github.com/doze-dev/doze-rs/releases/download/kafka/kafka-plugin-0.2.2-aarch64-apple-darwin.tar.gz
+        sha256: a2420df245b58b4c95fafa007833e8d4d8ec7334033de01e3eb2c2967e690c88
+        sig: YDof42GClJ6tDQ90mDYLrGwF4eBmHn2p6DMs5gow1geU3yvN7QO0aru9QurCMPAxFZS0OZGm/F73DSMiQx96Aw==
+      aarch64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/kafka/kafka-plugin-0.2.2-aarch64-unknown-linux-gnu.tar.gz
+        sha256: 063277d4f6bf8f33540c9c4f4c438f7fb8df6d82fc7232cb794bcf13bcec6514
+        sig: Jha+YYnMp/OASeiP4nRQfGNIk8z3uvvt+V2Ro1lJ4LoUU1FdXzfJjMWlxbA5fu3KRpD89iF7IiCJQYmiRkjBBQ==
+      x86_64-unknown-linux-gnu:
+        url: https://github.com/doze-dev/doze-rs/releases/download/kafka/kafka-plugin-0.2.2-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 967a731586ce47a54f26b360d630b735b8abcaf9cab87e45829c2675c8f7731e
+        sig: RRVQ97IjTvmI58Etp/sJ4QZU3HmOPFbebz/e6+CCqo95DvwJ7lbKmwWj4kI3ZoXefPqdt7AuodzMfz6wRuTyBQ==
+    doze: 0.3.0
 channels:
-  stable: 0.2.1
-signature: A+FQmCIKmcCl0EcWSSBvpIVVA+TQPLYpY683iVFd46C6hfyXFa9IgGD0NzAWLJr0GFiESqpSWyW0c79kdqULBw==
+  stable: 0.2.2
+signature: 54gqWT5F7oAKwcfD6RMwcw80y2FrLP8P9SIexqWzmAfGunpiJcMGoDEUY+E+o627t8VE3M1kU4bdsCYBBxj9Bw==
